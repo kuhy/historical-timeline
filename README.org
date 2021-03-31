@@ -44,12 +44,12 @@ group and add a comment to them. Searching among all events is also possible.
     - create the JPA implementation of the DAO classes (CRUD operations are enough for the first milestone).
     - create tests for the DAO classes (you can use an in-memory database).
     - *we will have a call on 6. 4. and we will reflect on our work*
-    | Task          | Deadline | =Student= | =StudyGroup= | =HistoricalTimeline= | =Comment= | =Teacher= | =HistoricalEvent= |
-    |---------------+----------+-----------+--------------+----------------------+-----------+-----------+-------------------|
-    | *Class*       | 2. 4.    | Stefan    | Stefan       | Kuhy                 | Kuhy      | Kája      | Matej             |
-    | *DAO*         | 4. 4.    | Matej     | Matej        | Stefan               | Stefan    | Kuhy      | Kája              |
-    | *Tests*       | 6. 4.    | Kája      | Kája         | Matej                | Matej     | Stefan    | Kuhy              |
-    | *Check tests* | 6. 4.    | Kuhy      | Kuhy         | Kája                 | Kája      | Matej     | Stefan            |
+    | Task          | Deadline | =Student= | =StudyGroup= | =HistoricalTimeline= | =TimelineComment= | =Teacher= | =HistoricalEvent= |
+    |---------------+----------+-----------+--------------+----------------------+-------------------+-----------+-------------------|
+    | *Class*       | 2. 4.    | Stefan    | Stefan       | Kuhy                 | Kuhy              | Kája      | Matej             |
+    | *DAO*         | 4. 4.    | Matej     | Matej        | Stefan               | Stefan            | Kuhy      | Kája              |
+    | *Tests*       | 6. 4.    | Kája      | Kája         | Matej                | Matej             | Stefan    | Kuhy              |
+    | *Check tests* | 6. 4.    | Kuhy      | Kuhy         | Kája                 | Kája              | Matej     | Stefan            |
 * Use-case diagram
   #+BEGIN_SRC plantuml :file images/use-case_diagram.svg :exports results
   left to right direction
@@ -90,7 +90,7 @@ group and add a comment to them. Searching among all events is also possible.
     description: String
     data: LocalDate
     location: String
-    image: Image
+    image: byte[]
   }
 
   class HistoricalTimeline {
@@ -124,12 +124,12 @@ group and add a comment to them. Searching among all events is also possible.
 
   Student "*" o--o "*" StudyGroup
 
-  class Comment {
+  class TimelineComment {
     text: String
   }
 
-  HistoricalTimeline "1" *-- "*" Comment
-  Comment "*" o-- "1" Student
+  HistoricalTimeline "1" *-- "*" TimelineComment
+  TimelineComment "*" o-- "1" Student
   #+END_SRC
 
   #+RESULTS:
