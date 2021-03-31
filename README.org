@@ -120,7 +120,7 @@ group and add a comment to them. Searching among all events is also possible.
     hashedPassword: int
   }
 
-  Student "*" o-- "*" StudyGroup
+  Student "*" o--o "*" StudyGroup
 
   class Comment {
     text: String
