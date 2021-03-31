@@ -39,6 +39,7 @@ group and add a comment to them. Searching among all events is also possible.
     DEADLINE: <2021-04-07 Wed>
     - *create a project wiki with a project description*
     - create 4 entity classes for your project if you are a team of four (rule: one entity for each team member).
+    - *implement properly equals and hash code for these entities*
     - create a DAO layer interface (with proper Javadoc).
     - create the JPA implementation of the DAO classes (CRUD operations are enough for the first milestone).
     - create tests for the DAO classes (you can use an in-memory database).
