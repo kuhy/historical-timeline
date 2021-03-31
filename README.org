@@ -35,6 +35,7 @@ group and add a comment to them. Searching among all events is also possible.
 ** Milestones
    - when the milestone will be completed, we will merge =develop= to the =master=
 *** TODO Milestone 1
+    DEADLINE: <2021-04-07 Wed>
     - *create a project wiki with a project description*
     - create 4 entity classes for your project if you are a team of four (rule: one entity for each team member).
     - create a DAO layer interface (with proper Javadoc).
