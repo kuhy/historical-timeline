@@ -16,6 +16,7 @@ group and add a comment to them. Searching among all events is also possible.
 ** Tasks
    - create a separate branch for every task
      - use =git checkout -b name-of-my-branch develop=
+     - use following prefix for branch name: =feature-=
    - commit all of your work to this branch
      - capitalize the subject line of the commit message
      - use the imperative mood in the subject line
