@@ -1,0 +1,133 @@
+#+TITLE: Historical Timeline
+/The web application allows to create timelines of historical events that
+teachers can show to students to better learn history./
+
+The main functionality for teachers is to add new historical events
+(e.g. Austerlitz battle, Dec 2, 1805). Each event is represented by a date, a
+location, a description and an image/placeholder. Teachers can create several
+timelines and add events to them. All events on a timeline will be shown
+graphically ordered in time (no need of something complex, also some simple HTML
+will do it). Teachers can create some study groups (e.g. Roman Empire, Second
+World War, etc...) and enroll students. Teachers can add one or more timelines
+to each group. Students can login to the system and take part to some groups
+created by teachers. They will be able to see all the timelines for the specific
+group and add a comment to them. Searching among all events is also possible.
+* What to do?
+** Tasks
+   - create a separate branch for every task
+     - use =git checkout -b name-of-my-branch develop=
+   - commit all of your work to this branch
+     - capitalize the subject line of the commit message
+     - use the imperative mood in the subject line
+   - check if the program can be build using =mvn clean install=
+     - this will also run tests
+   - check if every class that you created has =javadoc= with =@author= tag
+   - check if every public field and method that you created has =javadoc=
+     - except simple getters and setters
+     - except methods that you =@Override=
+   - crosscheck all project requirements
+   - create a PR from your branch to the branch called =develop=
+   - assign PR to the subsequent team member (based on the following table)
+** Code review
+   - every team member is responsible to do code review for the PRs that he is assigned to
+   - also crosscheck everything that was mentioned above
+   - when everything is ok, merge the branch
+** Milestones
+   - when the milestone will be completed, we will merge =develop= to the =master=
+*** TODO Milestone 1
+    - *create a project wiki with a project description*
+    - create 4 entity classes for your project if you are a team of four (rule: one entity for each team member).
+    - create a DAO layer interface (with proper Javadoc).
+    - create the JPA implementation of the DAO classes (CRUD operations are enough for the first milestone).
+    - create tests for the DAO classes (you can use an in-memory database).
+    - *we will have a call on 6. 4. and we will reflect on our work*
+    | Task          | Deadline | =Student= | =StudyGroup= | =HistoricalTimeline= | =Comment= | =Teacher= | =HistoricalEvent= |
+    |---------------+----------+-----------+--------------+----------------------+-----------+-----------+-------------------|
+    | *Class*       | 2. 4.    | Stefan    | Stefan       | Kuhy                 | Kuhy      | Kája      | Matej             |
+    | *DAO*         | 4. 4.    | Matej     | Matej        | Stefan               | Stefan    | Kuhy      | Kája              |
+    | *Tests*       | 6. 4.    | Kája      | Kája         | Matej                | Matej     | Stefan    | Kuhy              |
+    | *Check tests* | 6. 4.    | Kuhy      | Kuhy         | Kája                 | Kája      | Matej     | Stefan            |
+* Use-case diagram
+  #+BEGIN_SRC plantuml :file images/use-case_diagram.svg :exports results
+  left to right direction
+
+  actor Student
+  actor Teacher
+
+  Student --> (add comment to timeline)
+  Student --> (search among all events)
+
+  Student --> (login)
+  Student --> (logout)
+  Student --> (register)
+  Student --> (view timeline)
+  Student --> (view study group)
+
+  Teacher --> (login)
+  Teacher --> (logout)
+  Teacher --> (register)
+  Teacher --> (view timeline)
+  Teacher --> (view study group)
+
+  Teacher --> (create event)
+  Teacher --> (create timeline)
+  Teacher --> (create study group)
+
+  Teacher --> (add event to timeline)
+  Teacher --> (add timeline to study group)
+  Teacher --> (enroll student to study group)
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:images/use-case_diagram.svg]]
+* Class diagram
+  #+BEGIN_SRC plantuml :file images/class_diagram.svg :exports results
+  class HistoricalEvent {
+    name: String
+    description: String
+    data: LocalDate
+    location: String
+    image: Image
+  }
+
+  class HistoricalTimeline {
+    name: String
+  }
+
+  HistoricalTimeline "1" *-- "*" HistoricalEvent
+
+  class StudyGroup {
+    name: String
+  }
+
+  StudyGroup "1" *-- "*" HistoricalTimeline
+
+  class Teacher {
+    firstName: String
+    lastName: String
+    username: String
+    hashedPassword: int
+  }
+
+  Teacher "1" *-- "*" StudyGroup
+
+
+  class Student {
+    firstName: String
+    lastName: String
+    username: String
+    hashedPassword: int
+  }
+
+  Student "*" o-- "*" StudyGroup
+
+  class Comment {
+    text: String
+  }
+
+  HistoricalTimeline "1" *-- "*" Comment
+  Comment "*" o-- "1" Student
+  #+END_SRC
+
+  #+RESULTS:
+  [[file:images/class_diagram.svg]]
