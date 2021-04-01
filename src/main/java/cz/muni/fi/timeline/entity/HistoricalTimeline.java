@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -26,6 +27,7 @@ public class HistoricalTimeline {
     @Setter
     private Long id;
 
+    @NotNull
     @Getter
     @Setter
     private String name;
