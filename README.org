@@ -25,7 +25,8 @@ group and add a comment to them. Searching among all events is also possible.
    - commit all of your work to this branch
      - capitalize the subject line of the commit message
      - use the imperative mood in the subject line
-   - check if the program can be build using =mvn clean install=
+   - do not write boilerplate code; use Lombok!
+   - check if the program can be build using =./mvnw clean install=
      - this will also run tests
    - check if every class that you created has =javadoc= with =@author= tag
    - check if every public field and method that you created has =javadoc=
@@ -93,7 +94,7 @@ group and add a comment to them. Searching among all events is also possible.
   class HistoricalEvent {
     name: String
     description: String
-    data: LocalDate
+    date: LocalDate
     location: String
     image: byte[]
   }
