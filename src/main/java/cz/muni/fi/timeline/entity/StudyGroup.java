@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,6 +30,33 @@ public class StudyGroup {
 
     @ManyToMany
     private Set<Student> students;
+
+    /**
+     * Returns all students of study group.
+     *
+     * @return all students of study group
+     */
+    public Set<Student> getStudents() {
+        return Collections.unmodifiableSet(students);
+    }
+
+    /**
+     * Adds student to study group.
+     *
+     * @param student student that is added to study group.
+     */
+    public void addStudent(Student student) {
+        students.add(student);
+    }
+
+    /**
+     * Removes student from study group
+     *
+     * @param student student that is removed from study group
+     */
+    public void removeStudent(Student student) {
+        students.remove(student);
+    }
 
     @Override
     public boolean equals(Object o) {

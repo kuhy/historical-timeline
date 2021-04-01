@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -45,8 +46,62 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private Set<StudyGroup> studyGroups;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany
     private Set<TimelineComment> timelineComments;
+
+    /**
+     * Returns all study groups of student.
+     *
+     * @return all study groups of student
+     */
+    public Set<StudyGroup> getStudyGroups() {
+        return Collections.unmodifiableSet(studyGroups);
+    }
+
+    /**
+     * Adds study group to student.
+     *
+     * @param studyGroup student group that is added to student.
+     */
+    public void addStudyGroup(StudyGroup studyGroup) {
+        studyGroups.add(studyGroup);
+    }
+
+    /**
+     * Removes student group from student
+     *
+     * @param studyGroup student group that is removed from student
+     */
+    public void removeStudyGroup(StudyGroup studyGroup) {
+        studyGroups.remove(studyGroup);
+    }
+
+    /**
+     * Returns all timeline comments of student.
+     *
+     * @return all timeline comments of student
+     */
+    public Set<TimelineComment> getTimelineComments() {
+        return Collections.unmodifiableSet(timelineComments);
+    }
+
+    /**
+     * Adds timeline comment to student.
+     *
+     * @param timelineComment timeline comment that is added to student.
+     */
+    public void addTimelineComment(TimelineComment timelineComment) {
+        timelineComments.add(timelineComment);
+    }
+
+    /**
+     * Removes timeline comment from student
+     *
+     * @param timelineComment timeline comment that is removed from student
+     */
+    public void removeStudyGroup(TimelineComment timelineComment) {
+        timelineComments.remove(timelineComment);
+    }
 
     @Override
     public boolean equals(Object o) {
