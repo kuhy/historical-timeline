@@ -45,6 +45,9 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private Set<StudyGroup> studyGroups;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private Set<TimelineComment> timelineComments;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
