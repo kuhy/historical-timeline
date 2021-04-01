@@ -36,7 +36,7 @@ public class HistoricalEvent {
 
     @Getter
     @Setter
-    private LocalDate data;
+    private LocalDate date;
 
     @Getter
     @Setter
@@ -54,13 +54,13 @@ public class HistoricalEvent {
         HistoricalEvent that = (HistoricalEvent) o;
         return Objects.equals(getName(), that.getName())
                 && Objects.equals(getDescription(), that.getDescription())
-                && Objects.equals(getData(), that.getData())
+                && Objects.equals(getDate(), that.getDate())
                 && Objects.equals(getLocation(), that.getLocation())
                 && Arrays.equals(getImage(), that.getImage());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getDescription(), getData(), getLocation(), getImage());
+        return Objects.hash(getName(), getDescription(), getDate(), getLocation(), getImage());
     }
 }
