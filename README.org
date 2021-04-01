@@ -26,7 +26,7 @@ group and add a comment to them. Searching among all events is also possible.
      - capitalize the subject line of the commit message
      - use the imperative mood in the subject line
    - do not write boilerplate code; use Lombok!
-   - check if the program can be build using =mvn clean install=
+   - check if the program can be build using =./mvnw clean install=
      - this will also run tests
    - check if every class that you created has =javadoc= with =@author= tag
    - check if every public field and method that you created has =javadoc=
