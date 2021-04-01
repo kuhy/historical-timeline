@@ -94,7 +94,7 @@ group and add a comment to them. Searching among all events is also possible.
   class HistoricalEvent {
     name: String
     description: String
-    data: LocalDate
+    date: LocalDate
     location: String
     image: byte[]
   }
