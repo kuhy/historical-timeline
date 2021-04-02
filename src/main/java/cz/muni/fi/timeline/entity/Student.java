@@ -48,9 +48,6 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private Set<StudyGroup> studyGroups;
 
-    @OneToMany
-    private Set<TimelineComment> timelineComments;
-
     /**
      * Returns all study groups of student.
      *
@@ -76,33 +73,6 @@ public class Student {
      */
     public void removeStudyGroup(StudyGroup studyGroup) {
         studyGroups.remove(studyGroup);
-    }
-
-    /**
-     * Returns all timeline comments of student.
-     *
-     * @return all timeline comments of student
-     */
-    public Set<TimelineComment> getTimelineComments() {
-        return Collections.unmodifiableSet(timelineComments);
-    }
-
-    /**
-     * Adds timeline comment to student.
-     *
-     * @param timelineComment timeline comment that is added to student.
-     */
-    public void addTimelineComment(TimelineComment timelineComment) {
-        timelineComments.add(timelineComment);
-    }
-
-    /**
-     * Removes timeline comment from student
-     *
-     * @param timelineComment timeline comment that is removed from student
-     */
-    public void removeStudyGroup(TimelineComment timelineComment) {
-        timelineComments.remove(timelineComment);
     }
 
     @Override
