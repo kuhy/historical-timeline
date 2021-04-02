@@ -34,11 +34,11 @@ public class HistoricalTimeline {
 
     @OneToMany
     @JoinColumn
-    private final Set<HistoricalEvent> historicalEvents = new HashSet<>();
+    private Set<HistoricalEvent> historicalEvents = new HashSet<>();
 
     @OneToMany
     @JoinColumn
-    private final Set<TimelineComment> timelineComments = new HashSet<>();
+    private Set<TimelineComment> timelineComments = new HashSet<>();
 
     /**
      * Returns all events in this timeline.

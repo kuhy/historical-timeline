@@ -5,10 +5,11 @@ import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import java.util.List;
 
 /**
- * Data access inteface (DAO) for HistoricalTimeline entity
+ * Data access interface (DAO) for HistoricalTimeline entity
  *
  * @author Tri Le Mau
  */
+
 public interface HistoricalTimelineDao {
 
     /**

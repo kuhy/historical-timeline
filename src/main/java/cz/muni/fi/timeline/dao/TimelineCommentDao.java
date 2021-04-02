@@ -4,6 +4,12 @@ import cz.muni.fi.timeline.entity.TimelineComment;
 
 import java.util.List;
 
+/**
+ * Data access interface (DAO) for TimelineComment entity
+ *
+ * @author Tri Le Mau
+ */
+
 public interface TimelineCommentDao {
 
     /**
