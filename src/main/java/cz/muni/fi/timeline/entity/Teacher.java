@@ -1,5 +1,6 @@
 package cz.muni.fi.timeline.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,7 @@ public class Teacher {
     private String lastName;
 
     @NotNull
+    @Column(unique = true)
     private String username;
 
     @NotNull
@@ -41,17 +43,19 @@ public class Teacher {
 
     @OneToMany
     @JoinColumn
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     public Set<StudyGroup> studyGroups = new HashSet<>();
 
-    public void addStudyGroup(StudyGroup studyGroup){
+    public void addStudyGroup(StudyGroup studyGroup) {
         this.studyGroups.add(studyGroup);
     }
 
-    public Set<StudyGroup> getStudyGroups(){
+    public Set<StudyGroup> getStudyGroups() {
         return Collections.unmodifiableSet(studyGroups);
     }
 
-    public void removeStudyGroup(StudyGroup studyGroup){
+    public void removeStudyGroup(StudyGroup studyGroup) {
         this.studyGroups.remove(studyGroup);
     }
 
