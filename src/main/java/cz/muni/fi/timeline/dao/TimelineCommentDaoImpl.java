@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TimelineCommentDaoImpl implements TimelineCommentDao {
@@ -19,8 +20,8 @@ public class TimelineCommentDaoImpl implements TimelineCommentDao {
     }
 
     @Override
-    public TimelineComment findById(Long id) {
-        return em.find(TimelineComment.class, id);
+    public Optional<TimelineComment> findById(Long id) {
+        return Optional.ofNullable(em.find(TimelineComment.class, id));
     }
 
     @Override

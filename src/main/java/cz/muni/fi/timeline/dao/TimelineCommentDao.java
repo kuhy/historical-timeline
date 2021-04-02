@@ -3,6 +3,7 @@ package cz.muni.fi.timeline.dao;
 import cz.muni.fi.timeline.entity.TimelineComment;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Data access interface (DAO) for TimelineComment entity
@@ -25,7 +26,7 @@ public interface TimelineCommentDao {
      * @param id Id used for finding the TimelineComment entity
      * @return A TimelineComment with id
      */
-    TimelineComment findById(Long id);
+    Optional<TimelineComment> findById(Long id);
 
     /**
      * Updates a TimelineComment entity in the database

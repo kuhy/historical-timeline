@@ -3,6 +3,7 @@ package cz.muni.fi.timeline.dao;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Data access interface (DAO) for HistoricalTimeline entity
@@ -25,7 +26,7 @@ public interface HistoricalTimelineDao {
      * @param id Id used for finding the HistoricalTimeline entity
      * @return A HistoricalTimeline with id
      */
-    HistoricalTimeline findById(Long id);
+    Optional<HistoricalTimeline> findById(Long id);
 
     /**
      * Updates a HistoricalTimeline entity in the database
