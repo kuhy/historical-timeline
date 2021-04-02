@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -16,32 +17,25 @@ import java.util.Set;
  * @author Karolína Veselá
  */
 
+@Getter
+@Setter
 @Entity
 public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private Long id;
 
     @NotNull
-    @Getter
-    @Setter
     private String firstName;
 
     @NotNull
-    @Getter
-    @Setter
     private String lastName;
 
     @NotNull
-    @Getter
-    @Setter
     private String username;
 
     @NotNull
-    @Getter
-    @Setter
     private String hashedPassword;
 
 
@@ -49,24 +43,28 @@ public class Teacher {
     @JoinColumn
     public Set<StudyGroup> studyGroups = new HashSet<>();
 
-    public void setStudyGroups(StudyGroup studyGroup){
+    public void addStudyGroup(StudyGroup studyGroup){
         this.studyGroups.add(studyGroup);
     }
 
     public Set<StudyGroup> getStudyGroups(){
-        return this.studyGroups;
+        return Collections.unmodifiableSet(studyGroups);
+    }
+
+    public void removeStudyGroup(StudyGroup studyGroup){
+        this.studyGroups.remove(studyGroup);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Teacher)) return false;
         Teacher teacher = (Teacher) o;
-        return Objects.equals(getId(), teacher.getId()) && getFirstName().equals(teacher.getFirstName()) && getLastName().equals(teacher.getLastName()) && getUsername().equals(teacher.getUsername()) && getHashedPassword().equals(teacher.getHashedPassword()) && Objects.equals(studyGroups, teacher.studyGroups);
+        return getFirstName().equals(teacher.getFirstName()) && getLastName().equals(teacher.getLastName()) && getUsername().equals(teacher.getUsername()) && getHashedPassword().equals(teacher.getHashedPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getUsername(), getHashedPassword());
+        return Objects.hash(getFirstName(), getLastName(), getUsername(), getHashedPassword());
     }
 }
