@@ -14,7 +14,7 @@ import java.util.Optional;
  * @author Karolína Veselá
  */
 @Repository
-public class HistoricalEventDaoImpl implements HistoricalEventDao{
+public class HistoricalEventDaoImpl implements HistoricalEventDao {
     @PersistenceContext
     private EntityManager em;
 
