@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -26,17 +27,18 @@ public class HistoricalTimeline {
     @Setter
     private Long id;
 
+    @NotNull
     @Getter
     @Setter
     private String name;
 
     @OneToMany
     @JoinColumn
-    private final Set<HistoricalEvent> historicalEvents = new HashSet<>();
+    private Set<HistoricalEvent> historicalEvents = new HashSet<>();
 
     @OneToMany
     @JoinColumn
-    private final Set<TimelineComment> timelineComments = new HashSet<>();
+    private Set<TimelineComment> timelineComments = new HashSet<>();
 
     /**
      * Returns all events in this timeline.
