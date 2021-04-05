@@ -4,6 +4,7 @@ import cz.muni.fi.timeline.entity.Teacher;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +37,12 @@ public class TeacherDaoImpl implements TeacherDao {
 
     @Override
     public Optional<Teacher> findByUsername(String username) {
-        return Optional.ofNullable(em.createQuery("select t from Teacher t where t.username = :username",
-            Teacher.class).setParameter("username", username).getSingleResult());
+        try {
+            return Optional.ofNullable(em.createQuery("select t from Teacher t where t.username = :username",
+                    Teacher.class).setParameter("username", username).getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.ofNullable(null);
+        }
     }
 
     @Override
