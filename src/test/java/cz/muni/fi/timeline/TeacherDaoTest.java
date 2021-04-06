@@ -35,7 +35,7 @@ public class TeacherDaoTest extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod
     @Transactional
-    public void beforeClass() {
+    public void before() {
         englishHistoryGroup = new StudyGroup();
         englishHistoryGroup.setName("English history group");
 
