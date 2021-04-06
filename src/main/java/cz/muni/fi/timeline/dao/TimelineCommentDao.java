@@ -47,5 +47,5 @@ public interface TimelineCommentDao {
      *
      * @return All TimelineComment entities in the database
      */
-    List<TimelineComment> FindAll();
+    List<TimelineComment> findAll();
 }

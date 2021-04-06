@@ -33,9 +33,9 @@ public interface StudyGroupDao {
     /**
      * Finds StudyGroup based on name
      * @param name name of looking StudyGroup
-     * @return StudyGroup with given name
+     * @return list of StudyGroups with given name
      */
-    Optional<StudyGroup> findByName(String name);
+    List<StudyGroup> findByName(String name);
 
     /**
      * Updates StudyGroup in the database

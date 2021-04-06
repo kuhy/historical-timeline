@@ -35,7 +35,7 @@ public class TimelineCommentDaoImpl implements TimelineCommentDao {
     }
 
     @Override
-    public List<TimelineComment> FindAll() {
+    public List<TimelineComment> findAll() {
         return em.createQuery("select tm from TimelineComment tm", TimelineComment.class).getResultList();
     }
 }

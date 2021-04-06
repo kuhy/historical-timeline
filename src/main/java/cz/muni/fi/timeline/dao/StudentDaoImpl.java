@@ -4,6 +4,7 @@ import cz.muni.fi.timeline.entity.Student;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
@@ -35,9 +36,12 @@ public class StudentDaoImpl implements StudentDao{
 
     @Override
     public Optional<Student> findByUserName(String username) {
-        return Optional.ofNullable(em.createQuery("select s from Student s where s.username = :username", Student.class)
-                .setParameter("username", username)
-                .getSingleResult());
+        try {
+            return Optional.ofNullable(em.createQuery("select s from Student s where s.username = :username",
+                Student.class).setParameter("username", username).getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override

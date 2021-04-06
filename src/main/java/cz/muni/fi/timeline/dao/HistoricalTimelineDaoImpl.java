@@ -42,7 +42,6 @@ public class HistoricalTimelineDaoImpl implements HistoricalTimelineDao {
     @Override
     public List<HistoricalTimeline> findByName(String name) {
         return em.createQuery("select ht from HistoricalTimeline ht where name = :name", HistoricalTimeline.class)
-                .setParameter("name", name)
-                . getResultList();
+            .setParameter("name", name).getResultList();
     }
 }

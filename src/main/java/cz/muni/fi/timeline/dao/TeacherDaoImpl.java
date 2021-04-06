@@ -40,9 +40,9 @@ public class TeacherDaoImpl implements TeacherDao {
     public Optional<Teacher> findByUsername(String username) {
         try {
             return Optional.ofNullable(em.createQuery("select t from Teacher t where t.username = :username",
-                    Teacher.class).setParameter("username", username).getSingleResult());
+                Teacher.class).setParameter("username", username).getSingleResult());
         } catch (NoResultException e) {
-            return Optional.ofNullable(null);
+            return Optional.empty();
         }
     }
 

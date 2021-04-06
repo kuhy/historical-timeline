@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -88,9 +89,9 @@ public class StudyGroupDaoTest extends AbstractTestNGSpringContextTests {
         studyGroupDao.create(studyGroup2);
 
 
-        Optional<StudyGroup> group = studyGroupDao.findByName("History2");
-        Assert.assertTrue(group.isPresent());
-        Assert.assertEquals(group.get().getName(), "History2");
+        List<StudyGroup> group = studyGroupDao.findByName("History2");
+        Assert.assertEquals(group.size(), 1);
+        Assert.assertEquals(group.get(0).getName(), "History2");
     }
 
     @Test

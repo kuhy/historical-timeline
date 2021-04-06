@@ -32,11 +32,11 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
         TimelineComment positiveComment = new TimelineComment();
         positiveComment.setText("Very interesting");
 
-        Assert.assertEquals(timelineCommentDao.FindAll().size(),0);
+        Assert.assertEquals(timelineCommentDao.findAll().size(),0);
 
         timelineCommentDao.create(positiveComment);
 
-        Assert.assertEquals(timelineCommentDao.FindAll().size(),1);
+        Assert.assertEquals(timelineCommentDao.findAll().size(),1);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
         questionComment.setText("How old was the Alexander when invading India?");
         timelineCommentDao.create(questionComment);
 
-        Assert.assertEquals(timelineCommentDao.FindAll().size(),2);
+        Assert.assertEquals(timelineCommentDao.findAll().size(),2);
     }
 
     @Test
@@ -60,11 +60,11 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
         positiveComment.setText("Very interesting");
         timelineCommentDao.create(positiveComment);
 
-        Assert.assertEquals(timelineCommentDao.FindAll().size(),1);
+        Assert.assertEquals(timelineCommentDao.findAll().size(),1);
 
         timelineCommentDao.remove(positiveComment);
 
-        Assert.assertEquals(timelineCommentDao.FindAll().size(),0);
+        Assert.assertEquals(timelineCommentDao.findAll().size(),0);
     }
 
     @Test

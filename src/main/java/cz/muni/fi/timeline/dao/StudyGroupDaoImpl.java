@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +34,9 @@ public class StudyGroupDaoImpl implements StudyGroupDao{
     }
 
     @Override
-    public Optional<StudyGroup> findByName(String name) {
-        return Optional.ofNullable(em.createQuery("select sg from StudyGroup sg where sg.name = :name", StudyGroup.class)
-        .setParameter("name", name)
-        .getSingleResult());
+    public List<StudyGroup> findByName(String name) {
+        return em.createQuery("select sg from StudyGroup sg where sg.name = :name", StudyGroup.class)
+            .setParameter("name", name).getResultList();
     }
 
     @Override

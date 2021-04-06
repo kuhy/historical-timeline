@@ -202,7 +202,7 @@ public class TeacherDaoTest extends AbstractTestNGSpringContextTests {
     @Transactional
     public void testFindTeacherByNonExistingUsername () {
         Optional<Teacher> find = teacherDao.findByUsername("JankoKral");
-        Assert.assertFalse(find.isPresent());
+        Assert.assertTrue(find.isEmpty());
     }
 
     @Test
