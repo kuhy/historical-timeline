@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -18,33 +18,24 @@ import java.util.Objects;
  * @author Matej Macák
  */
 @Entity
+@Getter
+@Setter
 public class HistoricalEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private Long id;
 
-    @Getter
-    @Setter
+    @NotNull
     private String name;
 
-    @Getter
-    @Setter
     private String description;
 
-    @Getter
-    @Setter
     private LocalDate date;
 
-    @Getter
-    @Setter
     private String location;
 
     @Lob
-    @Getter
-    @Setter
     private byte[] image;
 
     @Override
@@ -55,12 +46,11 @@ public class HistoricalEvent {
         return Objects.equals(getName(), that.getName())
                 && Objects.equals(getDescription(), that.getDescription())
                 && Objects.equals(getDate(), that.getDate())
-                && Objects.equals(getLocation(), that.getLocation())
-                && Arrays.equals(getImage(), that.getImage());
+                && Objects.equals(getLocation(), that.getLocation());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getDescription(), getDate(), getLocation(), getImage());
+        return Objects.hash(getName(), getDescription(), getDate(), getLocation());
     }
 }
