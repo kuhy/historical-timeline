@@ -4,12 +4,15 @@ import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.dao.TeacherDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.Teacher;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
@@ -30,7 +33,7 @@ public class TeacherDaoTest extends AbstractTestNGSpringContextTests {
     private StudyGroup englishHistoryGroup;
     private StudyGroup asianHistoryGroup;
 
-    @BeforeClass
+    @BeforeMethod
     @Transactional
     public void beforeClass() {
         englishHistoryGroup = new StudyGroup();

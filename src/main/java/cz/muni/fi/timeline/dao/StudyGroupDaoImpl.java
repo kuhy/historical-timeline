@@ -14,7 +14,6 @@ import java.util.Optional;
  * @author Matej Macák
  */
 @Repository
-@Transactional
 public class StudyGroupDaoImpl implements StudyGroupDao{
 
     @PersistenceContext

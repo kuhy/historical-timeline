@@ -16,7 +16,6 @@ import java.util.Optional;
  * @author Ondřej Kuhejda
  */
 @Repository
-@Transactional
 public class TeacherDaoImpl implements TeacherDao {
 
     @PersistenceContext
