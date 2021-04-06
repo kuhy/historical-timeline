@@ -12,7 +12,12 @@ World War, etc...) and enroll students. Teachers can add one or more timelines
 to each group. Students can login to the system and take part to some groups
 created by teachers. They will be able to see all the timelines for the specific
 group and add a comment to them. Searching among all events is also possible.
-* What to do?
+* How to build it
+  Use the Maven wrapper to build the project:
+  #+BEGIN_SRC sh
+  ./mvnw clean install
+  #+END_SRC
+* What needs to be done
 ** Tasks
    - create a separate branch for every task
      - use =git checkout -b name-of-my-branch develop=
@@ -20,7 +25,8 @@ group and add a comment to them. Searching among all events is also possible.
    - commit all of your work to this branch
      - capitalize the subject line of the commit message
      - use the imperative mood in the subject line
-   - check if the program can be build using =mvn clean install=
+   - do not write boilerplate code; use Lombok!
+   - check if the program can be build using =./mvnw clean install=
      - this will also run tests
    - check if every class that you created has =javadoc= with =@author= tag
    - check if every public field and method that you created has =javadoc=
@@ -44,12 +50,12 @@ group and add a comment to them. Searching among all events is also possible.
     - create the JPA implementation of the DAO classes (CRUD operations are enough for the first milestone).
     - create tests for the DAO classes (you can use an in-memory database).
     - *we will have a call on 6. 4. and we will reflect on our work*
-    | Task          | Deadline | =Student= | =StudyGroup= | =HistoricalTimeline= | =Comment= | =Teacher= | =HistoricalEvent= |
-    |---------------+----------+-----------+--------------+----------------------+-----------+-----------+-------------------|
-    | *Class*       | 2. 4.    | Stefan    | Stefan       | Kuhy                 | Kuhy      | Kája      | Matej             |
-    | *DAO*         | 4. 4.    | Matej     | Matej        | Stefan               | Stefan    | Kuhy      | Kája              |
-    | *Tests*       | 6. 4.    | Kája      | Kája         | Matej                | Matej     | Stefan    | Kuhy              |
-    | *Check tests* | 6. 4.    | Kuhy      | Kuhy         | Kája                 | Kája      | Matej     | Stefan            |
+    | Task          | Deadline | =Student= | =StudyGroup= | =HistoricalTimeline= | =TimelineComment= | =Teacher= | =HistoricalEvent= |
+    |---------------+----------+-----------+--------------+----------------------+-------------------+-----------+-------------------|
+    | *Class*       | 2. 4.    | Stefan    | Stefan       | Kuhy                 | Kuhy              | Kája      | Matej             |
+    | *DAO*         | 4. 4.    | Matej     | Matej        | Stefan               | Stefan            | Kuhy      | Kája              |
+    | *Tests*       | 6. 4.    | Kája      | Kája         | Matej                | Matej             | Stefan    | Kuhy              |
+    | *Check tests* | 6. 4.    | Kuhy      | Kuhy         | Kája                 | Kája              | Matej     | Stefan            |
 * Use-case diagram
   #+BEGIN_SRC plantuml :file images/use-case_diagram.svg :exports results
   left to right direction
@@ -88,9 +94,9 @@ group and add a comment to them. Searching among all events is also possible.
   class HistoricalEvent {
     name: String
     description: String
-    data: LocalDate
+    date: LocalDate
     location: String
-    image: Image
+    image: byte[]
   }
 
   class HistoricalTimeline {
@@ -124,12 +130,12 @@ group and add a comment to them. Searching among all events is also possible.
 
   Student "*" o--o "*" StudyGroup
 
-  class Comment {
+  class TimelineComment {
     text: String
   }
 
-  HistoricalTimeline "1" *-- "*" Comment
-  Comment "*" o-- "1" Student
+  HistoricalTimeline "1" *-- "*" TimelineComment
+  TimelineComment "*" o-- "1" Student
   #+END_SRC
 
   #+RESULTS:
