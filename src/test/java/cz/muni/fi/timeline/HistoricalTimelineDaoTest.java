@@ -119,4 +119,25 @@ public class HistoricalTimelineDaoTest extends AbstractTestNGSpringContextTests 
         Assert.assertEquals(timeline.get().getName(),"Roman Empire");
         Assert.assertFalse(historicalTimelineDao.findById(romanEmpire.getId() + 10).isPresent());
     }
+
+    @Test
+    @Transactional
+    public void testUpdateHistoricalTimeline(){
+        HistoricalTimeline ancientGreece = new HistoricalTimeline();
+        ancientGreece.setName("Defeated by Alexander");
+        historicalTimelineDao.create(ancientGreece);
+
+        HistoricalTimeline persianEmpire = new HistoricalTimeline();
+        persianEmpire.setName("Defeated by Alexander");
+        historicalTimelineDao.create(persianEmpire);
+
+        List<HistoricalTimeline> defeatedByAlexander = historicalTimelineDao.findByName("Defeated by Alexander");
+        Assert.assertEquals(defeatedByAlexander.size(), 2);
+
+        ancientGreece.setName("Also defeated by Persian empire");
+        historicalTimelineDao.update(ancientGreece);
+
+        defeatedByAlexander = historicalTimelineDao.findByName("Defeated by Alexander");
+        Assert.assertEquals(defeatedByAlexander.size(), 1);
+    }
 }

@@ -51,7 +51,7 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     @Transactional
-    public void testRemoveHistoricalTimeline(){
+    public void testRemoveTimelineComment(){
         TimelineComment positiveComment = new TimelineComment();
         positiveComment.setText("Very interesting");
         timelineCommentDao.create(positiveComment);
@@ -65,7 +65,7 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     @Transactional
-    public void testFindHistoricalTimelineByID(){
+    public void testFindTimelineCommentByID(){
         TimelineComment questionComment = new TimelineComment();
         questionComment.setText("How old was the Alexander when invading India?");
         timelineCommentDao.create(questionComment);
@@ -87,7 +87,7 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     @Transactional
-    public void testFindHistoricalTimelineByIDWithStudent(){
+    public void testFindTimelineCommentByIDWithStudent(){
         TimelineComment studentComment = new TimelineComment();
         Student joseph = new Student();
         joseph.setFirstName("Joseph");
@@ -105,8 +105,20 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(comment.get().getStudent().getUsername(),"xklein");
         Assert.assertEquals(comment.get().getStudent().getLastName(),"Klein");
         Assert.assertEquals(comment.get().getStudent().getFirstName(),"Joseph");
-
-
     }
 
+    @Test
+    @Transactional
+    public void testUpdateTimelineComment(){
+        TimelineComment meanCommentToPositive = new TimelineComment();
+        meanCommentToPositive.setText("This is so boring");
+        timelineCommentDao.create(meanCommentToPositive);
+
+        Optional<TimelineComment> comment = timelineCommentDao.findById(meanCommentToPositive.getId());
+
+        meanCommentToPositive.setText("Changed to positive");
+        timelineCommentDao.update(meanCommentToPositive);
+
+        Assert.assertEquals(comment.get().getText(),"Changed to positive");
+    }
 }
