@@ -1,5 +1,6 @@
 package cz.muni.fi.timeline;
 
+import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.dao.TeacherDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.Teacher;
@@ -23,16 +24,23 @@ public class TeacherDaoTest extends AbstractTestNGSpringContextTests {
     @Inject
     private TeacherDao teacherDao;
 
+    @Inject
+    private StudyGroupDao studyGroupDao;
+
     private StudyGroup englishHistoryGroup;
     private StudyGroup asianHistoryGroup;
 
     @BeforeClass
+    @Transactional
     public void beforeClass() {
         englishHistoryGroup = new StudyGroup();
         englishHistoryGroup.setName("English history group");
 
         asianHistoryGroup = new StudyGroup();
         asianHistoryGroup.setName("Asian history group");
+
+        studyGroupDao.create(englishHistoryGroup);
+        studyGroupDao.create(asianHistoryGroup);
     }
 
     @Test
