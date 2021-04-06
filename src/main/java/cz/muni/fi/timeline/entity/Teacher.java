@@ -40,7 +40,6 @@ public class Teacher {
     @NotNull
     private String hashedPassword;
 
-
     @OneToMany
     @JoinColumn
     @Getter(AccessLevel.NONE)
