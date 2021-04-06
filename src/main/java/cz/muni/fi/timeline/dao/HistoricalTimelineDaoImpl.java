@@ -8,6 +8,11 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of HistoricalTimelineDao.
+ *
+ * @author Tri Le Mau
+ */
 @Repository
 public class HistoricalTimelineDaoImpl implements HistoricalTimelineDao {
 
@@ -35,7 +40,7 @@ public class HistoricalTimelineDaoImpl implements HistoricalTimelineDao {
     }
 
     @Override
-    public List<HistoricalTimeline> FindAll() {
+    public List<HistoricalTimeline> findAll() {
         return em.createQuery("select ht from HistoricalTimeline ht", HistoricalTimeline.class).getResultList();
     }
 

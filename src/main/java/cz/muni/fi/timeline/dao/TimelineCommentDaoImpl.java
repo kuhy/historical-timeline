@@ -8,6 +8,11 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of TimelineCommentDao.
+ *
+ * @author Tri Le Mau
+ */
 @Repository
 public class TimelineCommentDaoImpl implements TimelineCommentDao {
 

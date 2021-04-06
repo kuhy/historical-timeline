@@ -32,11 +32,11 @@ public class HistoricalTimelineDaoTest extends AbstractTestNGSpringContextTests 
         HistoricalTimeline romanEmpire = new HistoricalTimeline();
         romanEmpire.setName("Roman Empire");
 
-        Assert.assertEquals(historicalTimelineDao.FindAll().size(),0);
+        Assert.assertEquals(historicalTimelineDao.findAll().size(),0);
 
         historicalTimelineDao.create(romanEmpire);
 
-        Assert.assertEquals(historicalTimelineDao.FindAll().size(),1);
+        Assert.assertEquals(historicalTimelineDao.findAll().size(),1);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class HistoricalTimelineDaoTest extends AbstractTestNGSpringContextTests 
         persianEmpire.setName("Persian Empire");
         historicalTimelineDao.create(persianEmpire);
 
-        Assert.assertEquals(historicalTimelineDao.FindAll().size(),3);
+        Assert.assertEquals(historicalTimelineDao.findAll().size(),3);
     }
 
     @Test
@@ -95,11 +95,11 @@ public class HistoricalTimelineDaoTest extends AbstractTestNGSpringContextTests 
         romanEmpire.setName("Roman Empire");
         historicalTimelineDao.create(romanEmpire);
 
-        Assert.assertEquals(historicalTimelineDao.FindAll().size(),1);
+        Assert.assertEquals(historicalTimelineDao.findAll().size(),1);
 
         historicalTimelineDao.remove(romanEmpire);
 
-        Assert.assertEquals(historicalTimelineDao.FindAll().size(),0);
+        Assert.assertEquals(historicalTimelineDao.findAll().size(),0);
     }
 
     @Test(expectedExceptions = ConstraintViolationException.class)

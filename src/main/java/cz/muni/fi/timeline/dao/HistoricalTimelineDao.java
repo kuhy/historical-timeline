@@ -47,7 +47,7 @@ public interface HistoricalTimelineDao {
      *
      * @return All HistoricalTimeline entities in the database
      */
-    List<HistoricalTimeline> FindAll();
+    List<HistoricalTimeline> findAll();
 
     /**
      * Find all HistoricalTimeline entities with the same name

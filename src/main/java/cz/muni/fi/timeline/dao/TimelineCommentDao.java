@@ -10,7 +10,6 @@ import java.util.Optional;
  *
  * @author Tri Le Mau
  */
-
 public interface TimelineCommentDao {
 
     /**
