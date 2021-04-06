@@ -15,6 +15,10 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * tests for historicalTimaline DAO
+ * @author Matej Macák
+ */
 @ContextConfiguration(classes = HistoricalTimelineApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 public class HistoricalTimelineDaoTest extends AbstractTestNGSpringContextTests {

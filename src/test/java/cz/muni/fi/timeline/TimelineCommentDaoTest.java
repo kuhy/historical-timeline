@@ -15,6 +15,10 @@ import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 import java.util.Optional;
 
+/**
+ * tests for timelineComment DAO
+ * @author Matej Macák
+ */
 @ContextConfiguration(classes = HistoricalTimelineApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
@@ -93,7 +97,7 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
         joseph.setFirstName("Joseph");
         joseph.setLastName("Klein");
         joseph.setUsername("xklein");
-        joseph.setHashedPassword(123456789);
+        joseph.setHashedPassword("123456789");
         studentComment.setStudent(joseph);
         studentComment.setText("May I have a question?");
         timelineCommentDao.create(studentComment);
@@ -101,7 +105,7 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
         Optional<TimelineComment> comment = timelineCommentDao.findById(studentComment.getId());
 
         Assert.assertTrue(comment.isPresent());
-        Assert.assertEquals(comment.get().getStudent().getHashedPassword(),123456789);
+        Assert.assertEquals(comment.get().getStudent().getHashedPassword(),"123456789");
         Assert.assertEquals(comment.get().getStudent().getUsername(),"xklein");
         Assert.assertEquals(comment.get().getStudent().getLastName(),"Klein");
         Assert.assertEquals(comment.get().getStudent().getFirstName(),"Joseph");
