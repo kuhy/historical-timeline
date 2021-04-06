@@ -43,7 +43,7 @@ public class Student {
     @NotNull
     @Getter
     @Setter
-    private int hashedPassword;
+    private String hashedPassword;
 
     @ManyToMany(mappedBy = "students")
     private Set<StudyGroup> studyGroups;
