@@ -66,16 +66,16 @@ public class User {
     /**
      * Adds study group to user.
      *
-     * @param studyGroup student group that is added to user.
+     * @param studyGroup study group that is added to user.
      */
     public void addStudyGroup(StudyGroup studyGroup) {
         studyGroups.add(studyGroup);
     }
 
     /**
-     * Removes student group from user
+     * Removes study group from user
      *
-     * @param studyGroup student group that is removed from user
+     * @param studyGroup study group that is removed from user
      */
     public void removeStudyGroup(StudyGroup studyGroup) {
         studyGroups.remove(studyGroup);
