@@ -41,7 +41,34 @@ group and add a comment to them. Searching among all events is also possible.
    - when everything is ok, merge the branch
 ** Milestones
    - when the milestone will be completed, we will merge =develop= to the =master=
-*** TODO Milestone 1
+*** TODO Milestone 2
+    DEADLINE: <2021-04-30 Fri>
+    - implement the Facade layer interfaces and implementations.
+      - everything that should happen in the system must be available through these interfaces (creating entities, deleting them etc);
+    - other points about the Facade and Service layers:
+      - all the classes must be wired via dependency injection. Your service objects should obtain an instance of the EntityManager that way;
+      - all the facade interfaces must not reference entities, but Transfer Objects only;
+      - all service interfaces must reference only entities, not Data Transfer Objects;
+      - you can use the Dozer framework (or similar) to map entity instances to transfer objects. The mapping may be done on Facade Layer;
+      - the Facade layer is used to drive transactions;
+    - change the layout of your project to a Multimodule Maven project (tutorial here http://maven.apache.org/guides/getting-started/index.html) Your project should have 3 separate modules:
+      - DAO layer
+      - Service Layer and Facade Layer implementation
+      - API layer - just DTOs and facade interfaces!
+    - the Facade layer will use the Service layer and the Service layer will use the DAO layer;
+    - implement simple unit tests for the facade layer. Just one simple test per method is enough. This is mainly so that it’s easy to verify the Facade layer;
+    - there must be extensive unit tests for the service layer (particularly for your two business functions) and all the tests of the service layer must use Mock DAO objects;
+    - *Stefan's task is to refactor User (entity, DAO, test) and rewrite javadoc.*
+    - first task is to implement services (and create interfaces for them):
+      - crosscheck each service with use-case diagram, DAO and facade API
+      - make sure that =DataAccessException= or its subclass is thrown in case of any exception on the DAO layer
+      - you must have at least two non-trivial business functions on Service Layer (the example project contains several of them). Service layer is not always just a place to delegate to DAOs.
+      - check [[https://www.javaguides.net/2018/07/handle-nullpointerexception-in-controller-service-and-dao-layer-using-java-8-optional-class.html][this tutorial on use of Optionals inside the service layer]]
+      | Task          | Deadline | =User= | =StudyGroup= | =HistoricalTimeline= | =TimelineComment= | =HistoricalEvent= |
+      | *Service*     | 16. 4.   | Stefan | Matej        | Kuhy                 | Kuhy              | Kája              |
+      | *Code review* | 16. 4.   | Kája   | Kuhy         | Stefan               | Matej             | Matej             |
+      - *we will have a call on 19. 4. and we will reflect on our work*
+*** DONE Milestone 1
     DEADLINE: <2021-04-07 Wed>
     - *create a project wiki with a project description*
     - create 4 entity classes for your project if you are a team of four (rule: one entity for each team member).

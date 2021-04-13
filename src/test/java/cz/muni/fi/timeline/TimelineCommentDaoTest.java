@@ -1,7 +1,7 @@
 package cz.muni.fi.timeline;
 
 import cz.muni.fi.timeline.dao.TimelineCommentDao;
-import cz.muni.fi.timeline.entity.Student;
+import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.entity.TimelineComment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -93,22 +93,22 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
     @Transactional
     public void testFindTimelineCommentByIDWithStudent(){
         TimelineComment studentComment = new TimelineComment();
-        Student joseph = new Student();
+        User joseph = new User();
         joseph.setFirstName("Joseph");
         joseph.setLastName("Klein");
         joseph.setUsername("xklein");
         joseph.setHashedPassword("123456789");
-        studentComment.setStudent(joseph);
+        studentComment.setUser(joseph);
         studentComment.setText("May I have a question?");
         timelineCommentDao.create(studentComment);
 
         Optional<TimelineComment> comment = timelineCommentDao.findById(studentComment.getId());
 
         Assert.assertTrue(comment.isPresent());
-        Assert.assertEquals(comment.get().getStudent().getHashedPassword(),"123456789");
-        Assert.assertEquals(comment.get().getStudent().getUsername(),"xklein");
-        Assert.assertEquals(comment.get().getStudent().getLastName(),"Klein");
-        Assert.assertEquals(comment.get().getStudent().getFirstName(),"Joseph");
+        Assert.assertEquals(comment.get().getUser().getHashedPassword(),"123456789");
+        Assert.assertEquals(comment.get().getUser().getUsername(),"xklein");
+        Assert.assertEquals(comment.get().getUser().getLastName(),"Klein");
+        Assert.assertEquals(comment.get().getUser().getFirstName(),"Joseph");
     }
 
     @Test

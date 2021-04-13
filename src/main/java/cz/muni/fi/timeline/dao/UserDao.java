@@ -1,6 +1,6 @@
 package cz.muni.fi.timeline.dao;
 
-import cz.muni.fi.timeline.entity.Student;
+import cz.muni.fi.timeline.entity.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,44 +8,47 @@ import java.util.Optional;
 /**
  * DAO interface for entity Student
  * @author Matej Macák
+ *
+ * TODO return all teachers, students
+ * TODO change javadoc
  */
-public interface StudentDao {
+public interface UserDao {
 
     /**
      * Adds Student into database
-     * @param student entity that is added to the database
+     * @param user entity that is added to the database
      */
-    void create(Student student);
+    void create(User user);
 
     /**
      * Returns all Students from database
      * @return all students from database
      */
-    List<Student> findAll();
+    List<User> findAll();
 
     /**
      * Finds Student based on ID
      * @param id id of Student
      * @return Student with id
      */
-    Optional<Student> findById(Long id);
+    Optional<User> findById(Long id);
 
     /**
      * Finds Student based on ID
      * @param username username of looking Student
      * @return Student with given username
      */
-    Optional<Student> findByUserName(String username);
+    Optional<User> findByUserName(String username);
 
     /**
      * Updates Student in the database
-     * @param student is the updated entity
+     * @param user is the updated entity
      */
-    void update(Student student);
+    void update(User user);
 
     /**
      * Removes Student from the database
-     * @param student that is removed
+     * @param user that is removed
      */
-    void remove(Student student);
+    void remove(User user);
 }

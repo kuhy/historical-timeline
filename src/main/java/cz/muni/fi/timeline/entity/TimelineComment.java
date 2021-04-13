@@ -27,18 +27,18 @@ public class TimelineComment {
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Student student;
+    private User user;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TimelineComment)) return false;
         TimelineComment that = (TimelineComment) o;
-        return Objects.equals(getText(), that.getText()) && Objects.equals(getStudent(), that.getStudent());
+        return Objects.equals(getText(), that.getText()) && Objects.equals(getUser(), that.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getText(), getStudent());
+        return Objects.hash(getText(), getUser());
     }
 }

@@ -10,14 +10,16 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * This entity class represents a student
- * Contains study groups where student is enrolled in
+ * This entity class represents a User
+ * Contains study groups where User is enrolled in
  *
  * @author Tri Le Mau
+ *
+ * TODO change javadoc
  */
-
+@Table(name = "UserTable")
 @Entity
-public class Student {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +47,11 @@ public class Student {
     @Setter
     private String hashedPassword;
 
-    @ManyToMany(mappedBy = "students")
+    // TODO
+    private boolean isTeacher;
+
+    // TODO
+    @ManyToMany(mappedBy = "users")
     private Set<StudyGroup> studyGroups;
 
     /**
@@ -78,8 +84,8 @@ public class Student {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Student)) return false;
-        Student that = (Student) o;
+        if (!(o instanceof User)) return false;
+        User that = (User) o;
         return Objects.equals(getFirstName(), that.getFirstName())
                 && Objects.equals(getLastName(), that.getLastName())
                 && Objects.equals(getUsername(), that.getUsername())

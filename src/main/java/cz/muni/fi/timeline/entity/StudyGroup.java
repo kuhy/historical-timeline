@@ -14,6 +14,7 @@ import java.util.Set;
  * Contains students of the study group
  *
  * @author Tri Le Mau
+ * TODO change javadoc
  */
 
 @Entity
@@ -31,33 +32,33 @@ public class StudyGroup {
     private String name;
 
     @ManyToMany
-    private Set<Student> students;
+    private Set<User> users;
 
     /**
      * Returns all students of study group.
      *
      * @return all students of study group
      */
-    public Set<Student> getStudents() {
-        return Collections.unmodifiableSet(students);
+    public Set<User> getUsers() {
+        return Collections.unmodifiableSet(users);
     }
 
     /**
      * Adds student to study group.
      *
-     * @param student student that is added to study group.
+     * @param user student that is added to study group.
      */
-    public void addStudent(Student student) {
-        students.add(student);
+    public void addUser(User user) {
+        users.add(user);
     }
 
     /**
      * Removes student from study group
      *
-     * @param student student that is removed from study group
+     * @param user student that is removed from study group
      */
-    public void removeStudent(Student student) {
-        students.remove(student);
+    public void removeUser(User user) {
+        users.remove(user);
     }
 
     @Override
