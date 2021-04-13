@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,8 +15,6 @@ import java.util.Set;
  * Contains study groups where User is enrolled in
  *
  * @author Tri Le Mau
- *
- * TODO change javadoc
  */
 @Table(name = "UserTable")
 @Entity
@@ -47,35 +46,36 @@ public class User {
     @Setter
     private String hashedPassword;
 
-    // TODO
-    private boolean isTeacher;
+    @NotNull
+    @Getter
+    @Setter
+    private Boolean isTeacher;
 
-    // TODO
     @ManyToMany(mappedBy = "users")
-    private Set<StudyGroup> studyGroups;
+    private Set<StudyGroup> studyGroups = new HashSet<>();
 
     /**
-     * Returns all study groups of student.
+     * Returns all study groups of user.
      *
-     * @return all study groups of student
+     * @return all study groups of user
      */
     public Set<StudyGroup> getStudyGroups() {
         return Collections.unmodifiableSet(studyGroups);
     }
 
     /**
-     * Adds study group to student.
+     * Adds study group to user.
      *
-     * @param studyGroup student group that is added to student.
+     * @param studyGroup student group that is added to user.
      */
     public void addStudyGroup(StudyGroup studyGroup) {
         studyGroups.add(studyGroup);
     }
 
     /**
-     * Removes student group from student
+     * Removes student group from user
      *
-     * @param studyGroup student group that is removed from student
+     * @param studyGroup student group that is removed from user
      */
     public void removeStudyGroup(StudyGroup studyGroup) {
         studyGroups.remove(studyGroup);

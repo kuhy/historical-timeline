@@ -12,8 +12,6 @@ import java.util.Optional;
 /**
  * Implementation of StudentDao
  * @author Matej Macák
- *
- * TODO replace s with u
  */
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -28,7 +26,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
-        return em.createQuery("select s from User s", User.class).getResultList();
+        return em.createQuery("select u from User u", User.class).getResultList();
     }
 
     @Override
@@ -39,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> findByUserName(String username) {
         try {
-            return Optional.ofNullable(em.createQuery("select s from User s where s.username = :username",
+            return Optional.ofNullable(em.createQuery("select u from User u where u.username = :username",
                 User.class).setParameter("username", username).getSingleResult());
         } catch (NoResultException e) {
             return Optional.empty();
@@ -54,5 +52,15 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void remove(User user) {
         em.remove(user);
+    }
+
+    @Override
+    public List<User> findAllStudents() {
+        return em.createQuery("select u from User u where u.isTeacher = false", User.class).getResultList();
+    }
+
+    @Override
+    public List<User> findAllTeachers() {
+        return em.createQuery("select u from User u where u.isTeacher = true", User.class).getResultList();
     }
 }
