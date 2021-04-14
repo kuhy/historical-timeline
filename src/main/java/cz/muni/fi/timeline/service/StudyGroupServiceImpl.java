@@ -10,6 +10,9 @@ import javax.inject.Inject;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * @author Matej Macák
+ */
 @Service
 public class StudyGroupServiceImpl implements StudyGroupService{
 
