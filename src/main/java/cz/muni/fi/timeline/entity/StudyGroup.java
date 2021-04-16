@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -31,7 +32,11 @@ public class StudyGroup {
     private String name;
 
     @ManyToMany
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
+
+    @OneToMany
+    @JoinColumn
+    private Set<HistoricalTimeline> historicalTimelines = new HashSet<>();
 
     /**
      * Returns all users of study group.
@@ -58,6 +63,24 @@ public class StudyGroup {
      */
     public void removeUser(User user) {
         users.remove(user);
+    }
+
+    /**
+     * Adds timeline to study group.
+     *
+     * @param timeline timeline that is added to study group.
+     */
+    public void addHistoricalTimeline(HistoricalTimeline timeline) {
+        historicalTimelines.add(timeline);
+    }
+
+    /**
+     * Removes timeline from study group
+     *
+     * @param timeline timeline that is removed from study group
+     */
+    public void removeHistoricalTimeline(HistoricalTimeline timeline) {
+        historicalTimelines.remove(timeline);
     }
 
     @Override
