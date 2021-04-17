@@ -16,13 +16,17 @@ import java.util.Set;
 @Service
 public class StudyGroupServiceImpl implements StudyGroupService{
 
+
+    private final StudyGroupDao studyGroupDao;
+
     @Inject
-    private StudyGroupDao studyGroupDao;
+    public StudyGroupServiceImpl(StudyGroupDao studyGroupDao) {
+        this.studyGroupDao = studyGroupDao;
+    }
 
     @Override
-    public void createStudyGroup(StudyGroup studyGroup, User teacher) {
+    public void createStudyGroup(StudyGroup studyGroup) {
         studyGroupDao.create(studyGroup);
-        studyGroup.addUser(teacher);
     }
 
     @Override

@@ -16,7 +16,7 @@ public interface StudyGroupService {
      * @param studyGroup study group to be created
      * @param teacher teacher who created the study group
      */
-    void createStudyGroup(StudyGroup studyGroup, User teacher);
+    void createStudyGroup(StudyGroup studyGroup);
 
     /**
      * updates study group
