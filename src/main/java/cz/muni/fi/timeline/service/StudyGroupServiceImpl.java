@@ -53,8 +53,4 @@ public class StudyGroupServiceImpl implements StudyGroupService{
         return studyGroupDao.findById(id);
     }
 
-    @Override
-    public Set<User> getAllUsersStudyGroup(StudyGroup studyGroup) {
-        return studyGroup.getUsers();
-    }
 }

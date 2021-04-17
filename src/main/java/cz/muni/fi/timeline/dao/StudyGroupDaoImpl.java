@@ -1,6 +1,7 @@
 package cz.muni.fi.timeline.dao;
 
 import cz.muni.fi.timeline.entity.StudyGroup;
+import cz.muni.fi.timeline.entity.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -48,4 +49,5 @@ public class StudyGroupDaoImpl implements StudyGroupDao{
     public void remove(StudyGroup studyGroup) {
         em.remove(studyGroup);
     }
+
 }

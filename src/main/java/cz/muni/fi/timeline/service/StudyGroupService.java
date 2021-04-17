@@ -8,13 +8,12 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * Service for manipulation with Study groups
  * @author Matej Macák
  */
-@Service
 public interface StudyGroupService {
     /**
      * @param studyGroup study group to be created
-     * @param teacher teacher who created the study group
      */
     void createStudyGroup(StudyGroup studyGroup);
 
@@ -44,10 +43,5 @@ public interface StudyGroupService {
      */
     Optional<StudyGroup> findById(long id);
 
-    /**
-     * returns all users (student and teachers from study group
-     * @param studyGroup study group from which we want the users
-     * @return all users of the study group
-     */
-    Set<User> getAllUsersStudyGroup(StudyGroup studyGroup);
+    //Set<User> getAllUsersStudyGroup(StudyGroup studyGroup);
 }
