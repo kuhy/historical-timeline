@@ -7,6 +7,7 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +18,14 @@ import java.util.Optional;
  */
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserDao userDao;
+    private final UserDao userDao;
+    private final PasswordEncoder encoder;
 
-    private PasswordEncoder encoder = new Argon2PasswordEncoder();
+    @Inject
+    public UserServiceImpl(UserDao userDao, PasswordEncoder encoder) {
+        this.userDao = userDao;
+        this.encoder = encoder;
+    }
 
     @Override
     public void registerUser(User user, String unencryptedPassword) {
@@ -31,6 +36,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean authenticateUser(User user, String password) {
         return encoder.matches(password, user.getHashedPassword());
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userDao.update(user);
+    }
+
+    @Override
+    public void removeUser(User user) {
+        userDao.remove(user);
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        return userDao.findById(id);
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return userDao.findByUserName(username);
     }
 
     @Override

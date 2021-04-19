@@ -4,6 +4,7 @@ import cz.muni.fi.timeline.dao.UserDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.UserService;
+import cz.muni.fi.timeline.service.UserServiceImpl;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -113,6 +114,11 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         teachers.add(teacher2);
     }
 
+    @BeforeMethod
+    public void prepareService() {
+        userService = new UserServiceImpl(userDao, encoder);
+    }
+
     @BeforeClass
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -129,6 +135,42 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     public void testAuthenticateUser() {
         when(encoder.matches(anyString(), anyString())).thenReturn(true);
         Assert.assertTrue(userService.authenticateUser(student1, "hashedPassword"));
+    }
+
+    @Test
+    public void testUpdateUser() {
+        userService.updateUser(student1);
+        verify(userDao, times(1)).update(any(User.class));
+    }
+
+    @Test
+    public void testRemoveUser() {
+        userService.removeUser(student1);
+        verify(userDao, times(1)).remove(any(User.class));
+    }
+
+    @Test
+    public void testFindById() {
+        when(userDao.findById(student1.getId())).thenReturn(Optional.ofNullable(student1));
+        Optional<User> find = userService.findById(student1.getId());
+
+        Assert.assertTrue(find.isPresent());
+        Assert.assertEquals(find.get(), student1);
+    }
+
+    @Test
+    public void testFindByUsername() {
+        when(userDao.findByUserName(student1.getUsername())).thenReturn(Optional.ofNullable(student1));
+        Optional<User> find = userService.findByUsername(student1.getUsername());
+
+        Assert.assertTrue(find.isPresent());
+        Assert.assertEquals(find.get(), student1);
+    }
+
+    @Test
+    public void testIsTeacher() {
+        when(userDao.findById(teacher1.getId())).thenReturn(Optional.ofNullable(teacher1));
+        Assert.assertTrue(userService.isTeacher(teacher1));
     }
 
     @Test

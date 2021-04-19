@@ -3,6 +3,7 @@ package cz.muni.fi.timeline.service;
 import cz.muni.fi.timeline.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Interface for a service access to User entity.
@@ -29,7 +30,37 @@ public interface UserService {
     boolean authenticateUser(User user, String password);
 
     /**
-     * Checks if User is a Teacher
+     * Updates User information.
+     *
+     * @param user User with updated information
+     */
+    void updateUser(User user);
+
+    /**
+     * Removes User.
+     *
+     * @param user User to be removed
+     */
+    void removeUser(User user);
+
+    /**
+     * Finds User based on Id.
+     *
+     * @param id Id used for finding User
+     * @return User
+     */
+    Optional<User> findById(Long id);
+
+    /**
+     * Finds User based on Username.
+     *
+     * @param username username used for finding User
+     * @return User
+     */
+    Optional<User> findByUsername(String username);
+
+    /**
+     * Checks if User is a Teacher.
      *
      * @param user User to be checked
      * @return True if User is a Teacher, False otherwise
