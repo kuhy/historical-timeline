@@ -1,6 +1,7 @@
 package cz.muni.fi.timeline;
 
 import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
+import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,7 +25,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackageClasses = {HistoricalTimelineDao.class})
+@ComponentScan(basePackageClasses = {HistoricalTimelineDao.class, HistoricalTimelineService.class})
 public class HistoricalTimelineApplicationContext {
 
     @Bean
