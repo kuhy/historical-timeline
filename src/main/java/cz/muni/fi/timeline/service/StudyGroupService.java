@@ -32,7 +32,7 @@ public interface StudyGroupService {
     /**
      * add new student to study group in case the student is not already in
      * @param studyGroup study group to which student will be enrolled
-     * @param student student to be enrolled
+     * @param user student to be enrolled
      */
     void addUserToStudyGroup(StudyGroup studyGroup, User user);
 
