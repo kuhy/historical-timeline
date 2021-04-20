@@ -66,6 +66,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     @BeforeMethod
     public void prepareUsers() {
         teacher1 = new User();
+        teacher1.setId(1L);
         teacher1.setFirstName("Thrall");
         teacher1.setLastName("Hellscream");
         teacher1.setUsername("Warchief");
@@ -75,6 +76,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         teacher1.addStudyGroup(asianHistoryGroup);
 
         teacher2 = new User();
+        teacher2.setId(2L);
         teacher2.setFirstName("Jožko");
         teacher2.setLastName("Pročko");
         teacher2.setUsername("JozkoProcko");
@@ -83,6 +85,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         teacher2.addStudyGroup(asianHistoryGroup);
 
         student1 = new User();
+        student1.setId(3L);
         student1.setFirstName("David");
         student1.setLastName("Lister");
         student1.setUsername("DavidLister");
@@ -92,6 +95,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         student1.addStudyGroup(asianHistoryGroup);
 
         student2 = new User();
+        student2.setId(4L);
         student2.setFirstName("Alena");
         student2.setLastName("Kováčova");
         student2.setUsername("AlenaKovacova");
