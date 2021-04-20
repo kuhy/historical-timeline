@@ -34,7 +34,7 @@ public interface StudyGroupService {
      * @param studyGroup study group to which student will be enrolled
      * @param student student to be enrolled
      */
-    void addStudentToStudyGroup(StudyGroup studyGroup, User student);
+    void addUserToStudyGroup(StudyGroup studyGroup, User user);
 
     /**
      * finds study group based on id
