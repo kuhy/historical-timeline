@@ -40,9 +40,9 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     }
 
     @Override
-    public void addUserToStudyGroup(StudyGroup studyGroup, User user) {
+    public void addUserToStudyGroup(StudyGroup studyGroup, User user) throws ContainsStudentException {
         if(studyGroup.getUsers().contains(user)){
-            throw new DataAccessException("StudyGroup already contains this Student") {
+            throw new ContainsStudentException("StudyGroup already contains this Student") {
             };
         }
         studyGroup.addUser(user);

@@ -3,6 +3,7 @@ package cz.muni.fi.timeline;
 import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
+import cz.muni.fi.timeline.service.ContainsStudentException;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.service.StudyGroupServiceImpl;
 import org.mockito.InjectMocks;
@@ -115,7 +116,7 @@ public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testAddUserToStudyGroup(){
+    public void testAddUserToStudyGroup() throws ContainsStudentException {
         Assert.assertEquals(group2.getUsers().size(),0);
         studyGroupService.addUserToStudyGroup(group2,teacher1);
         studyGroupService.addUserToStudyGroup(group2,student1);
