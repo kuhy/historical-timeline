@@ -1,5 +1,9 @@
 package cz.muni.fi.timeline.service;
 
+/**
+ * Exception for handling adding the same student into group
+ * @author Matej Macák
+ */
 public class ContainsStudentException extends Exception {
 
     public ContainsStudentException() {

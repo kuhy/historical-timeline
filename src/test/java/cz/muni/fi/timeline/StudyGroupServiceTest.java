@@ -22,7 +22,10 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
+/**
+ * Tests for service of study groups
+ * @author Matej Macák
+ */
 @ContextConfiguration(classes = HistoricalTimelineApplicationContext.class)
 public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
 
