@@ -21,8 +21,8 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
     private final HistoricalEventDao historicalEventDao;
 
     @Inject
-    public HistoricalEventServiceImpl(HistoricalEventDao historicalTimelineDao) {
-        this.historicalEventDao = historicalTimelineDao;}
+    public HistoricalEventServiceImpl(HistoricalEventDao historicalEventDao) {
+        this.historicalEventDao = historicalEventDao;}
 
     @Override
     public void createEvent(HistoricalEvent historicalEvent){
