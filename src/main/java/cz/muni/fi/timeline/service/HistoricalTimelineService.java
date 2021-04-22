@@ -1,6 +1,7 @@
 package cz.muni.fi.timeline.service;
 
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
+import cz.muni.fi.timeline.entity.StudyGroup;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,10 +15,11 @@ import java.util.Optional;
 public interface HistoricalTimelineService {
 
     /**
-     * Creates new timeline in the database.
+     * Creates new timeline in study group.
      * @param timeline timeline that will be created
+     * @param studyGroup study group to which the timeline will be added
      */
-    void createTimeline(HistoricalTimeline timeline);
+    void createTimelineInStudyGroup(HistoricalTimeline timeline, StudyGroup studyGroup);
 
     /**
      * Updates timeline in the database.

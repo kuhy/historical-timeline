@@ -1,7 +1,9 @@
 package cz.muni.fi.timeline.service;
 
 import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
+import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
+import cz.muni.fi.timeline.entity.StudyGroup;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -19,14 +21,25 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
     private final HistoricalTimelineDao historicalTimelineDao;
 
+    private final StudyGroupDao studyGroupDao;
+
     @Inject
-    public HistoricalTimelineServiceImpl(HistoricalTimelineDao historicalTimelineDao) {
+    public HistoricalTimelineServiceImpl(HistoricalTimelineDao historicalTimelineDao, StudyGroupDao studyGroupDao) {
         this.historicalTimelineDao = historicalTimelineDao;
+        this.studyGroupDao = studyGroupDao;
     }
 
     @Override
-    public void createTimeline(HistoricalTimeline timeline) {
+    public void createTimelineInStudyGroup(HistoricalTimeline timeline, StudyGroup studyGroup) {
         historicalTimelineDao.create(timeline);
+
+        StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
+            new IllegalArgumentException("Study group with the given id does not exist.")
+        );
+
+        group.addHistoricalTimeline(timeline);
+
+        studyGroupDao.update(group);
     }
 
     @Override

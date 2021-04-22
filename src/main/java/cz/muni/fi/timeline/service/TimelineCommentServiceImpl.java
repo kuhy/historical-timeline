@@ -1,6 +1,8 @@
 package cz.muni.fi.timeline.service;
 
+import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
 import cz.muni.fi.timeline.dao.TimelineCommentDao;
+import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.TimelineComment;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +21,25 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
 
     private final TimelineCommentDao timelineCommentDao;
 
+    private final HistoricalTimelineDao timelineDao;
+
     @Inject
-    public TimelineCommentServiceImpl(TimelineCommentDao timelineCommentDao) {
+    public TimelineCommentServiceImpl(TimelineCommentDao timelineCommentDao, HistoricalTimelineDao timelineDao) {
         this.timelineCommentDao = timelineCommentDao;
+        this.timelineDao = timelineDao;
     }
 
     @Override
-    public void createTimelineComment(TimelineComment comment) {
+    public void createTimelineCommentInTimeline(TimelineComment comment, HistoricalTimeline timeline) {
         timelineCommentDao.create(comment);
+
+        HistoricalTimeline historicalTimeline = timelineDao.findById(timeline.getId()).orElseThrow(() ->
+            new IllegalArgumentException("Timeline with the given id does not exist.")
+        );
+
+        historicalTimeline.addTimelineComment(comment);
+
+        timelineDao.update(timeline);
     }
 
     @Override
