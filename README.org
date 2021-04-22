@@ -65,8 +65,12 @@ group and add a comment to them. Searching among all events is also possible.
       - you must have at least two non-trivial business functions on Service Layer (the example project contains several of them). Service layer is not always just a place to delegate to DAOs.
       - check [[https://www.javaguides.net/2018/07/handle-nullpointerexception-in-controller-service-and-dao-layer-using-java-8-optional-class.html][this tutorial on use of Optionals inside the service layer]]
       | Task          | Deadline | =User= | =StudyGroup= | =HistoricalTimeline= | =TimelineComment= | =HistoricalEvent= |
-      | *Service*     | 16. 4.   | Stefan | Matej        | Kuhy                 | Kuhy              | Kája              |
-      | *Code review* | 16. 4.   | Kája   | Kuhy         | Stefan               | Matej             | Matej             |
+      | *Service*     | 23. 4.   | Stefan | Matej        | Kuhy                 | Kuhy              | Kája              |
+      | *Code review* | 23. 4.   | Kája   | Kuhy         | Stefan               | Matej             | Matej             |
+
+      | Task           | Deadline | =User= | =StudyGroup= | =HistoricalTimeline= | Milestone1 comments |
+      | *Facade + DTO* | 25. 4.   | Kája   | Stefan       | Matej                | Kuhy                |
+
       - *we will have a call on 19. 4. and we will reflect on our work*
 *** DONE Milestone 1
     DEADLINE: <2021-04-07 Wed>
