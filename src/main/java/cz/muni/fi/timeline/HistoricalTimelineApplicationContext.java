@@ -1,7 +1,11 @@
 package cz.muni.fi.timeline;
 
 import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
+import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.HistoricalTimelineService;
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
+import org.dozer.loader.api.BeanMappingBuilder;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -56,5 +60,10 @@ public class HistoricalTimelineApplicationContext {
     public DataSource db() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder.setType(EmbeddedDatabaseType.DERBY).build();
+    }
+
+    @Bean
+    public Mapper dozer(){
+        return new DozerBeanMapper();
     }
 }
