@@ -60,8 +60,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isTeacher(User user) {
-        Optional<User> find = userDao.findById(user.getId());
-        return find.get().getIsTeacher();
+        User find = userDao.findById(user.getId()).orElseThrow(() ->
+            new IllegalArgumentException("User with given id does not exist.")
+        );
+
+        return find.getIsTeacher();
     }
 
     @Override

@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -29,8 +30,7 @@ import java.util.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@ContextConfiguration(classes = HistoricalTimelineApplicationContext.class)
-public class UserServiceTest extends AbstractTestNGSpringContextTests {
+public class UserServiceTest {
     @Mock
     private UserDao userDao;
 
@@ -38,8 +38,9 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     private PasswordEncoder encoder;
 
     @Autowired
-    @InjectMocks
     private UserService userService;
+
+    private AutoCloseable autoCloseable;
 
     // Study groups
     private StudyGroup englishHistoryGroup;
@@ -119,38 +120,57 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @BeforeMethod
-    public void prepareService() {
+    public void openMocks() {
+        autoCloseable = MockitoAnnotations.openMocks(this);
         userService = new UserServiceImpl(userDao, encoder);
     }
 
-    @BeforeClass
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
+    @AfterMethod
+    public void releaseMocks() throws Exception {
+        autoCloseable.close();
     }
 
     @Test
     public void testRegisterUser() {
         when(encoder.encode(anyString())).thenReturn("hashedPassword");
         userService.registerUser(student1, "encryptedPassword");
+
         verify(userDao, times(1)).create(any(User.class));
+        verifyNoMoreInteractions(userDao);
+
+        verify(encoder, times(1)).encode(anyString());
+        verifyNoMoreInteractions(encoder);
     }
 
     @Test
     public void testAuthenticateUser() {
         when(encoder.matches(anyString(), anyString())).thenReturn(true);
         Assert.assertTrue(userService.authenticateUser(student1, "hashedPassword"));
+
+        verifyNoInteractions(userDao);
+
+        verify(encoder, times(1)).matches(anyString(), anyString());
+        verifyNoMoreInteractions(encoder);
     }
 
     @Test
     public void testUpdateUser() {
         userService.updateUser(student1);
+
         verify(userDao, times(1)).update(any(User.class));
+        verifyNoMoreInteractions(userDao);
+
+        verifyNoInteractions(encoder);
     }
 
     @Test
     public void testRemoveUser() {
         userService.removeUser(student1);
+
         verify(userDao, times(1)).remove(any(User.class));
+        verifyNoMoreInteractions(userDao);
+
+        verifyNoInteractions(encoder);
     }
 
     @Test
@@ -160,6 +180,11 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         Assert.assertTrue(find.isPresent());
         Assert.assertEquals(find.get(), student1);
+
+        verify(userDao, times(1)).findById(anyLong());
+        verifyNoMoreInteractions(userDao);
+
+        verifyNoInteractions(encoder);
     }
 
     @Test
@@ -169,29 +194,65 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         Assert.assertTrue(find.isPresent());
         Assert.assertEquals(find.get(), student1);
+
+        verify(userDao, times(1)).findByUserName(anyString());
+        verifyNoMoreInteractions(userDao);
+
+        verifyNoInteractions(encoder);
     }
 
     @Test
-    public void testIsTeacher() {
+    public void testExistingUserIsTeacher() {
         when(userDao.findById(teacher1.getId())).thenReturn(Optional.ofNullable(teacher1));
         Assert.assertTrue(userService.isTeacher(teacher1));
+
+        verify(userDao, times(1)).findById(anyLong());
+        verifyNoMoreInteractions(userDao);
+
+        verifyNoInteractions(encoder);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testNonExistingUserIsTeacher() {
+        when(userDao.findById(teacher1.getId())).thenReturn(Optional.empty());
+        Assert.assertTrue(userService.isTeacher(teacher1));
+
+        verify(userDao, times(1)).findById(anyLong());
+        verifyNoMoreInteractions(userDao);
+
+        verifyNoInteractions(encoder);
     }
 
     @Test
     public void testGetAllUsers() {
         when(userDao.findAll()).thenReturn(users);
         Assert.assertEquals(userService.getAllUsers(), users);
+
+        verify(userDao, times(1)).findAll();
+        verifyNoMoreInteractions(userDao);
+
+        verifyNoInteractions(encoder);
     }
 
     @Test
     public void testGetAllStudents() {
         when(userDao.findAllStudents()).thenReturn(students);
         Assert.assertEquals(userService.getAllStudents(), students);
+
+        verify(userDao, times(1)).findAllStudents();
+        verifyNoMoreInteractions(userDao);
+
+        verifyNoInteractions(encoder);
     }
 
     @Test
     public void testGetAllTeacher() {
         when(userDao.findAllTeachers()).thenReturn(teachers);
         Assert.assertEquals(userService.getAllTeachers(), teachers);
+
+        verify(userDao, times(1)).findAllTeachers();
+        verifyNoMoreInteractions(userDao);
+
+        verifyNoInteractions(encoder);
     }
 }
