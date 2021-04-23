@@ -6,15 +6,12 @@ import cz.muni.fi.timeline.entity.HistoricalEvent;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.service.HistoricalEventService;
 import cz.muni.fi.timeline.service.HistoricalEventServiceImpl;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,26 +27,30 @@ import static org.mockito.Mockito.*;
  * @author Karolína Veselá
  */
 
-@ContextConfiguration(classes = HistoricalTimelineApplicationContext.class)
-public class HistoricalEventServiceTest extends AbstractTestNGSpringContextTests {
+
+public class HistoricalEventServiceTest{
     @Mock
     public HistoricalEventDao historicalEventDao;
 
     @Mock
-    public HistoricalTimeline historicalTimeline;
+    public HistoricalTimelineDao historicalTimelineDao;
+
+    private AutoCloseable closeable;
 
     @Autowired
-    @InjectMocks
     public HistoricalEventService historicalEventService;
 
     //events
     private HistoricalEvent event1;
     private HistoricalEvent event2;
-    List<HistoricalEvent> events;
+    private List<HistoricalEvent> events;
 
+    //timeline
+    private HistoricalTimeline timeline;
 
     @BeforeMethod
     public void prepareEvents(){
+
         event1 = new HistoricalEvent();
         event2 = new HistoricalEvent();
         event1.setId(2L);
@@ -62,39 +63,57 @@ public class HistoricalEventServiceTest extends AbstractTestNGSpringContextTests
     }
 
     @BeforeMethod
-    public void prepareService() {
-        historicalEventService = new HistoricalEventServiceImpl(historicalEventDao){
-        };
+    public void prepareTimeline(){
+
+        timeline = new HistoricalTimeline();
+        timeline.setId(1L);
+        timeline.setName("Roman Empire");
     }
 
-    @BeforeClass
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
+    @BeforeMethod
+    public void prepareService() {
+        closeable = MockitoAnnotations.openMocks(this);
+        historicalEventService = new HistoricalEventServiceImpl(historicalEventDao, historicalTimelineDao);
+    }
+
+    @AfterMethod
+    public void releaseMocks() throws Exception {
+        closeable.close();
     }
 
     @Test
     public void testCreateHistoricalEventInTimeline(){
-        historicalEventService.createEventInTimeline(event1,historicalTimeline);
-        verify(historicalEventDao, times(1)).create(event1);
-        verify(historicalTimeline, times(1)).addHistoricalEvent(event1);
+
+        when(historicalTimelineDao.findById(timeline.getId())).thenReturn(Optional.of(timeline));
+        historicalEventService.createEventInTimeline(event1, timeline);
+
+        verify(historicalEventDao, times(1)).create(any(HistoricalEvent.class));
+        verifyNoMoreInteractions(historicalEventDao);
+
+        verify(historicalTimelineDao, times(1)).findById(timeline.getId());
+        verify(historicalTimelineDao, times(1)).update(any(HistoricalTimeline.class));
+        verifyNoMoreInteractions(historicalTimelineDao);
     }
 
     @Test
     public void testCreateHistoricalEvent(){
         historicalEventService.createEvent(event2);
-        verify(historicalEventDao, times(1)).create(event2);
+        verify(historicalEventDao, times(1)).create(any(HistoricalEvent.class));
+        verifyNoMoreInteractions(historicalEventDao);
     }
 
     @Test
     public void testUpdateHistoricalEvent(){
         historicalEventService.updateEvent(event1);
         verify(historicalEventDao,times(1)).update(any(HistoricalEvent.class));
+        verifyNoMoreInteractions(historicalEventDao);
     }
 
     @Test
     public void testRemoveHistoricalEvent(){
         historicalEventService.removeEvent(event1);
         verify(historicalEventDao, times(1)).remove(any(HistoricalEvent.class));
+        verifyNoMoreInteractions(historicalEventDao);
     }
 
     @Test

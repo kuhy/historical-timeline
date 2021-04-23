@@ -1,6 +1,7 @@
 package cz.muni.fi.timeline.service;
 
 import cz.muni.fi.timeline.dao.HistoricalEventDao;
+import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
 import cz.muni.fi.timeline.entity.HistoricalEvent;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.User;
@@ -19,10 +20,13 @@ import java.util.Set;
 public class HistoricalEventServiceImpl implements HistoricalEventService {
 
     private final HistoricalEventDao historicalEventDao;
+    private final HistoricalTimelineDao historicalTimelineDao;
 
     @Inject
-    public HistoricalEventServiceImpl(HistoricalEventDao historicalEventDao) {
-        this.historicalEventDao = historicalEventDao;}
+    public HistoricalEventServiceImpl(HistoricalEventDao historicalEventDao, HistoricalTimelineDao historicalTimelineDao) {
+        this.historicalEventDao = historicalEventDao;
+        this.historicalTimelineDao = historicalTimelineDao;
+    }
 
     @Override
     public void createEvent(HistoricalEvent historicalEvent){
@@ -30,9 +34,17 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
     }
 
     @Override
-    public void createEventInTimeline(HistoricalEvent event, HistoricalTimeline timeline) {
+    public void createEventInTimeline(HistoricalEvent event, HistoricalTimeline historicalTimeline) {
         historicalEventDao.create(event);
+
+        HistoricalTimeline timeline = historicalTimelineDao.findById(historicalTimeline.getId()).orElseThrow(() ->
+                new IllegalArgumentException("Historical timeline with the given id does not exist.")
+        );
+
         timeline.addHistoricalEvent(event);
+
+        historicalTimelineDao.update(timeline);
+
     }
 
     @Override
