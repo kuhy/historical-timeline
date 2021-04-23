@@ -3,12 +3,11 @@ package cz.muni.fi.timeline.service;
 import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * @author Matej Macák
@@ -40,18 +39,26 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     }
 
     @Override
-    public void addUserToStudyGroup(StudyGroup studyGroup, User user) throws ContainsStudentException {
-        if(studyGroup.getUsers().contains(user)){
-            throw new ContainsStudentException("StudyGroup already contains this Student") {
+    public void addUserToStudyGroup(StudyGroup studyGroup, User user) throws AlreadyInStudyGroup {
+        StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
+                new IllegalArgumentException("Study group with the given id does not exist.")
+        );
+        if(group.getUsers().contains(user)){
+            throw new AlreadyInStudyGroup("StudyGroup already contains this Student") {
             };
         }
-        studyGroup.addUser(user);
-        studyGroupDao.update(studyGroup);
+        group.addUser(user);
+        studyGroupDao.update(group);
     }
 
     @Override
     public Optional<StudyGroup> findById(long id) {
         return studyGroupDao.findById(id);
+    }
+
+    @Override
+    public List<StudyGroup> findAllStudyGroups() {
+        return studyGroupDao.findAll();
     }
 
 }

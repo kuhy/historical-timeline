@@ -3,20 +3,23 @@ package cz.muni.fi.timeline;
 import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
-import cz.muni.fi.timeline.service.ContainsStudentException;
+import cz.muni.fi.timeline.service.AlreadyInStudyGroup;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.service.StudyGroupServiceImpl;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -26,15 +29,14 @@ import static org.mockito.Mockito.*;
  * Tests for service of study groups
  * @author Matej Macák
  */
-@ContextConfiguration(classes = HistoricalTimelineApplicationContext.class)
-public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
+public class StudyGroupServiceTest{
 
     @Mock
     private StudyGroupDao studyGroupDao;
 
-    @Autowired
-    @InjectMocks
     private StudyGroupService studyGroupService;
+
+    private AutoCloseable closeable;
 
     // Study groups
     private StudyGroup group1;
@@ -50,12 +52,12 @@ public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
         group1 = new StudyGroup();
         group1.setName("PA165/01");
         Long id_1 = new Long(1);
-        group1.setId(id_1);
+        group1.setId(1L);
 
         group2 = new StudyGroup();
         group2.setName("PA165/02");
         Long id_2 = new Long(2);
-        group2.setId(id_2);
+        group2.setId(2L);
     }
 
     @BeforeMethod
@@ -93,14 +95,19 @@ public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
         };
     }
 
+    @BeforeMethod
+    public void openMocks() {
+        closeable = MockitoAnnotations.openMocks(this);
+        studyGroupService = new StudyGroupServiceImpl(studyGroupDao);
+    }
 
-    @BeforeClass
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
+    @AfterMethod
+    public void releaseMocks() throws Exception {
+        closeable.close();
     }
 
 
-    @Test
+        @Test
     public void testCreateStudyGroup() {
         studyGroupService.createStudyGroup(group1);
         verify(studyGroupDao, times(1)).create(any(StudyGroup.class));
@@ -109,7 +116,7 @@ public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testUpdateStudyGroup() {
         studyGroupService.updateStudyGroup(group1);
-        verify(studyGroupDao, times(1)).update(group1);
+        verify(studyGroupDao, times(1)).update(any(StudyGroup.class));
     }
 
     @Test
@@ -119,12 +126,16 @@ public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testAddUserToStudyGroup() throws ContainsStudentException {
+    public void testAddUserToStudyGroup() throws AlreadyInStudyGroup {
+        when(studyGroupDao.findById(group2.getId())).thenReturn(Optional.of(group2));
+
         Assert.assertEquals(group2.getUsers().size(),0);
         studyGroupService.addUserToStudyGroup(group2,teacher1);
         studyGroupService.addUserToStudyGroup(group2,student1);
         studyGroupService.addUserToStudyGroup(group2,student2);
         Assert.assertEquals(group2.getUsers().size(),3);
+
+        verify(studyGroupDao, times(3)).update(any(StudyGroup.class));
     }
 
     @Test
@@ -134,5 +145,23 @@ public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
 
         Assert.assertTrue(found.isPresent());
         Assert.assertEquals(found.get(), group2);
+
+        Mockito.verify(studyGroupDao).findById(group2.getId());
+        Mockito.verifyNoMoreInteractions(studyGroupDao);
     }
+
+    @Test
+    public void testFindAllStudyGroups(){
+        when(studyGroupDao.findAll()).thenReturn(List.of(group1, group2));
+
+        List<StudyGroup> timelines = studyGroupService.findAllStudyGroups();
+
+        Assert.assertEquals(timelines.size(), 2);
+        Assert.assertTrue(timelines.contains(group1));
+        Assert.assertTrue(timelines.contains(group2));
+
+        Mockito.verify(studyGroupDao).findAll();
+        Mockito.verifyNoMoreInteractions(studyGroupDao);
+    }
+
 }

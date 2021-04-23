@@ -2,10 +2,9 @@ package cz.muni.fi.timeline.service;
 
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
-import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Service for manipulation with Study groups
@@ -33,8 +32,9 @@ public interface StudyGroupService {
      * add new student to study group in case the student is not already in
      * @param studyGroup study group to which student will be enrolled
      * @param user student to be enrolled
+     * @throws AlreadyInStudyGroup in case User is alreday in studyGroup
      */
-    void addUserToStudyGroup(StudyGroup studyGroup, User user) throws ContainsStudentException;
+    void addUserToStudyGroup(StudyGroup studyGroup, User user) throws AlreadyInStudyGroup;
 
     /**
      * finds study group based on id
@@ -43,5 +43,9 @@ public interface StudyGroupService {
      */
     Optional<StudyGroup> findById(long id);
 
-    //Set<User> getAllUsersStudyGroup(StudyGroup studyGroup);
+    /**
+     *finds all study groups from databasae
+     * @return all study groups
+     */
+    List<StudyGroup> findAllStudyGroups();
 }
