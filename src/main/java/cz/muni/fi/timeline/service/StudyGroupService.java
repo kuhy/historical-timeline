@@ -32,9 +32,9 @@ public interface StudyGroupService {
      * add new student to study group in case the student is not already in
      * @param studyGroup study group to which student will be enrolled
      * @param user student to be enrolled
-     * @throws AlreadyInStudyGroup in case User is alreday in studyGroup
+     * @throws UserAlreadyInStudyGroupException in case User is alreday in studyGroup
      */
-    void addUserToStudyGroup(StudyGroup studyGroup, User user) throws AlreadyInStudyGroup;
+    void addUserToStudyGroup(StudyGroup studyGroup, User user) throws UserAlreadyInStudyGroupException;
 
     /**
      * finds study group based on id

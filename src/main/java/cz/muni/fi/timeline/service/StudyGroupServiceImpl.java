@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Implementation of StudyGroupService
  * @author Matej Macák
  */
 @Service
@@ -39,12 +40,12 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     }
 
     @Override
-    public void addUserToStudyGroup(StudyGroup studyGroup, User user) throws AlreadyInStudyGroup {
+    public void addUserToStudyGroup(StudyGroup studyGroup, User user) throws UserAlreadyInStudyGroupException {
         StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
                 new IllegalArgumentException("Study group with the given id does not exist.")
         );
         if(group.getUsers().contains(user)){
-            throw new AlreadyInStudyGroup("StudyGroup already contains this Student") {
+            throw new UserAlreadyInStudyGroupException("StudyGroup already contains this Student") {
             };
         }
         group.addUser(user);

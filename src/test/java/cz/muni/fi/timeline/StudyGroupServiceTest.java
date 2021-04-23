@@ -3,19 +3,14 @@ package cz.muni.fi.timeline;
 import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
-import cz.muni.fi.timeline.service.AlreadyInStudyGroup;
+import cz.muni.fi.timeline.service.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.service.StudyGroupServiceImpl;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -51,12 +46,10 @@ public class StudyGroupServiceTest{
     public void prepareStudyGroups() {
         group1 = new StudyGroup();
         group1.setName("PA165/01");
-        Long id_1 = new Long(1);
         group1.setId(1L);
 
         group2 = new StudyGroup();
         group2.setName("PA165/02");
-        Long id_2 = new Long(2);
         group2.setId(2L);
     }
 
@@ -111,6 +104,7 @@ public class StudyGroupServiceTest{
     public void testCreateStudyGroup() {
         studyGroupService.createStudyGroup(group1);
         verify(studyGroupDao, times(1)).create(any(StudyGroup.class));
+        Mockito.verifyNoMoreInteractions(studyGroupDao);
     }
 
     @Test
@@ -126,7 +120,7 @@ public class StudyGroupServiceTest{
     }
 
     @Test
-    public void testAddUserToStudyGroup() throws AlreadyInStudyGroup {
+    public void testAddUserToStudyGroup() throws UserAlreadyInStudyGroupException {
         when(studyGroupDao.findById(group2.getId())).thenReturn(Optional.of(group2));
 
         Assert.assertEquals(group2.getUsers().size(),0);
