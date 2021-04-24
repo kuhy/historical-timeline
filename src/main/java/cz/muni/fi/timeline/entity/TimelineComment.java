@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -17,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-public class TimelineComment {
+public class TimelineComment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

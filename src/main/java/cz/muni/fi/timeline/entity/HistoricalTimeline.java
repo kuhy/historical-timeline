@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -19,7 +20,7 @@ import java.util.Set;
  * @author Ondřej Kuhejda
  */
 @Entity
-public class HistoricalTimeline {
+public class HistoricalTimeline implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
