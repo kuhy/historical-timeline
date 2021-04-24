@@ -105,18 +105,25 @@ public class StudyGroupServiceTest{
         studyGroupService.createStudyGroup(group1);
         verify(studyGroupDao, times(1)).create(any(StudyGroup.class));
         Mockito.verifyNoMoreInteractions(studyGroupDao);
+
+            verifyNoMoreInteractions(studyGroupDao);
     }
 
     @Test
     public void testUpdateStudyGroup() {
         studyGroupService.updateStudyGroup(group1);
         verify(studyGroupDao, times(1)).update(any(StudyGroup.class));
+
+        verifyNoMoreInteractions(studyGroupDao);
     }
 
     @Test
     public void testRemoveStudyGroup() {
         studyGroupService.removeStudyGroup(group1);
         verify(studyGroupDao, times(1)).remove(any(StudyGroup.class));
+
+        verifyNoMoreInteractions(studyGroupDao);
+
     }
 
     @Test
@@ -130,6 +137,9 @@ public class StudyGroupServiceTest{
         Assert.assertEquals(group2.getUsers().size(),3);
 
         verify(studyGroupDao, times(3)).update(any(StudyGroup.class));
+        verify(studyGroupDao,times(3)).findById(2L);
+        verifyNoMoreInteractions(studyGroupDao);
+
     }
 
     @Test
@@ -142,6 +152,9 @@ public class StudyGroupServiceTest{
 
         Mockito.verify(studyGroupDao).findById(group2.getId());
         Mockito.verifyNoMoreInteractions(studyGroupDao);
+
+        verifyNoMoreInteractions(studyGroupDao);
+
     }
 
     @Test
@@ -156,6 +169,9 @@ public class StudyGroupServiceTest{
 
         Mockito.verify(studyGroupDao).findAll();
         Mockito.verifyNoMoreInteractions(studyGroupDao);
+
+        verifyNoMoreInteractions(studyGroupDao);
+
     }
 
 }
