@@ -20,7 +20,7 @@ public class HistoricalEventDaoImpl implements HistoricalEventDao {
 
     @Override
     public void create(HistoricalEvent historicalEvent) {
-    em.persist(historicalEvent);
+        em.persist(historicalEvent);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class HistoricalEventDaoImpl implements HistoricalEventDao {
     @Override
     public List<HistoricalEvent> findByName(String name) {
         return em.createQuery("select he from HistoricalEvent he where name = :name", HistoricalEvent.class)
-                .setParameter("name", name)
-                .getResultList();
+            .setParameter("name", name)
+            .getResultList();
     }
 
     @Override
