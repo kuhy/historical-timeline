@@ -1,6 +1,7 @@
 package cz.muni.fi.timeline.dao;
 
 import cz.muni.fi.timeline.entity.StudyGroup;
+import cz.muni.fi.timeline.entity.User;
 
 import java.util.List;
 import java.util.Optional;
