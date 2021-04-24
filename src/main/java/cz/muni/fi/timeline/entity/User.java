@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,34 +21,34 @@ import java.util.Set;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false)
     private String firstName;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false)
     private String lastName;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false)
     private String username;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false)
     private String hashedPassword;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false)
     private Boolean isTeacher;
 
     @ManyToMany(mappedBy = "users")

@@ -13,8 +13,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -67,7 +67,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(userDao.findAll().size(), 1);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testCreateUserNullFirstName() {
         User user = new User();
@@ -81,7 +81,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         userDao.create(user);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testCreateUserNullLastName() {
         User user = new User();
@@ -95,7 +95,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         userDao.create(user);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testCreateUserNullUsername() {
         User user = new User();
@@ -109,7 +109,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         userDao.create(user);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testCreateUserNullHashedPassword() {
         User user = new User();
@@ -123,7 +123,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         userDao.create(user);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testCreateUserNullIsTeacher() {
         User user = new User();
