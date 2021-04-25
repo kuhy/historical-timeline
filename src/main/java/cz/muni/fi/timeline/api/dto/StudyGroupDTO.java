@@ -1,2 +1,4 @@
-package cz.muni.fi.timeline.api.dto;public class StudyGroupDTO {
+package cz.muni.fi.timeline.api.dto;
+
+public class StudyGroupDTO {
 }
