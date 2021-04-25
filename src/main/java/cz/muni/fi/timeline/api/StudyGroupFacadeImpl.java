@@ -13,6 +13,7 @@ import cz.muni.fi.timeline.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.nio.channels.IllegalChannelGroupException;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,8 +39,8 @@ public class StudyGroupFacadeImpl implements StudyGroupFacade {
     }
 
     @Override
-    public StudyGroupDTO getStudyGroupWithId(Long id) {
-        Optional<StudyGroup> find = studyGroupService.findById(id);
+    public StudyGroupDTO getStudyGroupWithId(Long studyGroupId) {
+        Optional<StudyGroup> find = studyGroupService.findById(studyGroupId);
         return find.isPresent() ? beanMappingService.mapTo(find.get(), StudyGroupDTO.class) : null;
     }
 
