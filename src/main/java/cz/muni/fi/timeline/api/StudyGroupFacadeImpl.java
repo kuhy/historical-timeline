@@ -9,8 +9,7 @@ import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.service.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.service.UserNotInStudyGroupException;
 import cz.muni.fi.timeline.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -19,8 +18,7 @@ import java.util.Optional;
 
 @Service
 public class StudyGroupFacadeImpl implements StudyGroupFacade {
-//    final static Logger log = LoggerFactory.getLogger(StudyGroupFacadeImpl.class); TODO
-
+    
     final private StudyGroupService studyGroupService;
     final private UserService userService;
     final private BeanMappingService beanMappingService;
