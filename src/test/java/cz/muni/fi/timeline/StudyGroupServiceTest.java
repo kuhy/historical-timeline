@@ -6,6 +6,7 @@ import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.service.StudyGroupServiceImpl;
+import cz.muni.fi.timeline.service.UserNotInStudyGroupException;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -127,7 +128,7 @@ public class StudyGroupServiceTest{
     }
 
     @Test
-    public void testAddUserToStudyGroup() throws UserAlreadyInStudyGroupException {
+    public void testAddUserNotInStudyGroupToStudyGroup() throws UserAlreadyInStudyGroupException {
         when(studyGroupDao.findById(group2.getId())).thenReturn(Optional.of(group2));
 
         Assert.assertEquals(group2.getUsers().size(),0);
@@ -139,7 +140,45 @@ public class StudyGroupServiceTest{
         verify(studyGroupDao, times(3)).update(any(StudyGroup.class));
         verify(studyGroupDao,times(3)).findById(2L);
         verifyNoMoreInteractions(studyGroupDao);
+    }
 
+    @Test(expectedExceptions = UserAlreadyInStudyGroupException.class)
+    public void testAddUserInStudyGroupToStudyGroup() throws UserAlreadyInStudyGroupException {
+        group2.addUser(teacher1);
+        when(studyGroupDao.findById(group2.getId())).thenReturn(Optional.of(group2));
+
+        Assert.assertEquals(group2.getUsers().size(),1);
+        studyGroupService.addUserToStudyGroup(group2,teacher1);
+        Assert.assertEquals(group2.getUsers().size(),1);
+
+        verify(studyGroupDao,times(1)).findById(2L);
+        verifyNoMoreInteractions(studyGroupDao);
+    }
+
+    @Test(expectedExceptions = UserNotInStudyGroupException.class)
+    public void testRemoveUserNotInStudyGroupFromStudyGroup() throws UserNotInStudyGroupException {
+        when(studyGroupDao.findById(group2.getId())).thenReturn(Optional.of(group2));
+
+        Assert.assertEquals(group2.getUsers().size(),0);
+        studyGroupService.removeUserFromStudyGroup(group2,teacher1);
+        Assert.assertEquals(group2.getUsers().size(),0);
+
+        verify(studyGroupDao,times(1)).findById(2L);
+        verifyNoMoreInteractions(studyGroupDao);
+    }
+
+    @Test
+    public void testRemoveUserInStudyGroupFromStudyGroup() throws UserNotInStudyGroupException {
+        group2.addUser(teacher1);
+        when(studyGroupDao.findById(group2.getId())).thenReturn(Optional.of(group2));
+
+        Assert.assertEquals(group2.getUsers().size(),1);
+        studyGroupService.removeUserFromStudyGroup(group2,teacher1);
+        Assert.assertEquals(group2.getUsers().size(),0);
+
+        verify(studyGroupDao, times(1)).update(any(StudyGroup.class));
+        verify(studyGroupDao,times(1)).findById(2L);
+        verifyNoMoreInteractions(studyGroupDao);
     }
 
     @Test

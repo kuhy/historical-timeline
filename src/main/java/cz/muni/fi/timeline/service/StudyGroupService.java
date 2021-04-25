@@ -29,12 +29,20 @@ public interface StudyGroupService {
     void removeStudyGroup(StudyGroup studyGroup);
 
     /**
-     * add new student to study group in case the student is not already in
-     * @param studyGroup study group to which student will be enrolled
+     * add new user to study group in case the user is not already in
+     * @param studyGroup study group to which user will be enrolled
      * @param user student to be enrolled
      * @throws UserAlreadyInStudyGroupException in case User is alreday in studyGroup
      */
     void addUserToStudyGroup(StudyGroup studyGroup, User user) throws UserAlreadyInStudyGroupException;
+
+    /**
+     * removes user from study group, if user is in the group
+     * @param studyGroup study group from which user is removed
+     * @param user user to be removed from study group
+     * @throws UserNotInStudyGroupException in case User is not in studyGroup
+     */
+    void removeUserFromStudyGroup(StudyGroup studyGroup, User user) throws UserNotInStudyGroupException;
 
     /**
      * finds study group based on id

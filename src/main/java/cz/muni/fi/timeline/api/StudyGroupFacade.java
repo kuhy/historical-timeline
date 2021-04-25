@@ -4,6 +4,7 @@ import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupNewNameDTO;
 import cz.muni.fi.timeline.service.UserAlreadyInStudyGroupException;
+import cz.muni.fi.timeline.service.UserNotInStudyGroupException;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface StudyGroupFacade {
 
     public void addUserToStudyGroup(Long studyGroupId, Long userId) throws UserAlreadyInStudyGroupException;
 
-//    public void removeUserFromStudyGroup(Long studyGroupId, Long userId); TODO
+    public void removeUserFromStudyGroup(Long studyGroupId, Long userId) throws UserNotInStudyGroupException;
 
     public List<StudyGroupDTO> getAllStudyGroups();
 

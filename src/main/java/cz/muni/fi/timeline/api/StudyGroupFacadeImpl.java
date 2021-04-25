@@ -7,6 +7,7 @@ import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.service.UserAlreadyInStudyGroupException;
+import cz.muni.fi.timeline.service.UserNotInStudyGroupException;
 import cz.muni.fi.timeline.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +75,19 @@ public class StudyGroupFacadeImpl implements StudyGroupFacade {
         );
 
         studyGroupService.addUserToStudyGroup(studyGroup, user);
+    }
+
+    @Override
+    public void removeUserFromStudyGroup(Long studyGroupId, Long userId) throws UserNotInStudyGroupException {
+        StudyGroup studyGroup = studyGroupService.findById(studyGroupId).orElseThrow(() ->
+                new IllegalArgumentException("Study group with given id does not exist.")
+        );
+
+        User user = userService.findById(userId).orElseThrow(() ->
+                new IllegalArgumentException("User with given id does not exist.")
+        );
+
+        studyGroupService.removeUserFromStudyGroup(studyGroup, user);
     }
 
     @Override
