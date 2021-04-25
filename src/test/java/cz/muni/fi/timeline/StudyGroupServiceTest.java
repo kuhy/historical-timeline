@@ -84,12 +84,6 @@ public class StudyGroupServiceTest{
     }
 
     @BeforeMethod
-    public void prepareService() {
-        studyGroupService = new StudyGroupServiceImpl(studyGroupDao) {
-        };
-    }
-
-    @BeforeMethod
     public void openMocks() {
         closeable = MockitoAnnotations.openMocks(this);
         studyGroupService = new StudyGroupServiceImpl(studyGroupDao);
@@ -100,14 +94,13 @@ public class StudyGroupServiceTest{
         closeable.close();
     }
 
-
-        @Test
+    @Test
     public void testCreateStudyGroup() {
         studyGroupService.createStudyGroup(group1);
         verify(studyGroupDao, times(1)).create(any(StudyGroup.class));
         Mockito.verifyNoMoreInteractions(studyGroupDao);
 
-            verifyNoMoreInteractions(studyGroupDao);
+        verifyNoMoreInteractions(studyGroupDao);
     }
 
     @Test

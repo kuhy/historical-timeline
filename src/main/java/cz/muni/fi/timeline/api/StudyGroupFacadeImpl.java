@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 public class StudyGroupFacadeImpl implements StudyGroupFacade {
-    final static Logger log = LoggerFactory.getLogger(StudyGroupFacadeImpl.class);
+//    final static Logger log = LoggerFactory.getLogger(StudyGroupFacadeImpl.class); TODO
 
     final private StudyGroupService studyGroupService;
     final private UserService userService;
