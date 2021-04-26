@@ -13,9 +13,10 @@ import java.util.Objects;
  * Contains name, brief description, data location and can contain image or placeholder
  * @author Matej Macák
  */
-@Entity
 @Getter
 @Setter
+@Entity
+@Table(name = "event_entity")
 public class HistoricalEvent implements Serializable {
 
     @Id

@@ -14,9 +14,10 @@ import java.util.Objects;
  *
  * @author Ondřej Kuhejda
  */
-@Entity
 @Getter
 @Setter
+@Entity
+@Table(name = "comment_entity")
 public class TimelineComment implements Serializable {
 
     @Id

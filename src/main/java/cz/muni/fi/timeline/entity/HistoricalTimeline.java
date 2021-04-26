@@ -19,6 +19,7 @@ import java.util.Set;
  * @author Ondřej Kuhejda
  */
 @Entity
+@Table(name = "timeline_entity")
 public class HistoricalTimeline implements Serializable {
 
     @Id

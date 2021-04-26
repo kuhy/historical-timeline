@@ -18,6 +18,7 @@ import java.util.Set;
  */
 
 @Entity
+@Table(name = "study_group_entity")
 public class StudyGroup implements Serializable {
 
     @Id

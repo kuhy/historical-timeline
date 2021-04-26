@@ -16,8 +16,8 @@ import java.util.Set;
  *
  * @author Tri Le Mau
  */
-@Table(name = "UserTable")
 @Entity
+@Table(name = "user_entity")
 public class User implements Serializable {
 
     @Id
