@@ -34,11 +34,11 @@ public class HistoricalTimeline implements Serializable {
     private String name;
 
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "timeline_id", referencedColumnName = "id")
     private Set<HistoricalEvent> historicalEvents = new HashSet<>();
 
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "timeline_id", referencedColumnName = "id")
     private Set<TimelineComment> timelineComments = new HashSet<>();
 
     /**

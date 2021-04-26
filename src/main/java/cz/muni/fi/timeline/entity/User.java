@@ -28,12 +28,12 @@ public class User implements Serializable {
 
     @Getter
     @Setter
-    @Column(nullable=false)
+    @Column(nullable=false, name = "first_name")
     private String firstName;
 
     @Getter
     @Setter
-    @Column(nullable=false)
+    @Column(nullable=false, name = "last_name")
     private String lastName;
 
     @Getter
@@ -43,12 +43,12 @@ public class User implements Serializable {
 
     @Getter
     @Setter
-    @Column(nullable=false)
+    @Column(nullable=false, name = "hashed_password")
     private String hashedPassword;
 
     @Getter
     @Setter
-    @Column(nullable=false)
+    @Column(nullable=false, name = "is_teacher")
     private Boolean isTeacher;
 
     @ManyToMany(mappedBy = "users")

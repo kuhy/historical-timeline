@@ -33,10 +33,13 @@ public class StudyGroup implements Serializable {
     private String name;
 
     @ManyToMany
+    @JoinTable(name = "study_group_user",
+        joinColumns = @JoinColumn(name = "study_group_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users = new HashSet<>();
 
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "study_group_id", referencedColumnName = "id")
     private Set<HistoricalTimeline> historicalTimelines = new HashSet<>();
 
     /**
