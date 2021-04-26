@@ -16,9 +16,11 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of historical timeline facade
+ * @author Matej Macák
+ */
 public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
-
-    final static Logger log = LoggerFactory.getLogger(HistoricalTimelineFacadeImpl.class);
 
     final private HistoricalTimelineService timelineService;
     final private HistoricalEventService eventService;
