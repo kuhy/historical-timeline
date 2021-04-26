@@ -5,7 +5,7 @@ import cz.muni.fi.timeline.api.StudyGroupFacade;
 import cz.muni.fi.timeline.api.StudyGroupFacadeImpl;
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
-import cz.muni.fi.timeline.api.dto.StudyGroupNewNameDTO;
+import cz.muni.fi.timeline.api.dto.StudyGroupUpdateNameDTO;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.StudyGroupService;
@@ -91,11 +91,11 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetStudyGroupWithExistingId() {
         when(studyGroupService.findById(studyGroup.getId())).thenReturn(Optional.of(studyGroup));
-        StudyGroupDTO get = studyGroupFacade.getStudyGroupWithId(studyGroup.getId());
+        Optional<StudyGroupDTO> get = studyGroupFacade.getStudyGroupWithId(studyGroup.getId());
 
-        Assert.assertNotNull(get, "Study group should return valid object");
+        Assert.assertTrue(get.isPresent(), "Study group should return valid object");
         StudyGroupDTO mappedStudyGroup = beanMappingService.mapTo(studyGroup, StudyGroupDTO.class);
-        Assert.assertEquals(get, mappedStudyGroup);
+        Assert.assertEquals(get.get(), mappedStudyGroup);
 
         verify(studyGroupService, times(1)).findById(anyLong());
         verifyNoMoreInteractions(studyGroupService);
@@ -105,9 +105,9 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testGetStudyGroupWithNonExistingId() {
         when(studyGroupService.findById(studyGroup.getId())).thenReturn(Optional.empty());
-        StudyGroupDTO get = studyGroupFacade.getStudyGroupWithId(studyGroup.getId());
+        Optional<StudyGroupDTO> get = studyGroupFacade.getStudyGroupWithId(studyGroup.getId());
 
-        Assert.assertNull(get);
+        Assert.assertFalse(get.isPresent());
 
         verify(studyGroupService, times(1)).findById(anyLong());
         verifyNoMoreInteractions(studyGroupService);
@@ -117,11 +117,11 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
     @Test
     public void testNewStudyGroupName() {
         when(studyGroupService.findById(studyGroup.getId())).thenReturn(Optional.of(studyGroup));
-        StudyGroupNewNameDTO newNameDTO = new StudyGroupNewNameDTO();
+        StudyGroupUpdateNameDTO newNameDTO = new StudyGroupUpdateNameDTO();
         newNameDTO.setId(studyGroup.getId());
         newNameDTO.setName("German group");
 
-        studyGroupFacade.newStudyGroupName(newNameDTO);
+        studyGroupFacade.updateStudyGroupName(newNameDTO);
 
         verify(studyGroupService, times(1)).findById(studyGroup.getId());
         verify(studyGroupService, times(1)).updateStudyGroup(any(StudyGroup.class));

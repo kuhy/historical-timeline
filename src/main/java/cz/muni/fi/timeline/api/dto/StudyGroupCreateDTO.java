@@ -1,6 +1,7 @@
 package cz.muni.fi.timeline.api.dto;
 
 import cz.muni.fi.timeline.entity.StudyGroup;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,24 +14,10 @@ import java.util.Objects;
  *
  * @author Tri Le Mau
  */
+@Data
 public class StudyGroupCreateDTO {
 
-    @Getter
-    @Setter
     @NotNull
     @Size(min = 2, max = 500)
     private String name;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof StudyGroupCreateDTO)) return false;
-        StudyGroupCreateDTO that = (StudyGroupCreateDTO) o;
-        return Objects.equals(getName(), that.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName());
-    }
 }

@@ -2,11 +2,12 @@ package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
-import cz.muni.fi.timeline.api.dto.StudyGroupNewNameDTO;
+import cz.muni.fi.timeline.api.dto.StudyGroupUpdateNameDTO;
 import cz.muni.fi.timeline.service.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.service.UserNotInStudyGroupException;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Facade for study groups.
@@ -28,14 +29,14 @@ public interface StudyGroupFacade {
      * @param studyGroupId study group id
      * @return study group if found, null otherwise
      */
-    public StudyGroupDTO getStudyGroupWithId(Long studyGroupId);
+    public Optional<StudyGroupDTO> getStudyGroupWithId(Long studyGroupId);
 
     /**
      * Sets new study group name.
      *
      * @param newName new study group name
      */
-    public void newStudyGroupName(StudyGroupNewNameDTO newName);
+    public void updateStudyGroupName(StudyGroupUpdateNameDTO newName);
 
     /**
      * Removes study group with Id.

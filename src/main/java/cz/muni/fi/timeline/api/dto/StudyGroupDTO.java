@@ -15,26 +15,20 @@ import java.util.Set;
  *
  * @author Tri Le Mau
  */
+@Getter
+@Setter
 public class StudyGroupDTO {
 
-    @Getter
-    @Setter
     @NotNull
     private Long id;
 
-    @Getter
-    @Setter
     @NotNull
     @Size(min = 2, max = 500)
     private String name;
 
-    @Getter
-    @Setter
     @NotNull
     private Set<UserDTO> users = new HashSet<>();
 
-    @Getter
-    @Setter
     @NotNull
     private Set<HistoricalTimelineDTO> historicalTimelines = new HashSet<>();
 
