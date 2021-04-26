@@ -69,6 +69,7 @@ public class User implements Serializable {
      * @param studyGroup study group that is added to user.
      */
     public void addStudyGroup(StudyGroup studyGroup) {
+        studyGroup.addUser(this);
         studyGroups.add(studyGroup);
     }
 

@@ -48,7 +48,10 @@ public class HistoricalEventDaoImpl implements HistoricalEventDao {
 
     @Override
     public void remove(HistoricalEvent historicalEvent) {
-        em.remove(historicalEvent);
-
+        if (em.contains(historicalEvent)) {
+            em.remove(historicalEvent);
+        } else {
+            em.remove(em.merge(historicalEvent));
+        }
     }
 }

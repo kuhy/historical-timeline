@@ -47,7 +47,11 @@ public class StudyGroupDaoImpl implements StudyGroupDao{
 
     @Override
     public void remove(StudyGroup studyGroup) {
-        em.remove(studyGroup);
+        if (em.contains(studyGroup)) {
+            em.remove(studyGroup);
+        } else {
+            em.remove(em.merge(studyGroup));
+        }
     }
 
 }

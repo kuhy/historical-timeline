@@ -369,8 +369,6 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         user.setUsername("Warchief");
         user.setHashedPassword("1234");
         user.setIsTeacher(true);
-        user.addStudyGroup(englishHistoryGroup);
-        user.addStudyGroup(asianHistoryGroup);
 
         userDao.create(user);
 

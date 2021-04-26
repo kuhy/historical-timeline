@@ -39,7 +39,6 @@ public class StudyGroupServiceTest{
 
     private User student1;
     private User student2;
-    private User student3;
     private User teacher1;
 
     @BeforeMethod
@@ -55,14 +54,12 @@ public class StudyGroupServiceTest{
 
     @BeforeMethod
     public void prepareUsers() {
-
         teacher1 = new User();
         teacher1.setFirstName("Jožko");
         teacher1.setLastName("Pročko");
         teacher1.setUsername("JozkoProcko");
         teacher1.setHashedPassword("passHash1");
         teacher1.setIsTeacher(true);
-        teacher1.addStudyGroup(group2);
 
         student1 = new User();
         student1.setFirstName("David");
@@ -70,7 +67,6 @@ public class StudyGroupServiceTest{
         student1.setUsername("DavidLister");
         student1.setHashedPassword("1234");
         student1.setIsTeacher(false);
-        student1.addStudyGroup(group2);
 
         student2 = new User();
         student2.setFirstName("Alena");
@@ -78,8 +74,6 @@ public class StudyGroupServiceTest{
         student2.setUsername("AlenaKovacova");
         student2.setHashedPassword("passHash2");
         student2.setIsTeacher(false);
-        student2.addStudyGroup(group2);
-
     }
 
     @BeforeMethod
@@ -123,7 +117,6 @@ public class StudyGroupServiceTest{
         verify(studyGroupDao, times(1)).remove(any(StudyGroup.class));
 
         verifyNoMoreInteractions(studyGroupDao);
-
     }
 
     @Test
@@ -171,7 +164,6 @@ public class StudyGroupServiceTest{
         Mockito.verifyNoMoreInteractions(studyGroupDao);
 
         verifyNoMoreInteractions(studyGroupDao);
-
     }
 
 }

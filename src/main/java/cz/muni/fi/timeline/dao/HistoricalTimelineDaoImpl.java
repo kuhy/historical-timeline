@@ -36,7 +36,11 @@ public class HistoricalTimelineDaoImpl implements HistoricalTimelineDao {
 
     @Override
     public void remove(HistoricalTimeline historicalTimeline) {
-        em.remove(historicalTimeline);
+        if (em.contains(historicalTimeline)) {
+            em.remove(historicalTimeline);
+        } else {
+            em.remove(em.merge(historicalTimeline));
+        }
     }
 
     @Override
