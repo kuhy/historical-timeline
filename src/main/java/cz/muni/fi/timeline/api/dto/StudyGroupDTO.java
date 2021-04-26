@@ -10,6 +10,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * DTO used for Study Group.
+ *
+ * @author Tri Le Mau
+ */
 public class StudyGroupDTO {
 
     @Getter

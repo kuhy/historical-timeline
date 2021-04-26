@@ -1,8 +1,9 @@
 package cz.muni.fi.timeline.service;
 
 /**
- * Exception for handling adding the same student into group
- * @author Matej Macák
+ * Exception for handling a missing user in StudyGroup.
+ *
+ * @author Tri Le Mau
  */
 public class UserNotInStudyGroupException extends Exception {
 

@@ -17,9 +17,14 @@ import java.nio.channels.IllegalChannelGroupException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation for StudyGroupFacade.
+ *
+ * @author Tri Le Mau
+ */
 @Service
 public class StudyGroupFacadeImpl implements StudyGroupFacade {
-    
+
     final private StudyGroupService studyGroupService;
     final private UserService userService;
     final private BeanMappingService beanMappingService;

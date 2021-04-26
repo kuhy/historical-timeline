@@ -43,7 +43,6 @@ public interface StudyGroupFacade {
      * @param studyGroupId study group id
      */
     public void removeStudyGroup(Long studyGroupId);
-    // TODO: exception signature ?
 
     /**
      * Adds user to study group.
