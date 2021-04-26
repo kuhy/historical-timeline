@@ -138,31 +138,22 @@ group and add a comment to them. Searching among all events is also possible.
 
     StudyGroup "1" *-- "*" HistoricalTimeline
 
-    class Teacher {
+    class User {
+      isTeacher: Boolean
       firstName: String
       lastName: String
       username: String
-      hashedPassword: int
+      hashedPassword: String
     }
 
-    Teacher "1" *-- "*" StudyGroup
-
-
-    class Student {
-      firstName: String
-      lastName: String
-      username: String
-      hashedPassword: int
-    }
-
-    Student "*" o--o "*" StudyGroup
+    User "*" o--o "*" StudyGroup
 
     class TimelineComment {
       text: String
     }
 
     HistoricalTimeline "1" *-- "*" TimelineComment
-    TimelineComment "*" o-- "1" Student
+    TimelineComment "*" o-- "1" User
   #+END_SRC
 
   #+RESULTS:
