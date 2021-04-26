@@ -95,4 +95,11 @@ public class HistoricalTimeline implements Serializable {
     public int hashCode() {
         return Objects.hash(getName());
     }
+
+    @Override
+    public String toString() {
+        return "HistoricalTimeline{" +
+            "name='" + getName() + '\'' +
+            '}';
+    }
 }

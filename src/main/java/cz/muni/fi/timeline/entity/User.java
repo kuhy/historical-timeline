@@ -96,4 +96,15 @@ public class User implements Serializable {
     public int hashCode() {
         return Objects.hash(getFirstName(), getLastName(), getUsername(), getHashedPassword());
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+            "firstName='" + getFirstName() + '\'' +
+            ", lastName='" + getLastName() + '\'' +
+            ", username='" + getUsername() + '\'' +
+            ", hashedPassword='" + getHashedPassword() + '\'' +
+            ", isTeacher=" + getIsTeacher() +
+            '}';
+    }
 }

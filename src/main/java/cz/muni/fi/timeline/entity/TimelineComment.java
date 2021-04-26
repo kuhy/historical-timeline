@@ -42,4 +42,12 @@ public class TimelineComment implements Serializable {
     public int hashCode() {
         return Objects.hash(getText(), getUser());
     }
+
+    @Override
+    public String toString() {
+        return "TimelineComment{" +
+            "text='" + getText() + '\'' +
+            ", user=" + getUser() +
+            '}';
+    }
 }

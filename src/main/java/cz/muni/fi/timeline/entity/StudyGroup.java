@@ -99,4 +99,11 @@ public class StudyGroup implements Serializable {
     public int hashCode() {
         return Objects.hash(getName());
     }
+
+    @Override
+    public String toString() {
+        return "StudyGroup{" +
+            "name='" + getName() + '\'' +
+            '}';
+    }
 }

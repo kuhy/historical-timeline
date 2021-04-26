@@ -50,4 +50,14 @@ public class HistoricalEvent implements Serializable {
     public int hashCode() {
         return Objects.hash(getName(), getDescription(), getDate(), getLocation());
     }
+
+    @Override
+    public String toString() {
+        return "HistoricalEvent{" +
+            "name='" + getName() + '\'' +
+            ", description='" + getDescription() + '\'' +
+            ", date=" + getDate() +
+            ", location='" + getLocation() + '\'' +
+            '}';
+    }
 }
