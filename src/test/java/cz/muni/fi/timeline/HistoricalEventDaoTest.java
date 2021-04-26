@@ -130,5 +130,6 @@ public class HistoricalEventDaoTest extends AbstractTestNGSpringContextTests {
         HistoricalEvent nativityOfJesus = new HistoricalEvent();
 
         historicalEventDao.create(nativityOfJesus);
+        historicalEventDao.findAll();
     }
 }

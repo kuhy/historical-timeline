@@ -42,13 +42,16 @@ public class StudyGroupDaoTest extends AbstractTestNGSpringContextTests {
 
         Assert.assertEquals(studyGroupDao.findAll().size(), 1);
     }
+
     @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testCreateStudyGroupNullName() {
         StudyGroup studyGroup = new StudyGroup();
 
         studyGroupDao.create(studyGroup);
+        studyGroupDao.findAll();
     }
+
     @Test
     @Transactional
     public void testFindAllStudyGroups() {

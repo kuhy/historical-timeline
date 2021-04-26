@@ -24,7 +24,7 @@ public class HistoricalTimeline implements Serializable {
     @Id
     @Getter
     @Setter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Getter

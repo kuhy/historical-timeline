@@ -19,7 +19,7 @@ import java.util.Objects;
 public class HistoricalEvent implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(nullable=false)

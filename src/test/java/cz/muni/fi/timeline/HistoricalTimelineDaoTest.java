@@ -108,6 +108,7 @@ public class HistoricalTimelineDaoTest extends AbstractTestNGSpringContextTests 
         HistoricalTimeline romanEmpire = new HistoricalTimeline();
 
         historicalTimelineDao.create(romanEmpire);
+        historicalTimelineDao.findAll();
     }
 
     @Test

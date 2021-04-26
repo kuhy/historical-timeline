@@ -87,6 +87,7 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
         TimelineComment negativeComment = new TimelineComment();
 
         timelineCommentDao.create(negativeComment);
+        timelineCommentDao.findAll();
     }
 
     @Test

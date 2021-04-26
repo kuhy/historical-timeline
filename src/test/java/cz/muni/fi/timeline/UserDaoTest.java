@@ -79,6 +79,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         user.addStudyGroup(asianHistoryGroup);
 
         userDao.create(user);
+        userDao.findAll();
     }
 
     @Test(expectedExceptions = PersistenceException.class)
@@ -93,6 +94,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         user.addStudyGroup(asianHistoryGroup);
 
         userDao.create(user);
+        userDao.findAll();
     }
 
     @Test(expectedExceptions = PersistenceException.class)
@@ -107,6 +109,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         user.addStudyGroup(asianHistoryGroup);
 
         userDao.create(user);
+        userDao.findAll();
     }
 
     @Test(expectedExceptions = PersistenceException.class)
@@ -121,6 +124,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         user.addStudyGroup(asianHistoryGroup);
 
         userDao.create(user);
+        userDao.findAll();
     }
 
     @Test(expectedExceptions = PersistenceException.class)
@@ -135,6 +139,7 @@ public class UserDaoTest extends AbstractTestNGSpringContextTests {
         user.addStudyGroup(asianHistoryGroup);
 
         userDao.create(user);
+        userDao.findAll();
     }
 
     @Test
