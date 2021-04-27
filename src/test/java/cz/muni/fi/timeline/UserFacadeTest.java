@@ -51,11 +51,11 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         user.setIsTeacher(true);
 
         user2 = new User();
-        user2.setId(1L);
-        user2.setFirstName("Jožko");
-        user2.setLastName("Pročko");
-        user2.setUsername("JozkoProcko");
-        user2.setHashedPassword("passHash1");
+        user2.setId(2L);
+        user2.setFirstName("David");
+        user2.setLastName("Lister");
+        user2.setUsername("DaveLister");
+        user2.setHashedPassword("passHash2");
         user2.setIsTeacher(false);
 
     }
