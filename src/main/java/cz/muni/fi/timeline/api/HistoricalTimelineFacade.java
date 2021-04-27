@@ -1,6 +1,7 @@
 package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.*;
+import cz.muni.fi.timeline.entity.HistoricalTimeline;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,15 +25,16 @@ public interface HistoricalTimelineFacade {
     /**
      * return timeline with given id
      * @param id of the looking timeline
-     * @return found timeline or null
+     * @return found timeline
      */
     public Optional<HistoricalTimelineDTO> getHistoricalTimelineWithId(Long id);
 
     /**
-     * renames timeline
-     * @param historicalTimelineUpdateNameDTO new timeline name
+     * updates timeline
+     * @param historicalTimelineDTO updated timeline
+     * @return id of updated timeline
      */
-    public void updateNameOfHistoricalTimeline(HistoricalTimelineUpdateNameDTO historicalTimelineUpdateNameDTO);
+    public Long updateHistoricalTimeline(HistoricalTimelineDTO historicalTimelineDTO);
 
     /**
      * removes timeline with given id
@@ -66,13 +68,14 @@ public interface HistoricalTimelineFacade {
     /**
      * updates parameters in event
      * @param historicalEventDTO event with new parameters
+     * @return id of updated Event
      */
-    public void updateHistoricalEvent(HistoricalEventDTO historicalEventDTO);
+    public Long updateHistoricalEvent(HistoricalEventDTO historicalEventDTO);
 
     /**
      * return event with given id
      * @param id id of looking event
-     * @return found event or null
+     * @return found event
      */
     public Optional<HistoricalEventDTO> getHistoricalEventWithId(Long id);
 
@@ -101,15 +104,16 @@ public interface HistoricalTimelineFacade {
     /**
      * return comment with given id
      * @param id id of looking comment
-     * @return found comment or null
+     * @return found comment
      */
     public Optional<TimelineCommentDTO> getTimelineCommentWithId(Long id);
 
     /**
-     * updates text in comment
-     * @param timelineCommentDTO comment with updated text
+     * updates comment
+     * @param timelineCommentDTO updated comment
+     * @return id of updated comment
      */
-    public void updateTimelineCommentText(TimelineCommentDTO timelineCommentDTO);
+    public Long updateTimelineComment(TimelineCommentDTO timelineCommentDTO);
 
     /**
      * removes comment with given id

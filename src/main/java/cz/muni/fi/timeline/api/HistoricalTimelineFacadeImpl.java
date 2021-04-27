@@ -11,7 +11,6 @@ import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.service.TimelineCommentService;
 
 import javax.inject.Inject;
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,13 +56,10 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
     }
 
     @Override
-    public void updateNameOfHistoricalTimeline(HistoricalTimelineUpdateNameDTO historicalTimelineUpdateNameDTO) {
-        HistoricalTimeline historicalTimeline = timelineService.findTimelineById(historicalTimelineUpdateNameDTO.getId()).orElseThrow(() ->
-                new IllegalArgumentException("Historical timeline with given id does not exist.")
-        );
-
-        historicalTimeline.setName(historicalTimelineUpdateNameDTO.getName());
-        timelineService.updateTimeline(historicalTimeline);
+    public Long updateHistoricalTimeline(HistoricalTimelineDTO historicalTimelineDTO) {
+        HistoricalTimeline mappedTimeline = beanMappingService.mapTo(historicalTimelineDTO, HistoricalTimeline.class);
+        timelineService.updateTimeline(mappedTimeline);
+        return mappedTimeline.getId();
     }
 
     @Override
@@ -101,15 +97,10 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
     }
 
     @Override
-    public void updateHistoricalEvent(HistoricalEventDTO historicalEventDTO) {
-        HistoricalEvent historicalEvent = eventService.findById(historicalEventDTO.getId()).orElseThrow(() ->
-                new IllegalArgumentException("Historical event with given id does not exist.")
-        );
-
+    public Long updateHistoricalEvent(HistoricalEventDTO historicalEventDTO) {
         HistoricalEvent mappedEvent = beanMappingService.mapTo(historicalEventDTO, HistoricalEvent.class);
-
-
         eventService.updateEvent(mappedEvent);
+        return mappedEvent.getId();
     }
 
     @Override
@@ -158,13 +149,10 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
     }
 
     @Override
-    public void updateTimelineCommentText(TimelineCommentDTO timelineCommentDTO) {
-        TimelineComment timelineComment = commentService.findTimelineCommentById(timelineCommentDTO.getId()).orElseThrow(() ->
-                new IllegalArgumentException("Timeline comment with given id does not exist.")
-        );
-
-        timelineComment.setText(timelineCommentDTO.getText());
-        commentService.updateTimelineComment(timelineComment);
+    public Long updateTimelineComment(TimelineCommentDTO timelineCommentDTO) {
+        TimelineComment mappedComment = beanMappingService.mapTo(timelineCommentDTO, TimelineComment.class);
+        commentService.updateTimelineComment(mappedComment);
+        return mappedComment.getId();
     }
 
     @Override
