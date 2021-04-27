@@ -1,5 +1,7 @@
 package cz.muni.fi.timeline;
 
+import cz.muni.fi.timeline.api.BeanMappingService;
+import cz.muni.fi.timeline.api.BeanMappingServiceImpl;
 import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.HistoricalTimelineService;
@@ -31,7 +33,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackageClasses = {HistoricalTimelineDao.class, HistoricalTimelineService.class})
+@ComponentScan(basePackageClasses = {HistoricalTimelineDao.class, HistoricalTimelineService.class, BeanMappingService.class})
 public class HistoricalTimelineApplicationContext {
 
     @Bean

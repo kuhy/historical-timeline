@@ -16,7 +16,6 @@ import java.util.Optional;
 @Service
 public class StudyGroupServiceImpl implements StudyGroupService{
 
-
     private final StudyGroupDao studyGroupDao;
 
     @Inject
@@ -44,11 +43,26 @@ public class StudyGroupServiceImpl implements StudyGroupService{
         StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
                 new IllegalArgumentException("Study group with the given id does not exist.")
         );
+
         if(group.getUsers().contains(user)){
-            throw new UserAlreadyInStudyGroupException("StudyGroup already contains this Student") {
-            };
+            throw new UserAlreadyInStudyGroupException("StudyGroup already contains this User");
         }
+
         group.addUser(user);
+        studyGroupDao.update(group);
+    }
+
+    @Override
+    public void removeUserFromStudyGroup(StudyGroup studyGroup, User user) throws UserNotInStudyGroupException {
+        StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
+                new IllegalArgumentException("Study group with the given id does not exist.")
+        );
+
+        if(!group.getUsers().contains(user)){
+            throw new UserNotInStudyGroupException("StudyGroup does not contains User.");
+        }
+
+        group.removeUser(user);
         studyGroupDao.update(group);
     }
 
