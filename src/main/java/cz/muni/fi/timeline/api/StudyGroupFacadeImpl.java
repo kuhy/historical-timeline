@@ -2,7 +2,6 @@ package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
-import cz.muni.fi.timeline.api.dto.StudyGroupUpdateNameDTO;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.StudyGroupService;
@@ -54,13 +53,10 @@ public class StudyGroupFacadeImpl implements StudyGroupFacade {
     }
 
     @Override
-    public void updateStudyGroupName(StudyGroupUpdateNameDTO newName) {
-        StudyGroup studyGroup = studyGroupService.findById(newName.getId()).orElseThrow(() ->
-            new IllegalArgumentException("Study group with given id does not exist.")
-        );
-
-        studyGroup.setName(newName.getName());
-        studyGroupService.updateStudyGroup(studyGroup);
+    public Long updateStudyGroup(StudyGroupDTO studyGroup) {
+        StudyGroup mappedStudyGroup = beanMappingService.mapTo(studyGroup, StudyGroup.class);
+        studyGroupService.updateStudyGroup(mappedStudyGroup);
+        return mappedStudyGroup.getId();
     }
 
     @Override

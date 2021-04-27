@@ -5,7 +5,6 @@ import cz.muni.fi.timeline.api.StudyGroupFacade;
 import cz.muni.fi.timeline.api.StudyGroupFacadeImpl;
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
-import cz.muni.fi.timeline.api.dto.StudyGroupUpdateNameDTO;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.StudyGroupService;
@@ -115,16 +114,14 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testNewStudyGroupName() {
-        when(studyGroupService.findById(studyGroup.getId())).thenReturn(Optional.of(studyGroup));
-        StudyGroupUpdateNameDTO newNameDTO = new StudyGroupUpdateNameDTO();
-        newNameDTO.setId(studyGroup.getId());
-        newNameDTO.setName("German group");
+    public void testUpdateStudyGroup() {
+        StudyGroupDTO studyGroupDTO = beanMappingService.mapTo(studyGroup, StudyGroupDTO.class);
+        Long result = studyGroupFacade.updateStudyGroup(studyGroupDTO);
 
-        studyGroupFacade.updateStudyGroupName(newNameDTO);
+        Assert.assertNotNull(result);
+        Assert.assertEquals(result, studyGroup.getId());
 
-        verify(studyGroupService, times(1)).findById(studyGroup.getId());
-        verify(studyGroupService, times(1)).updateStudyGroup(any(StudyGroup.class));
+        verify(studyGroupService, times(1)).updateStudyGroup(studyGroup);
         verifyNoMoreInteractions(studyGroupService);
         verifyNoInteractions(userService);
     }

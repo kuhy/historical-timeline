@@ -2,7 +2,6 @@ package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
-import cz.muni.fi.timeline.api.dto.StudyGroupUpdateNameDTO;
 import cz.muni.fi.timeline.service.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.service.UserNotInStudyGroupException;
 
@@ -32,11 +31,12 @@ public interface StudyGroupFacade {
     public Optional<StudyGroupDTO> getStudyGroupWithId(Long studyGroupId);
 
     /**
-     * Sets new study group name.
+     * Updates Study Group.
      *
-     * @param newName new study group name
+     * @param studyGroup study group DTO to be updated
+     * @return id of updated study group
      */
-    public void updateStudyGroupName(StudyGroupUpdateNameDTO newName);
+    public Long updateStudyGroup(StudyGroupDTO studyGroup);
 
     /**
      * Removes study group with Id.
