@@ -1,6 +1,6 @@
 package cz.muni.fi.timeline;
 
-import cz.muni.fi.timeline.api.BeanMappingService;
+import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.StudyGroupFacade;
 import cz.muni.fi.timeline.api.StudyGroupFacadeImpl;
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;

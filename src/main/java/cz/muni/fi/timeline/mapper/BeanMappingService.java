@@ -1,4 +1,4 @@
-package cz.muni.fi.timeline.api;
+package cz.muni.fi.timeline.mapper;
 
 import com.github.dozermapper.core.Mapper;
 import java.util.Collection;

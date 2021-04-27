@@ -1,6 +1,6 @@
 package cz.muni.fi.timeline;
 
-import cz.muni.fi.timeline.api.BeanMappingService;
+import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.HistoricalTimelineFacade;
 import cz.muni.fi.timeline.api.HistoricalTimelineFacadeImpl;
 import cz.muni.fi.timeline.api.dto.*;

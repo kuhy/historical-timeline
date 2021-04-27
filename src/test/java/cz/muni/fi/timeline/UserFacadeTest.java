@@ -1,6 +1,6 @@
 package cz.muni.fi.timeline;
 
-import cz.muni.fi.timeline.api.BeanMappingService;
+import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.UserFacade;
 import cz.muni.fi.timeline.api.UserFacadeImpl;
 import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;

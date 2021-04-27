@@ -1,9 +1,8 @@
 package cz.muni.fi.timeline;
 
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
-import cz.muni.fi.timeline.api.BeanMappingService;
+import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
-import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import com.github.dozermapper.core.Mapper;
 import org.hibernate.jpa.HibernatePersistenceProvider;
