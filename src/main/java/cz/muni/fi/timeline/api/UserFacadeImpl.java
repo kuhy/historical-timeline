@@ -7,7 +7,7 @@ import cz.muni.fi.timeline.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -27,43 +27,52 @@ public class UserFacadeImpl implements UserFacade{
     }
 
     @Override
-    public UserDTO findUserById(Long id) {
+    public Optional<UserDTO> findUserById(Long id) {
         Optional<User> user = userService.findById(id);
-        return user.isPresent() ? beanMappingService.mapTo(user.get(), UserDTO.class) : null;
+
+        if (!user.isPresent()) {
+            return Optional.empty();
+        }
+        return Optional.of(beanMappingService.mapTo(user.get(), UserDTO.class));
     }
 
     @Override
-    public UserDTO findUserByUsername(String username) {
+    public Optional <UserDTO> findUserByUsername(String username) {
         Optional<User> user = userService.findByUsername(username);
-        return user.isPresent() ? beanMappingService.mapTo(user.get(), UserDTO.class) : null;
+        if (!user.isPresent()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(beanMappingService.mapTo(user.get(), UserDTO.class));
     }
 
     @Override
     public void registerUser(UserDTO userDTO, String unencryptedPassword) {
         User userEntity = beanMappingService.mapTo(userDTO, User.class);
         userService.registerUser(userEntity, unencryptedPassword);
-        userDTO.setID(userEntity.getId());
     }
 
     @Override
-    public Collection<UserDTO> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         return beanMappingService.mapTo(userService.getAllUsers(), UserDTO.class);
     }
 
     @Override
-    public Collection<UserDTO> getAllTeachers() {
+    public List<UserDTO> getAllTeachers() {
         return beanMappingService.mapTo(userService.getAllTeachers(), UserDTO.class);
     }
 
     @Override
-    public Collection<UserDTO> getAllStudents() {
+    public List<UserDTO> getAllStudents() {
         return beanMappingService.mapTo(userService.getAllStudents(), UserDTO.class);
     }
 
     @Override
     public boolean authenticate(UserAuthenticateDTO userAuthenticateDTO) {
+
         return userService.authenticateUser(
-                userService.findById((userAuthenticateDTO.getID())).get(), userAuthenticateDTO.getPassword());
+                userService.findById(userAuthenticateDTO.getId()).orElseThrow(() ->
+                new IllegalArgumentException("User with given id does not exist.")), userAuthenticateDTO.getPassword());
     }
 
     @Override

@@ -11,21 +11,20 @@ import java.util.Objects;
 @Setter
 public class UserAuthenticateDTO {
     @NotNull
-    private long ID;
+    private long id;
     @NotNull
     private String password;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (!(o instanceof UserAuthenticateDTO)) return false;
         UserAuthenticateDTO that = (UserAuthenticateDTO) o;
-        return Objects.equals(getID(), that.getID())
-                ;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getID());
+        return Objects.hash(getId());
     }
 }
