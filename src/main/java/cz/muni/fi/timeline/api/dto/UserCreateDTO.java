@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.api.dto;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,9 +9,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class UserDTO {
-    @NotNull
-    private long id;
+public class UserCreateDTO {
     @NotNull
     @Size(min = 2, max = 500)
     private String firstName;
@@ -31,8 +28,8 @@ public class UserDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserDTO)) return false;
-        UserDTO that = (UserDTO) o;
+        if (!(o instanceof UserCreateDTO)) return false;
+        UserCreateDTO that = (UserCreateDTO) o;
         return Objects.equals(getFirstName(), that.getFirstName())
                 && Objects.equals(getLastName(), that.getLastName())
                 && Objects.equals(getUsername(), that.getUsername())

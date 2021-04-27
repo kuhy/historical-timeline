@@ -1,6 +1,7 @@
 package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;
+import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.UserService;
@@ -47,9 +48,18 @@ public class UserFacadeImpl implements UserFacade{
     }
 
     @Override
-    public void registerUser(UserDTO userDTO, String unencryptedPassword) {
-        User userEntity = beanMappingService.mapTo(userDTO, User.class);
+    public Long updateUser(UserDTO userDTO) {
+        User user = beanMappingService.mapTo(userDTO, User.class);
+        userService.updateUser(user);
+        return user.getId();
+
+    }
+
+    @Override
+    public Long registerUser(UserCreateDTO userCreateDTO, String unencryptedPassword) {
+        User userEntity = beanMappingService.mapTo(userCreateDTO, User.class);
         userService.registerUser(userEntity, unencryptedPassword);
+        return userEntity.getId();
     }
 
     @Override

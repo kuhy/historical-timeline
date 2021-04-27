@@ -1,6 +1,7 @@
 package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;
+import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
 import cz.muni.fi.timeline.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,21 @@ public interface UserFacade {
      */
     Optional <UserDTO> findUserByUsername(String username);
 
+    /**
+     * update user
+     * @param userDTO updated user
+     * @return id of the updated user
+     */
+    Long updateUser(UserDTO userDTO);
 
     /**
      * Register user with given unencrypted password.
-     * @param userDTO user to be registered
+     * @param userCreateDTO user to be registered
      * @param unencryptedPassword password with which will be the user registered
+     * @return id of registered user
      */
-    void registerUser(UserDTO userDTO, String unencryptedPassword);
+
+    Long registerUser(UserCreateDTO userCreateDTO, String unencryptedPassword);
 
     /**
      * Get all registered users

@@ -4,6 +4,7 @@ import cz.muni.fi.timeline.api.BeanMappingService;
 import cz.muni.fi.timeline.api.UserFacade;
 import cz.muni.fi.timeline.api.UserFacadeImpl;
 import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;
+import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.UserService;
@@ -72,8 +73,8 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testRegisterUser() {
-        UserDTO userDTO = beanMappingService.mapTo(user, UserDTO.class);
-        userFacade.registerUser(userDTO, "134");
+        UserCreateDTO userCreateDTO = beanMappingService.mapTo(user, UserCreateDTO.class);
+        userFacade.registerUser(userCreateDTO, "134");
 
         verify(userService, times(1)).registerUser(any(User.class),(anyString()));
         verifyNoMoreInteractions(userService);
@@ -193,6 +194,18 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
         verify(userService, times(1)).isTeacher(any(User.class));
         verifyNoMoreInteractions(userService);
 
+    }
+
+    @Test
+    public void testUpdateUser(){
+        UserDTO userDTO = beanMappingService.mapTo(user, UserDTO.class);
+        Long result = userFacade.updateUser(userDTO);
+
+        Assert.assertNotNull(result);
+        Assert.assertEquals(result, user.getId());
+
+        verify(userService, times(1)).updateUser(user);
+        verifyNoMoreInteractions(userService);
     }
 
 }
