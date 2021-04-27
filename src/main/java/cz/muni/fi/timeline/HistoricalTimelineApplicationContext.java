@@ -1,13 +1,11 @@
 package cz.muni.fi.timeline;
 
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import cz.muni.fi.timeline.api.BeanMappingService;
-import cz.muni.fi.timeline.api.BeanMappingServiceImpl;
 import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.HistoricalTimelineService;
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
-import org.dozer.loader.api.BeanMappingBuilder;
+import com.github.dozermapper.core.Mapper;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -68,7 +66,7 @@ public class HistoricalTimelineApplicationContext {
 
     @Bean
     public Mapper dozer(){
-        return new DozerBeanMapper();
+        return DozerBeanMapperBuilder.buildDefault();
     }
 
     @Bean
