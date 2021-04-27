@@ -163,7 +163,7 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
     @Override
     public void removeTimelineComment(Long id) {
         TimelineComment timelineComment = commentService.findTimelineCommentById(id).orElseThrow(() ->
-                new IllegalArgumentException("Timeline comment with given id does not exist.")
+            new IllegalArgumentException("Timeline comment with given id does not exist.")
         );
 
         commentService.removeTimelineComment(timelineComment);

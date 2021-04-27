@@ -6,6 +6,7 @@ import cz.muni.fi.timeline.entity.TimelineComment;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.service.TimelineCommentService;
 import cz.muni.fi.timeline.service.TimelineCommentServiceImpl;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -72,7 +73,7 @@ public class TimelineCommentServiceTest {
         Mockito.verifyNoMoreInteractions(timelineDaoMock);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = ServiceLayerException.class)
     public void testCreateTimelineCommentInNonexistentHistoricalTimeline() {
         comment.setId(null);
 

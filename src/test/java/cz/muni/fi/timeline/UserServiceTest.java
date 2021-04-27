@@ -5,6 +5,7 @@ import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.UserService;
 import cz.muni.fi.timeline.service.UserServiceImpl;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -212,7 +213,7 @@ public class UserServiceTest {
         verifyNoInteractions(encoder);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = ServiceLayerException.class)
     public void testNonExistingUserIsTeacher() {
         when(userDao.findById(teacher1.getId())).thenReturn(Optional.empty());
         Assert.assertTrue(userService.isTeacher(teacher1));

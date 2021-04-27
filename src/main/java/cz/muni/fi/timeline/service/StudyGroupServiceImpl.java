@@ -3,6 +3,7 @@ package cz.muni.fi.timeline.service;
 import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import cz.muni.fi.timeline.service.exception.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.service.exception.UserNotInStudyGroupException;
 import org.springframework.stereotype.Service;
@@ -27,55 +28,91 @@ public class StudyGroupServiceImpl implements StudyGroupService{
 
     @Override
     public void createStudyGroup(StudyGroup studyGroup) {
-        studyGroupDao.create(studyGroup);
+
+        try {
+            studyGroupDao.create(studyGroup);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public void updateStudyGroup(StudyGroup studyGroup) {
-        studyGroupDao.update(studyGroup);
+        try {
+            studyGroupDao.update(studyGroup);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public void removeStudyGroup(StudyGroup studyGroup) {
-        studyGroupDao.remove(studyGroup);
+        try {
+            studyGroupDao.remove(studyGroup);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public void addUserToStudyGroup(StudyGroup studyGroup, User user) throws UserAlreadyInStudyGroupException {
-        StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
-                new IllegalArgumentException("Study group with the given id does not exist.")
-        );
+        try {
+            StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
+                new ServiceLayerException("Study group with the given id does not exist.")
+            );
 
-        if(group.getUsers().contains(user)){
-            throw new UserAlreadyInStudyGroupException("StudyGroup already contains this User");
+            if(group.getUsers().contains(user)){
+                throw new UserAlreadyInStudyGroupException("StudyGroup already contains this User");
+            }
+
+            group.addUser(user);
+            studyGroupDao.update(group);
+        } catch (UserAlreadyInStudyGroupException e) {
+            throw e;
+        } catch (ServiceLayerException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
         }
-
-        group.addUser(user);
-        studyGroupDao.update(group);
     }
 
     @Override
     public void removeUserFromStudyGroup(StudyGroup studyGroup, User user) throws UserNotInStudyGroupException {
-        StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
-                new IllegalArgumentException("Study group with the given id does not exist.")
-        );
+        try {
+            StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
+                new ServiceLayerException("Study group with the given id does not exist.")
+            );
 
-        if(!group.getUsers().contains(user)){
-            throw new UserNotInStudyGroupException("StudyGroup does not contains User.");
+            if(!group.getUsers().contains(user)){
+                throw new UserNotInStudyGroupException("StudyGroup does not contains User.");
+            }
+
+            group.removeUser(user);
+            studyGroupDao.update(group);
+        } catch (UserNotInStudyGroupException e) {
+            throw e;
+        } catch (ServiceLayerException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
         }
-
-        group.removeUser(user);
-        studyGroupDao.update(group);
     }
 
     @Override
     public Optional<StudyGroup> findById(long id) {
-        return studyGroupDao.findById(id);
+        try {
+            return studyGroupDao.findById(id);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public List<StudyGroup> findAllStudyGroups() {
-        return studyGroupDao.findAll();
+        try {
+            return studyGroupDao.findAll();
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
-
 }

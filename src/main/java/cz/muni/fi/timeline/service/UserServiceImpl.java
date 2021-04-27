@@ -2,6 +2,7 @@ package cz.muni.fi.timeline.service;
 
 import cz.muni.fi.timeline.dao.UserDao;
 import cz.muni.fi.timeline.entity.User;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,8 +30,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(User user, String unencryptedPassword) {
-        user.setHashedPassword(encoder.encode(unencryptedPassword));
-        userDao.create(user);
+        try {
+            user.setHashedPassword(encoder.encode(unencryptedPassword));
+            userDao.create(user);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
@@ -40,45 +45,79 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        userDao.update(user);
+        try {
+            userDao.update(user);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public void removeUser(User user) {
-        userDao.remove(user);
+        try {
+            userDao.remove(user);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public Optional<User> findById(Long id) {
-        return userDao.findById(id);
+        try {
+            return userDao.findById(id);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        return userDao.findByUserName(username);
+        try {
+            return userDao.findByUserName(username);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public boolean isTeacher(User user) {
-        User find = userDao.findById(user.getId()).orElseThrow(() ->
-            new IllegalArgumentException("User with given id does not exist.")
-        );
+        try {
+            User find = userDao.findById(user.getId()).orElseThrow(() ->
+                new ServiceLayerException("User with given id does not exist.")
+            );
 
-        return find.getIsTeacher();
+            return find.getIsTeacher();
+        } catch (ServiceLayerException e) {
+            throw e;
+        }catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public List<User> getAllUsers() {
-        return userDao.findAll();
+        try {
+            return userDao.findAll();
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public List<User> getAllStudents() {
-        return userDao.findAllStudents();
+        try {
+            return userDao.findAllStudents();
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public List<User> getAllTeachers() {
-        return userDao.findAllTeachers();
+        try {
+            return userDao.findAllTeachers();
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 }

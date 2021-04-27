@@ -4,6 +4,7 @@ import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
 import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.StudyGroup;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -31,39 +32,65 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
     @Override
     public void createTimelineInStudyGroup(HistoricalTimeline timeline, StudyGroup studyGroup) {
-        historicalTimelineDao.create(timeline);
+        try {
+            historicalTimelineDao.create(timeline);
 
-        StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
-            new IllegalArgumentException("Study group with the given id does not exist.")
-        );
+            StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
+                new ServiceLayerException("Study group with the given id does not exist.")
+            );
 
-        group.addHistoricalTimeline(timeline);
+            group.addHistoricalTimeline(timeline);
 
-        studyGroupDao.update(group);
+            studyGroupDao.update(group);
+        } catch (ServiceLayerException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public void updateTimeline(HistoricalTimeline timeline) {
-        historicalTimelineDao.update(timeline);
+        try {
+            historicalTimelineDao.update(timeline);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public void removeTimeline(HistoricalTimeline timeline) {
-        historicalTimelineDao.remove(timeline);
+        try {
+            historicalTimelineDao.remove(timeline);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public Optional<HistoricalTimeline> findTimelineById(Long id) {
-        return historicalTimelineDao.findById(id);
+        try {
+            return historicalTimelineDao.findById(id);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public List<HistoricalTimeline> findTimelineByName(String name) {
-        return historicalTimelineDao.findByName(name);
+        try {
+            return historicalTimelineDao.findByName(name);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public List<HistoricalTimeline> findAllTimelines() {
-        return historicalTimelineDao.findAll();
+        try {
+            return historicalTimelineDao.findAll();
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 }

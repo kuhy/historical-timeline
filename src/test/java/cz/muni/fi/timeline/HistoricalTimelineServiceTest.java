@@ -6,6 +6,7 @@ import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import cz.muni.fi.timeline.service.HistoricalTimelineServiceImpl;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -73,7 +74,7 @@ public class HistoricalTimelineServiceTest {
         Mockito.verifyNoMoreInteractions(studyGroupDaoMock);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = ServiceLayerException.class)
     public void testCreateHistoricalTimelineInNonexistentStudyGroup() {
         romanEmpire.setId(null);
 
