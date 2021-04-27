@@ -2,8 +2,8 @@ package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
-import cz.muni.fi.timeline.service.UserAlreadyInStudyGroupException;
-import cz.muni.fi.timeline.service.UserNotInStudyGroupException;
+import cz.muni.fi.timeline.service.exception.UserAlreadyInStudyGroupException;
+import cz.muni.fi.timeline.service.exception.UserNotInStudyGroupException;
 
 import java.util.List;
 import java.util.Optional;

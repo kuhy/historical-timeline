@@ -1,4 +1,4 @@
-package cz.muni.fi.timeline.service;
+package cz.muni.fi.timeline.service.exception;
 
 /**
  * Exception for handling adding the same user into group

@@ -10,8 +10,10 @@ import cz.muni.fi.timeline.service.HistoricalEventService;
 import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.service.TimelineCommentService;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +21,8 @@ import java.util.Optional;
  * Implementation of historical timeline facade
  * @author Matej Macák
  */
+@Service
+@Transactional
 public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
 
     final private HistoricalTimelineService timelineService;
@@ -50,7 +54,7 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
     @Override
     public Optional<HistoricalTimelineDTO> getHistoricalTimelineWithId(Long id) {
         Optional<HistoricalTimeline> find = timelineService.findTimelineById(id);
-        if (!find.isPresent()) {
+        if (find.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(beanMappingService.mapTo(find.get(), HistoricalTimelineDTO.class));
@@ -107,7 +111,7 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
     @Override
     public Optional<HistoricalEventDTO> getHistoricalEventWithId(Long id) {
         Optional<HistoricalEvent> find = eventService.findById(id);
-        if (!find.isPresent()) {
+        if (find.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(beanMappingService.mapTo(find.get(), HistoricalEventDTO.class));
@@ -143,7 +147,7 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
     @Override
     public Optional<TimelineCommentDTO> getTimelineCommentWithId(Long id) {
         Optional<TimelineComment> find = commentService.findTimelineCommentById(id);
-        if (!find.isPresent()) {
+        if (find.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(beanMappingService.mapTo(find.get(), TimelineCommentDTO.class));

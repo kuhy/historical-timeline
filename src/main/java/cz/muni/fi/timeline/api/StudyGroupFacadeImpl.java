@@ -6,13 +6,14 @@ import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.service.StudyGroupService;
-import cz.muni.fi.timeline.service.UserAlreadyInStudyGroupException;
-import cz.muni.fi.timeline.service.UserNotInStudyGroupException;
+import cz.muni.fi.timeline.service.exception.UserAlreadyInStudyGroupException;
+import cz.muni.fi.timeline.service.exception.UserNotInStudyGroupException;
 import cz.muni.fi.timeline.service.UserService;
 
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ import java.util.Optional;
  * @author Tri Le Mau
  */
 @Service
+@Transactional
 public class StudyGroupFacadeImpl implements StudyGroupFacade {
 
     final private StudyGroupService studyGroupService;
@@ -46,7 +48,7 @@ public class StudyGroupFacadeImpl implements StudyGroupFacade {
     public Optional<StudyGroupDTO> getStudyGroupWithId(Long studyGroupId) {
         Optional<StudyGroup> find = studyGroupService.findById(studyGroupId);
 
-        if (!find.isPresent()) {
+        if (find.isEmpty()) {
             return Optional.empty();
         }
 

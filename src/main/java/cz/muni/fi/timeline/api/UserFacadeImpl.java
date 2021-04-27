@@ -9,6 +9,7 @@ import cz.muni.fi.timeline.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +18,11 @@ import java.util.Optional;
  * @author Karolína Veselá
  */
 @Service
+@Transactional
 public class UserFacadeImpl implements UserFacade{
 
-    private UserService userService;
-    private BeanMappingService beanMappingService;
+    private final UserService userService;
+    private final BeanMappingService beanMappingService;
 
     @Inject
     public UserFacadeImpl(UserService userService,BeanMappingService beanMappingService){
@@ -32,7 +34,7 @@ public class UserFacadeImpl implements UserFacade{
     public Optional<UserDTO> findUserById(Long id) {
         Optional<User> user = userService.findById(id);
 
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             return Optional.empty();
         }
         return Optional.of(beanMappingService.mapTo(user.get(), UserDTO.class));
@@ -41,7 +43,7 @@ public class UserFacadeImpl implements UserFacade{
     @Override
     public Optional <UserDTO> findUserByUsername(String username) {
         Optional<User> user = userService.findByUsername(username);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             return Optional.empty();
         }
 
@@ -100,5 +102,4 @@ public class UserFacadeImpl implements UserFacade{
 
         userService.removeUser(user);
     }
-
 }

@@ -3,6 +3,8 @@ package cz.muni.fi.timeline.service;
 import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
+import cz.muni.fi.timeline.service.exception.UserAlreadyInStudyGroupException;
+import cz.muni.fi.timeline.service.exception.UserNotInStudyGroupException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
