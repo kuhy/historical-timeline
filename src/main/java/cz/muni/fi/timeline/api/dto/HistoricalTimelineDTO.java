@@ -10,26 +10,20 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Getter
+@Setter
 public class HistoricalTimelineDTO {
 
-    @Getter
-    @Setter
     @NotNull
     private Long id;
 
-    @Getter
-    @Setter
     @NotNull
     @Size(min = 2, max = 500)
     private String name;
 
-    @Getter
-    @Setter
     @NotNull
     private Set<HistoricalEventDTO> historicalEvents = new HashSet<>();
 
-    @Getter
-    @Setter
     @NotNull
     private Set<TimelineCommentDTO> timelineComments = new HashSet<>();
 

@@ -2,8 +2,8 @@ package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.*;
 
-import java.sql.Time;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Facade for historical timeline
@@ -26,13 +26,13 @@ public interface HistoricalTimelineFacade {
      * @param id of the looking timeline
      * @return found timeline or null
      */
-    public HistoricalTimelineDTO getHistoricalTimelineWithId(Long id);
+    public Optional<HistoricalTimelineDTO> getHistoricalTimelineWithId(Long id);
 
     /**
      * renames timeline
-     * @param historicalTimelineNewNameDTO new timeline name
+     * @param historicalTimelineUpdateNameDTO new timeline name
      */
-    public void newHistoricalTimelineName(HistoricalTimelineNewNameDTO historicalTimelineNewNameDTO);
+    public void updateNameOfHistoricalTimeline(HistoricalTimelineUpdateNameDTO historicalTimelineUpdateNameDTO);
 
     /**
      * removes timeline with given id
@@ -67,14 +67,14 @@ public interface HistoricalTimelineFacade {
      * updates parameters in event
      * @param historicalEventDTO event with new parameters
      */
-    public void newEventUpdate(HistoricalEventDTO historicalEventDTO);
+    public void updateHistoricalEvent(HistoricalEventDTO historicalEventDTO);
 
     /**
      * return event with given id
      * @param id id of looking event
      * @return found event or null
      */
-    public HistoricalEventDTO getHistoricalEventWithId(Long id);
+    public Optional<HistoricalEventDTO> getHistoricalEventWithId(Long id);
 
     /**
      * removes event with given id
@@ -103,13 +103,13 @@ public interface HistoricalTimelineFacade {
      * @param id id of looking comment
      * @return found comment or null
      */
-    public TimelineCommentDTO getTimelineCommentWithId(Long id);
+    public Optional<TimelineCommentDTO> getTimelineCommentWithId(Long id);
 
     /**
      * updates text in comment
      * @param timelineCommentDTO comment with updated text
      */
-    public void newTimelineCommentText(TimelineCommentDTO timelineCommentDTO);
+    public void updateTimelineCommentText(TimelineCommentDTO timelineCommentDTO);
 
     /**
      * removes comment with given id

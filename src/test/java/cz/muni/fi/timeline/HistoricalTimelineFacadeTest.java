@@ -63,6 +63,7 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
         event.setName("Funeral of Pope");
         event.setDescription("John Paul II");
         event.setLocation("Vatican");
+        event.setDate(LocalDate.of(2005,4,8));
 
         timeline = new HistoricalTimeline();
         timeline.setId(1L);
@@ -113,11 +114,11 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     @Test
     public void testGetHistoricalTimelineWithExistingId() {
         when(timelineService.findTimelineById(timeline.getId())).thenReturn(Optional.of(timeline));
-        HistoricalTimelineDTO get = historicalTimelineFacade.getHistoricalTimelineWithId(studyGroup.getId());
+        Optional<HistoricalTimelineDTO> get = historicalTimelineFacade.getHistoricalTimelineWithId(studyGroup.getId());
 
-        Assert.assertNotNull(get, "Historical Timeline should return valid object");
+        Assert.assertTrue(get.isPresent(), "Historical Timeline should return valid object");
         HistoricalTimelineDTO mappedTimeline = beanMappingService.mapTo(timeline, HistoricalTimelineDTO.class);
-        Assert.assertEquals(get, mappedTimeline);
+        Assert.assertEquals(get.get(), mappedTimeline);
 
         verify(timelineService, times(1)).findTimelineById(anyLong());
         verifyNoMoreInteractions(timelineService);
@@ -129,9 +130,9 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     @Test
     public void testGetHistoricalTimelineWithNonExistingId() {
         when(timelineService.findTimelineById(timeline.getId())).thenReturn(Optional.empty());
-        HistoricalTimelineDTO get = historicalTimelineFacade.getHistoricalTimelineWithId(studyGroup.getId());
+        Optional<HistoricalTimelineDTO> get = historicalTimelineFacade.getHistoricalTimelineWithId(studyGroup.getId());
 
-        Assert.assertNull(get);
+        Assert.assertFalse(get.isPresent());
 
         verify(timelineService, times(1)).findTimelineById(anyLong());
         verifyNoMoreInteractions(timelineService);
@@ -143,11 +144,11 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     @Test
     public void testNewHistoricalTimelineName() {
         when(timelineService.findTimelineById(timeline.getId())).thenReturn(Optional.of(timeline));
-        HistoricalTimelineNewNameDTO newNameDTO = new HistoricalTimelineNewNameDTO();
+        HistoricalTimelineUpdateNameDTO newNameDTO = new HistoricalTimelineUpdateNameDTO();
         newNameDTO.setId(timeline.getId());
         newNameDTO.setName("Ancient Greece");
 
-        historicalTimelineFacade.newHistoricalTimelineName(newNameDTO);
+        historicalTimelineFacade.updateNameOfHistoricalTimeline(newNameDTO);
 
         verify(timelineService, times(1)).findTimelineById(timeline.getId());
         verify(timelineService, times(1)).updateTimeline(any(HistoricalTimeline.class));
@@ -221,7 +222,7 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
         updateDTO.setDescription("Bravery of Sparta");
         updateDTO.setLocation("Thermopylae");
 
-        historicalTimelineFacade.newEventUpdate(updateDTO);
+        historicalTimelineFacade.updateHistoricalEvent(updateDTO);
 
         verify(eventService, times(1)).findById(event.getId());
         verify(eventService, times(1)).updateEvent(any(HistoricalEvent.class));
@@ -234,11 +235,11 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     @Test
     public void testGetHistoricalEventWithExistingId() {
         when(eventService.findById(event.getId())).thenReturn(Optional.of(event));
-        HistoricalEventDTO get = historicalTimelineFacade.getHistoricalEventWithId(event.getId());
+        Optional<HistoricalEventDTO> get = historicalTimelineFacade.getHistoricalEventWithId(event.getId());
 
-        Assert.assertNotNull(get, "Historical Event should return valid object");
+        Assert.assertTrue(get.isPresent(), "Historical Event should return valid object");
         HistoricalEventDTO mappedEvent = beanMappingService.mapTo(event, HistoricalEventDTO.class);
-        Assert.assertEquals(get, mappedEvent);
+        Assert.assertEquals(get.get(), mappedEvent);
 
         verify(eventService, times(1)).findById(anyLong());
         verifyNoMoreInteractions(eventService);
@@ -250,9 +251,9 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     @Test
     public void testGetHistoricalEventWithNonExistingId() {
         when(eventService.findById(event.getId())).thenReturn(Optional.empty());
-        HistoricalEventDTO get = historicalTimelineFacade.getHistoricalEventWithId(event.getId());
+        Optional<HistoricalEventDTO> get = historicalTimelineFacade.getHistoricalEventWithId(event.getId());
 
-        Assert.assertNull(get);
+        Assert.assertFalse(get.isPresent());
 
         verify(eventService, times(1)).findById(anyLong());
         verifyNoMoreInteractions(eventService);
@@ -310,7 +311,7 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
         updateDTO.setId(event.getId());
         updateDTO.setText("Pay attention, please");
 
-        historicalTimelineFacade.newTimelineCommentText(updateDTO);
+        historicalTimelineFacade.updateTimelineCommentText(updateDTO);
 
         verify(commentService, times(1)).findTimelineCommentById(comment.getId());
         verify(commentService, times(1)).updateTimelineComment(any(TimelineComment.class));
@@ -323,11 +324,11 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     @Test
     public void testGetTimelineCommentWithExistingId() {
         when(commentService.findTimelineCommentById(comment.getId())).thenReturn(Optional.of(comment));
-        TimelineCommentDTO get = historicalTimelineFacade.getTimelineCommentWithId(comment.getId());
+        Optional<TimelineCommentDTO> get = historicalTimelineFacade.getTimelineCommentWithId(comment.getId());
 
-        Assert.assertNotNull(get, "Timeline comment should return valid object");
+        Assert.assertTrue(get.isPresent(), "Timeline comment should return valid object");
         TimelineCommentDTO mappedComment = beanMappingService.mapTo(comment, TimelineCommentDTO.class);
-        Assert.assertEquals(get, mappedComment);
+        Assert.assertEquals(get.get(), mappedComment);
 
         verify(commentService, times(1)).findTimelineCommentById(anyLong());
         verifyNoMoreInteractions(commentService);
@@ -339,9 +340,9 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     @Test
     public void testGetTimelineCommentWithNonExistingId() {
         when(commentService.findTimelineCommentById(comment.getId())).thenReturn(Optional.empty());
-        TimelineCommentDTO get = historicalTimelineFacade.getTimelineCommentWithId(comment.getId());
+        Optional<TimelineCommentDTO> get = historicalTimelineFacade.getTimelineCommentWithId(comment.getId());
 
-        Assert.assertNull(get);
+        Assert.assertFalse(get.isPresent());
 
         verify(commentService, times(1)).findTimelineCommentById(anyLong());
         verifyNoMoreInteractions(commentService);

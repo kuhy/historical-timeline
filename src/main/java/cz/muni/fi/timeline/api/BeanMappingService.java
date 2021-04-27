@@ -1,7 +1,6 @@
 package cz.muni.fi.timeline.api;
 
-import org.dozer.Mapper;
-
+import com.github.dozermapper.core.Mapper;
 import java.util.Collection;
 import java.util.List;
 

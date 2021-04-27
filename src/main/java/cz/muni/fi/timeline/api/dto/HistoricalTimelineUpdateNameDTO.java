@@ -7,24 +7,22 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
-public class HistoricalTimelineNewNameDTO {
+@Getter
+@Setter
+public class HistoricalTimelineUpdateNameDTO {
 
-    @Getter
-    @Setter
     @NotNull
     private Long id;
 
     @NotNull
-    @Getter
-    @Setter
     @Size(min = 2, max = 500)
     private String name;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof HistoricalTimelineNewNameDTO)) return false;
-        HistoricalTimelineNewNameDTO that = (HistoricalTimelineNewNameDTO) o;
+        if (!(o instanceof HistoricalTimelineUpdateNameDTO)) return false;
+        HistoricalTimelineUpdateNameDTO that = (HistoricalTimelineUpdateNameDTO) o;
         return Objects.equals(getName(), that.getName());
     }
 

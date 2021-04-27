@@ -14,8 +14,6 @@ import java.util.Objects;
 @Setter
 public class HistoricalEventDTO {
 
-    @Getter
-    @Setter
     @NotNull
     private Long id;
 
@@ -37,6 +35,8 @@ public class HistoricalEventDTO {
     @Lob
     @NotNull
     private byte[] image;
+
+
 
     @Override
     public boolean equals(Object o) {
