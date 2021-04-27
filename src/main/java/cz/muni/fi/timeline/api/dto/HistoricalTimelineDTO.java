@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.api.dto;
 
-import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +9,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * DTO for historical timeline.
+ *
+ * @author Matej Macák
+ */
 @Getter
 @Setter
 public class HistoricalTimelineDTO {

@@ -1,7 +1,6 @@
 package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.*;
-import cz.muni.fi.timeline.entity.HistoricalTimeline;
 
 import java.util.List;
 import java.util.Optional;

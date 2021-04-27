@@ -1,12 +1,17 @@
 package cz.muni.fi.timeline.api.dto;
 
-import cz.muni.fi.timeline.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+
+/**
+ * DTO for authentication of users.
+ *
+ * @author Karolína Veselá
+ */
 @Getter
 @Setter
 public class UserAuthenticateDTO {

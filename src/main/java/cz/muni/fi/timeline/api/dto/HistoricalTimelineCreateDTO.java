@@ -8,6 +8,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+/**
+ * DTO for creating historical timeline.
+ *
+ * @author Matej Macák
+ */
 @Data
 public class HistoricalTimelineCreateDTO {
 

@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.api.dto;
 
-import cz.muni.fi.timeline.entity.TimelineComment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +7,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+/**
+ * DTO for timeline comment.
+ *
+ * @author Matej Macák
+ */
 @Getter
 @Setter
 public class TimelineCommentDTO {

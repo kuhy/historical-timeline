@@ -8,6 +8,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+/**
+ * DTO for user.
+ *
+ * @author Karolína Veselá
+ */
 @Getter
 @Setter
 public class UserDTO {

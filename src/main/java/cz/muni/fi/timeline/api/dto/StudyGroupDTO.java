@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.api.dto;
 
-import cz.muni.fi.timeline.entity.StudyGroup;
 import lombok.Getter;
 import lombok.Setter;
 

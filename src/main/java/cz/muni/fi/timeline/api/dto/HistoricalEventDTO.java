@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.api.dto;
 
-import cz.muni.fi.timeline.entity.HistoricalEvent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +9,11 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * DTO for historical event.
+ *
+ * @author Matej Macák
+ */
 @Getter
 @Setter
 public class HistoricalEventDTO {
