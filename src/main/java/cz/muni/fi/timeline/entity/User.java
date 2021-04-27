@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -16,39 +16,39 @@ import java.util.Set;
  *
  * @author Tri Le Mau
  */
-@Table(name = "UserTable")
 @Entity
-public class User {
+@Table(name = "user_entity")
+public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false, name = "first_name")
     private String firstName;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false, name = "last_name")
     private String lastName;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false)
     private String username;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false, name = "hashed_password")
     private String hashedPassword;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false, name = "is_teacher")
     private Boolean isTeacher;
 
     @ManyToMany(mappedBy = "users")
@@ -69,6 +69,7 @@ public class User {
      * @param studyGroup study group that is added to user.
      */
     public void addStudyGroup(StudyGroup studyGroup) {
+        studyGroup.addUser(this);
         studyGroups.add(studyGroup);
     }
 
@@ -95,5 +96,16 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(getFirstName(), getLastName(), getUsername(), getHashedPassword());
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+            "firstName='" + getFirstName() + '\'' +
+            ", lastName='" + getLastName() + '\'' +
+            ", username='" + getUsername() + '\'' +
+            ", hashedPassword='" + getHashedPassword() + '\'' +
+            ", isTeacher=" + getIsTeacher() +
+            '}';
     }
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -14,16 +14,17 @@ import java.util.Objects;
  *
  * @author Ondřej Kuhejda
  */
-@Entity
 @Getter
 @Setter
-public class TimelineComment {
+@Entity
+@Table(name = "comment_entity")
+public class TimelineComment implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull
+    @Column(nullable=false)
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,5 +41,13 @@ public class TimelineComment {
     @Override
     public int hashCode() {
         return Objects.hash(getText(), getUser());
+    }
+
+    @Override
+    public String toString() {
+        return "TimelineComment{" +
+            "text='" + getText() + '\'' +
+            ", user=" + getUser() +
+            '}';
     }
 }

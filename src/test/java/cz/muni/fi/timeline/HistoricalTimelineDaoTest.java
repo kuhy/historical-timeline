@@ -10,8 +10,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,12 +102,13 @@ public class HistoricalTimelineDaoTest extends AbstractTestNGSpringContextTests 
         Assert.assertEquals(historicalTimelineDao.findAll().size(),0);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testForNotNullException(){
         HistoricalTimeline romanEmpire = new HistoricalTimeline();
 
         historicalTimelineDao.create(romanEmpire);
+        historicalTimelineDao.findAll();
     }
 
     @Test

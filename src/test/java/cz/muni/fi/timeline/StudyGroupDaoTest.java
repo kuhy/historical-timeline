@@ -13,8 +13,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,13 +42,16 @@ public class StudyGroupDaoTest extends AbstractTestNGSpringContextTests {
 
         Assert.assertEquals(studyGroupDao.findAll().size(), 1);
     }
-    @Test(expectedExceptions = ConstraintViolationException.class)
+
+    @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testCreateStudyGroupNullName() {
         StudyGroup studyGroup = new StudyGroup();
 
         studyGroupDao.create(studyGroup);
+        studyGroupDao.findAll();
     }
+
     @Test
     @Transactional
     public void testFindAllStudyGroups() {

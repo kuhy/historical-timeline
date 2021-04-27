@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -19,25 +19,26 @@ import java.util.Set;
  * @author Ondřej Kuhejda
  */
 @Entity
-public class HistoricalTimeline {
+@Table(name = "timeline_entity")
+public class HistoricalTimeline implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false)
     private String name;
 
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "timeline_id", referencedColumnName = "id")
     private Set<HistoricalEvent> historicalEvents = new HashSet<>();
 
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "timeline_id", referencedColumnName = "id")
     private Set<TimelineComment> timelineComments = new HashSet<>();
 
     /**
@@ -93,5 +94,12 @@ public class HistoricalTimeline {
     @Override
     public int hashCode() {
         return Objects.hash(getName());
+    }
+
+    @Override
+    public String toString() {
+        return "HistoricalTimeline{" +
+            "name='" + getName() + '\'' +
+            '}';
     }
 }

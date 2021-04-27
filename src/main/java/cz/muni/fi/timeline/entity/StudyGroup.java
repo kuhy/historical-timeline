@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -18,24 +18,28 @@ import java.util.Set;
  */
 
 @Entity
-public class StudyGroup {
+@Table(name = "study_group_entity")
+public class StudyGroup implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull
     @Getter
     @Setter
+    @Column(nullable=false)
     private String name;
 
     @ManyToMany
+    @JoinTable(name = "study_group_user",
+        joinColumns = @JoinColumn(name = "study_group_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users = new HashSet<>();
 
     @OneToMany
-    @JoinColumn
+    @JoinColumn(name = "study_group_id", referencedColumnName = "id")
     private Set<HistoricalTimeline> historicalTimelines = new HashSet<>();
 
     /**
@@ -94,5 +98,12 @@ public class StudyGroup {
     @Override
     public int hashCode() {
         return Objects.hash(getName());
+    }
+
+    @Override
+    public String toString() {
+        return "StudyGroup{" +
+            "name='" + getName() + '\'' +
+            '}';
     }
 }

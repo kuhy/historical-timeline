@@ -11,8 +11,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 import java.util.Optional;
 
 /**
@@ -81,12 +81,13 @@ public class TimelineCommentDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertFalse(timelineCommentDao.findById(questionComment.getId() + 10).isPresent());
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testForNotNullException(){
         TimelineComment negativeComment = new TimelineComment();
 
         timelineCommentDao.create(negativeComment);
+        timelineCommentDao.findAll();
     }
 
     @Test

@@ -3,12 +3,8 @@ package cz.muni.fi.timeline.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -17,16 +13,17 @@ import java.util.Objects;
  * Contains name, brief description, data location and can contain image or placeholder
  * @author Matej Macák
  */
-@Entity
 @Getter
 @Setter
-public class HistoricalEvent {
+@Entity
+@Table(name = "event_entity")
+public class HistoricalEvent implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @NotNull
+    @Column(nullable=false)
     private String name;
 
     private String description;
@@ -52,5 +49,15 @@ public class HistoricalEvent {
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getDescription(), getDate(), getLocation());
+    }
+
+    @Override
+    public String toString() {
+        return "HistoricalEvent{" +
+            "name='" + getName() + '\'' +
+            ", description='" + getDescription() + '\'' +
+            ", date=" + getDate() +
+            ", location='" + getLocation() + '\'' +
+            '}';
     }
 }

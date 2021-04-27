@@ -57,6 +57,7 @@ group and add a comment to them. Searching among all events is also possible.
       | Task          | Deadline | =User= | =StudyGroup= | =HistoricalTimeline= | =TimelineComment= | =HistoricalEvent= |
       | *Service*     | 23. 4.   | Stefan | Matej        | Kuhy                 | Kuhy              | Kája              |
       | *Code review* | 23. 4.   | Kája   | Kuhy         | Stefan               | Matej             | Matej             |
+      - *we will have a call on 19. 4. and we will reflect on our work*
     - second task is to implement facades and DTOs
       - the Facade layer will use the Service layer and the Service layer will use the DAO layer;
       - implement simple unit tests for the facade layer. Just one simple test per method is enough. This is mainly so that it’s easy to verify the Facade layer;
@@ -70,8 +71,6 @@ group and add a comment to them. Searching among all events is also possible.
         - the Facade layer is used to drive transactions;
       | Task           | Deadline | =User= | =StudyGroup= | =HistoricalTimeline= | Milestone1 comments |
       | *Facade + DTO* | 25. 4.   | Kája   | Stefan       | Matej                | Kuhy                |
-
-      - *we will have a call on 19. 4. and we will reflect on our work*
 *** DONE Milestone 1
     DEADLINE: <2021-04-07 Wed>
     - *create a project wiki with a project description*
@@ -89,84 +88,72 @@ group and add a comment to them. Searching among all events is also possible.
     | *Check tests* | 6. 4.    | Kuhy      | Kuhy         | Kája                 | Kája              | Matej     | Stefan            |
 * Use-case diagram
   #+BEGIN_SRC plantuml :file images/use-case_diagram.svg :exports results
-  left to right direction
+    left to right direction
 
-  actor Student
-  actor Teacher
+    actor User
+    actor Student
+    actor Teacher
 
-  Student --> (add comment to timeline)
-  Student --> (search among all events)
+    User <|-- Student
+    User <|-- Teacher
 
-  Student --> (login)
-  Student --> (logout)
-  Student --> (register)
-  Student --> (view timeline)
-  Student --> (view study group)
+    User --> (login)
+    User --> (logout)
+    User --> (register)
+    User --> (view timeline)
+    User --> (view study group)
 
-  Teacher --> (login)
-  Teacher --> (logout)
-  Teacher --> (register)
-  Teacher --> (view timeline)
-  Teacher --> (view study group)
+    Student --> (add comment to timeline)
+    Student --> (search among all events)
 
-  Teacher --> (create event)
-  Teacher --> (create timeline)
-  Teacher --> (create study group)
-
-  Teacher --> (add event to timeline)
-  Teacher --> (add timeline to study group)
-  Teacher --> (enroll student to study group)
+    Teacher --> (create event)
+    Teacher --> (create timeline)
+    Teacher --> (create study group)
+    Teacher --> (add event to timeline)
+    Teacher --> (add timeline to study group)
+    Teacher --> (enroll student to study group)
   #+END_SRC
 
   #+RESULTS:
   [[file:images/use-case_diagram.svg]]
 * Class diagram
   #+BEGIN_SRC plantuml :file images/class_diagram.svg :exports results
-  class HistoricalEvent {
-    name: String
-    description: String
-    date: LocalDate
-    location: String
-    image: byte[]
-  }
+    class HistoricalEvent {
+      name: String
+      description: String
+      date: LocalDate
+      location: String
+      image: byte[]
+    }
 
-  class HistoricalTimeline {
-    name: String
-  }
+    class HistoricalTimeline {
+      name: String
+    }
 
-  HistoricalTimeline "1" *-- "*" HistoricalEvent
+    HistoricalTimeline "1" *-- "*" HistoricalEvent
 
-  class StudyGroup {
-    name: String
-  }
+    class StudyGroup {
+      name: String
+    }
 
-  StudyGroup "1" *-- "*" HistoricalTimeline
+    StudyGroup "1" *-- "*" HistoricalTimeline
 
-  class Teacher {
-    firstName: String
-    lastName: String
-    username: String
-    hashedPassword: int
-  }
+    class User {
+      isTeacher: Boolean
+      firstName: String
+      lastName: String
+      username: String
+      hashedPassword: String
+    }
 
-  Teacher "1" *-- "*" StudyGroup
+    User "*" o--o "*" StudyGroup
 
+    class TimelineComment {
+      text: String
+    }
 
-  class Student {
-    firstName: String
-    lastName: String
-    username: String
-    hashedPassword: int
-  }
-
-  Student "*" o--o "*" StudyGroup
-
-  class TimelineComment {
-    text: String
-  }
-
-  HistoricalTimeline "1" *-- "*" TimelineComment
-  TimelineComment "*" o-- "1" Student
+    HistoricalTimeline "1" *-- "*" TimelineComment
+    TimelineComment "*" o-- "1" User
   #+END_SRC
 
   #+RESULTS:

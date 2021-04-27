@@ -36,7 +36,11 @@ public class TimelineCommentDaoImpl implements TimelineCommentDao {
 
     @Override
     public void remove(TimelineComment timelineComment) {
-        em.remove(timelineComment);
+        if (em.contains(timelineComment)) {
+            em.remove(timelineComment);
+        } else {
+            em.remove(em.merge(timelineComment));
+        }
     }
 
     @Override

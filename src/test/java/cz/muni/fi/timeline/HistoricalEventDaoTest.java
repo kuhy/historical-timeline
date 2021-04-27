@@ -10,8 +10,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -124,11 +124,12 @@ public class HistoricalEventDaoTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(historicalEventDao.findAll().size(), 0);
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test(expectedExceptions = PersistenceException.class)
     @Transactional
     public void testThatNameOfTheHistoricalEventCannotBeNull() {
         HistoricalEvent nativityOfJesus = new HistoricalEvent();
 
         historicalEventDao.create(nativityOfJesus);
+        historicalEventDao.findAll();
     }
 }
