@@ -3,7 +3,6 @@ package cz.muni.fi.timeline.api.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -36,11 +35,8 @@ public class HistoricalEventDTO {
     @Size(min = 2, max = 500)
     private String location;
 
-    @Lob
     @NotNull
     private byte[] image;
-
-
 
     @Override
     public boolean equals(Object o) {

@@ -216,22 +216,22 @@ public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testAddUserToStudyGroupNullStudyGroup() {
+    public void testAddUserToStudyGroupNullStudyGroup() throws UserAlreadyInStudyGroupException {
         studyGroupService.addUserToStudyGroup(null, teacher1);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testAddUserToStudyGroupNullUser() {
+    public void testAddUserToStudyGroupNullUser() throws UserAlreadyInStudyGroupException {
         studyGroupService.addUserToStudyGroup(group1, null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testRemoveUserFromStudyGroupNullStudyGroup() {
+    public void testRemoveUserFromStudyGroupNullStudyGroup() throws UserNotInStudyGroupException {
         studyGroupService.removeUserFromStudyGroup(null, teacher1);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testRemoveUserFromStudyGroupNullUser() {
+    public void testRemoveUserFromStudyGroupNullUser() throws UserNotInStudyGroupException {
         studyGroupService.removeUserFromStudyGroup(group1, null);
     }
 
