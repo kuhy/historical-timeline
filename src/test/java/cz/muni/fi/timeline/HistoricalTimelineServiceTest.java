@@ -6,6 +6,7 @@ import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import cz.muni.fi.timeline.service.HistoricalTimelineServiceImpl;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -73,7 +74,7 @@ public class HistoricalTimelineServiceTest {
         Mockito.verifyNoMoreInteractions(studyGroupDaoMock);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = ServiceLayerException.class)
     public void testCreateHistoricalTimelineInNonexistentStudyGroup() {
         romanEmpire.setId(null);
 
@@ -149,5 +150,39 @@ public class HistoricalTimelineServiceTest {
         Mockito.verify(timelineDaoMock).findAll();
         Mockito.verifyNoMoreInteractions(timelineDaoMock);
         Mockito.verifyNoInteractions(studyGroupDaoMock);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateTimelineInStudyGroupNullTimeline() {
+        StudyGroup historyGroup = new StudyGroup();
+        historyGroup.setId(1L);
+        historyGroup.setName("History");
+
+        timelineService.createTimelineInStudyGroup(null, historyGroup);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateTimelineInStudyGroupNullStudyGroup() {
+        timelineService.createTimelineInStudyGroup(romanEmpire, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateTimelineNull() {
+        timelineService.updateTimeline(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveTimelineNull() {
+        timelineService.removeTimeline(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindTimelineByIdNull() {
+        timelineService.findTimelineById(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindTimelineByNameNull() {
+        timelineService.findTimelineByName(null);
     }
 }

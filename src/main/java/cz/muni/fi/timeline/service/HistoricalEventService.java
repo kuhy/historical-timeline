@@ -56,5 +56,5 @@ public interface HistoricalEventService {
      * @param id id of the given event
      * @return event with the given id
      */
-    Optional<HistoricalEvent> findById(long id);
+    Optional<HistoricalEvent> findById(Long id);
 }

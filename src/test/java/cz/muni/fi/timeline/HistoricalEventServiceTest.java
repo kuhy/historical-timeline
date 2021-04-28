@@ -83,7 +83,6 @@ public class HistoricalEventServiceTest{
 
     @Test
     public void testCreateHistoricalEventInTimeline(){
-
         when(historicalTimelineDao.findById(timeline.getId())).thenReturn(Optional.of(timeline));
         historicalEventService.createEventInTimeline(event1, timeline);
 
@@ -138,5 +137,40 @@ public class HistoricalEventServiceTest{
     public void testGetAllEvents(){
         when(historicalEventDao.findAll()).thenReturn(events);
         Assert.assertEquals(historicalEventService.getAllEvents(), events);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateEventNull() {
+        historicalEventService.createEvent(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateEventInTimelineNullEvent() {
+        historicalEventService.createEventInTimeline(null, timeline);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateEventInTimelineNullTimeline() {
+        historicalEventService.createEventInTimeline(event1, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateEventNull() {
+        historicalEventService.updateEvent(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveEventNull() {
+        historicalEventService.removeEvent(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByNameNull() {
+        historicalEventService.findByName(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByIdNull() {
+        historicalEventService.findById(null);
     }
 }

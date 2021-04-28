@@ -6,6 +6,7 @@ import cz.muni.fi.timeline.entity.TimelineComment;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.service.TimelineCommentService;
 import cz.muni.fi.timeline.service.TimelineCommentServiceImpl;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -72,7 +73,7 @@ public class TimelineCommentServiceTest {
         Mockito.verifyNoMoreInteractions(timelineDaoMock);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = ServiceLayerException.class)
     public void testCreateTimelineCommentInNonexistentHistoricalTimeline() {
         comment.setId(null);
 
@@ -133,5 +134,34 @@ public class TimelineCommentServiceTest {
         Mockito.verify(timelineCommentDaoMock).findAll();
         Mockito.verifyNoMoreInteractions(timelineCommentDaoMock);
         Mockito.verifyNoInteractions(timelineDaoMock);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateTimelineCommentInTimelineNullComment() {
+        HistoricalTimeline romanEmpire = new HistoricalTimeline();
+        romanEmpire.setId(1L);
+        romanEmpire.setName("Roman Empire");
+
+        timelineCommentService.createTimelineCommentInTimeline(null, romanEmpire);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateTimelineCommentInTimelineNullTimeline() {
+        timelineCommentService.createTimelineCommentInTimeline(comment, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveTimelineCommentNull() {
+        timelineCommentService.removeTimelineComment(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateTimelineCommentNull() {
+        timelineCommentService.updateTimelineComment(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindTimelineCommentByIdNull() {
+        timelineCommentService.findTimelineCommentById(null);
     }
 }

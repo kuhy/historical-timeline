@@ -5,6 +5,7 @@ import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.UserService;
 import cz.muni.fi.timeline.service.UserServiceImpl;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -212,7 +213,7 @@ public class UserServiceTest {
         verifyNoInteractions(encoder);
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(expectedExceptions = ServiceLayerException.class)
     public void testNonExistingUserIsTeacher() {
         when(userDao.findById(teacher1.getId())).thenReturn(Optional.empty());
         Assert.assertTrue(userService.isTeacher(teacher1));
@@ -254,5 +255,50 @@ public class UserServiceTest {
         verifyNoMoreInteractions(userDao);
 
         verifyNoInteractions(encoder);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRegisterUserNullUser() {
+        userService.registerUser(null, "password");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRegisterUserNullPassword() {
+        userService.registerUser(teacher1, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testAuthenticateUserNullUser() {
+        userService.authenticateUser(null, "passowrd");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testAuthenticateUserNullPassword() {
+        userService.authenticateUser(teacher1, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateUserNull() {
+        userService.updateUser(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveUserNull() {
+        userService.removeUser(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByIdNull() {
+        userService.findById(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByUserNameNull() {
+        userService.findByUsername(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testIsTeacherNull() {
+        userService.isTeacher(null);
     }
 }

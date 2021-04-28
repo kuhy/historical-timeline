@@ -198,4 +198,43 @@ public class StudyGroupServiceTest{
         verifyNoMoreInteractions(studyGroupDao);
     }
 
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateStudyGroupNull() {
+        studyGroupService.createStudyGroup(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateStudyGroupNull() {
+        studyGroupService.updateStudyGroup(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveStudyGroupNull() {
+        studyGroupService.removeStudyGroup(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testAddUserToStudyGroupNullStudyGroup() {
+        studyGroupService.addUserToStudyGroup(null, teacher1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testAddUserToStudyGroupNullUser() {
+        studyGroupService.addUserToStudyGroup(group1, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveUserFromStudyGroupNullStudyGroup() {
+        studyGroupService.removeUserFromStudyGroup(null, teacher1);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveUserFromStudyGroupNullUser() {
+        studyGroupService.removeUserFromStudyGroup(group1, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByIdNull() {
+        studyGroupService.findById(null);
+    }
 }

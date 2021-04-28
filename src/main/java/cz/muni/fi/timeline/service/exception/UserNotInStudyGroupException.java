@@ -1,26 +1,19 @@
 package cz.muni.fi.timeline.service.exception;
 
+import org.springframework.dao.DataAccessException;
+
 /**
  * Exception for handling a missing user in StudyGroup.
  *
  * @author Tri Le Mau
  */
-public class UserNotInStudyGroupException extends Exception {
+public class UserNotInStudyGroupException extends DataAccessException {
 
-    public UserNotInStudyGroupException() {
-        super();
+    public UserNotInStudyGroupException(String msg) {
+        super(msg);
     }
 
-    public UserNotInStudyGroupException(String message, Throwable cause) {
-        super(message, cause);
+    public UserNotInStudyGroupException(String msg, Throwable cause) {
+        super(msg, cause);
     }
-
-    public UserNotInStudyGroupException(String message) {
-        super(message);
-    }
-
-    public UserNotInStudyGroupException(Throwable cause) {
-        super(cause);
-    }
-
 }

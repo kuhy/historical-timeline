@@ -1,25 +1,18 @@
 package cz.muni.fi.timeline.service.exception;
 
+import org.springframework.dao.DataAccessException;
+
 /**
  * Exception for handling adding the same user into group
  * @author Matej Macák
  */
-public class UserAlreadyInStudyGroupException extends Exception {
+public class UserAlreadyInStudyGroupException extends DataAccessException {
 
-    public UserAlreadyInStudyGroupException() {
-        super();
+    public UserAlreadyInStudyGroupException(String msg) {
+        super(msg);
     }
 
-    public UserAlreadyInStudyGroupException(String message, Throwable cause) {
-        super(message, cause);
+    public UserAlreadyInStudyGroupException(String msg, Throwable cause) {
+        super(msg, cause);
     }
-
-    public UserAlreadyInStudyGroupException(String message) {
-        super(message);
-    }
-
-    public UserAlreadyInStudyGroupException(Throwable cause) {
-        super(cause);
-    }
-
 }

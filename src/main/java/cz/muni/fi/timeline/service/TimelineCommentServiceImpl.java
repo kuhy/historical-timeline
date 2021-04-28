@@ -4,6 +4,7 @@ import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
 import cz.muni.fi.timeline.dao.TimelineCommentDao;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.TimelineComment;
+import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -31,34 +32,76 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
 
     @Override
     public void createTimelineCommentInTimeline(TimelineComment comment, HistoricalTimeline timeline) {
-        timelineCommentDao.create(comment);
+        if (comment == null) {
+            throw new IllegalArgumentException("Timeline comment is null.");
+        }
 
-        HistoricalTimeline historicalTimeline = timelineDao.findById(timeline.getId()).orElseThrow(() ->
-            new IllegalArgumentException("Timeline with the given id does not exist.")
-        );
+        if (timeline == null) {
+            throw new IllegalArgumentException("Historical timeline is null.");
+        }
 
-        historicalTimeline.addTimelineComment(comment);
+        try {
+            timelineCommentDao.create(comment);
 
-        timelineDao.update(timeline);
+            HistoricalTimeline historicalTimeline = timelineDao.findById(timeline.getId()).orElseThrow(() ->
+                new ServiceLayerException("Timeline with the given id does not exist.")
+            );
+
+            historicalTimeline.addTimelineComment(comment);
+
+            timelineDao.update(timeline);
+        } catch (ServiceLayerException e) {
+            throw e;
+        }catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public void removeTimelineComment(TimelineComment comment) {
-        timelineCommentDao.remove(comment);
+        if (comment == null) {
+            throw new IllegalArgumentException("Timeline comment is null.");
+        }
+
+        try {
+            timelineCommentDao.remove(comment);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public void updateTimelineComment(TimelineComment comment) {
-        timelineCommentDao.update(comment);
+        if (comment == null) {
+            throw new IllegalArgumentException("Timeline comment is null.");
+        }
+
+        try {
+            timelineCommentDao.update(comment);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public Optional<TimelineComment> findTimelineCommentById(Long id) {
-        return timelineCommentDao.findById(id);
+        if (id == null) {
+            throw new IllegalArgumentException("Id is null.");
+        }
+
+        try {
+            return timelineCommentDao.findById(id);
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 
     @Override
     public List<TimelineComment> findAllComments() {
-        return timelineCommentDao.findAll();
+        try {
+            return timelineCommentDao.findAll();
+        } catch (Exception e) {
+            throw new ServiceLayerException(e.getMessage());
+        }
     }
 }
