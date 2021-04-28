@@ -31,6 +31,10 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
     @Override
     public void createEvent(HistoricalEvent historicalEvent){
+        if (historicalEvent == null) {
+            throw new IllegalArgumentException("Historical event is null.");
+        }
+
         try {
             historicalEventDao.create(historicalEvent);
         } catch (Exception e) {
@@ -40,6 +44,14 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
     @Override
     public void createEventInTimeline(HistoricalEvent event, HistoricalTimeline historicalTimeline) {
+        if (event == null) {
+            throw new IllegalArgumentException("Historical event is null.");
+        }
+
+        if (historicalTimeline == null) {
+            throw new IllegalArgumentException("Historical timeline is null.");
+        }
+
         try {
             historicalEventDao.create(event);
 
@@ -59,6 +71,10 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
     @Override
     public void updateEvent(HistoricalEvent historicalEvent) {
+        if (historicalEvent == null) {
+            throw new IllegalArgumentException("Historical event is null.");
+        }
+
         try {
             historicalEventDao.update(historicalEvent);
         } catch (Exception e) {
@@ -68,6 +84,10 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
     @Override
     public void removeEvent(HistoricalEvent historicalEvent) {
+        if (historicalEvent == null) {
+            throw new IllegalArgumentException("Historical event is null.");
+        }
+
         try {
             historicalEventDao.remove(historicalEvent);
         } catch (Exception e) {
@@ -86,6 +106,10 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
     @Override
     public List<HistoricalEvent> findByName(String name){
+        if (name == null) {
+            throw new IllegalArgumentException("Name is null.");
+        }
+
         try {
             return historicalEventDao.findByName(name);
         } catch (Exception e) {
@@ -94,7 +118,11 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
     }
 
     @Override
-    public Optional<HistoricalEvent> findById(long id) {
+    public Optional<HistoricalEvent> findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id is null.");
+        }
+
         try {
             return historicalEventDao.findById(id);
         } catch (Exception e) {

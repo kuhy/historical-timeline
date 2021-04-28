@@ -32,6 +32,14 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
 
     @Override
     public void createTimelineCommentInTimeline(TimelineComment comment, HistoricalTimeline timeline) {
+        if (comment == null) {
+            throw new IllegalArgumentException("Timeline comment is null.");
+        }
+
+        if (timeline == null) {
+            throw new IllegalArgumentException("Historical timeline is null.");
+        }
+
         try {
             timelineCommentDao.create(comment);
 
@@ -51,6 +59,10 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
 
     @Override
     public void removeTimelineComment(TimelineComment comment) {
+        if (comment == null) {
+            throw new IllegalArgumentException("Timeline comment is null.");
+        }
+
         try {
             timelineCommentDao.remove(comment);
         } catch (Exception e) {
@@ -60,6 +72,10 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
 
     @Override
     public void updateTimelineComment(TimelineComment comment) {
+        if (comment == null) {
+            throw new IllegalArgumentException("Timeline comment is null.");
+        }
+
         try {
             timelineCommentDao.update(comment);
         } catch (Exception e) {
@@ -69,6 +85,10 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
 
     @Override
     public Optional<TimelineComment> findTimelineCommentById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id is null.");
+        }
+
         try {
             return timelineCommentDao.findById(id);
         } catch (Exception e) {

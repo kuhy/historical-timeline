@@ -151,4 +151,38 @@ public class HistoricalTimelineServiceTest {
         Mockito.verifyNoMoreInteractions(timelineDaoMock);
         Mockito.verifyNoInteractions(studyGroupDaoMock);
     }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateTimelineInStudyGroupNullTimeline() {
+        StudyGroup historyGroup = new StudyGroup();
+        historyGroup.setId(1L);
+        historyGroup.setName("History");
+
+        timelineService.createTimelineInStudyGroup(null, historyGroup);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateTimelineInStudyGroupNullStudyGroup() {
+        timelineService.createTimelineInStudyGroup(romanEmpire, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateTimelineNull() {
+        timelineService.updateTimeline(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveTimelineNull() {
+        timelineService.removeTimeline(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindTimelineByIdNull() {
+        timelineService.findTimelineById(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindTimelineByNameNull() {
+        timelineService.findTimelineByName(null);
+    }
 }

@@ -30,6 +30,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(User user, String unencryptedPassword) {
+        if (user == null) {
+            throw new IllegalArgumentException("User is null.");
+        }
+
+        if (unencryptedPassword == null) {
+            throw new IllegalArgumentException("Password is null.");
+        }
+
         try {
             user.setHashedPassword(encoder.encode(unencryptedPassword));
             userDao.create(user);
@@ -40,11 +48,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean authenticateUser(User user, String password) {
+        if (user == null) {
+            throw new IllegalArgumentException("User is null.");
+        }
+
+        if (password == null) {
+            throw new IllegalArgumentException("Password is null.");
+        }
+
         return encoder.matches(password, user.getHashedPassword());
     }
 
     @Override
     public void updateUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User is null.");
+        }
+
         try {
             userDao.update(user);
         } catch (Exception e) {
@@ -54,6 +74,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void removeUser(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User is null.");
+        }
+
         try {
             userDao.remove(user);
         } catch (Exception e) {
@@ -63,6 +87,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id is null.");
+        }
+
         try {
             return userDao.findById(id);
         } catch (Exception e) {
@@ -72,6 +100,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByUsername(String username) {
+        if (username == null) {
+            throw new IllegalArgumentException("Username is null.");
+        }
+
         try {
             return userDao.findByUserName(username);
         } catch (Exception e) {
@@ -81,6 +113,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isTeacher(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("User is null.");
+        }
+
         try {
             User find = userDao.findById(user.getId()).orElseThrow(() ->
                 new ServiceLayerException("User with given id does not exist.")
@@ -89,7 +125,7 @@ public class UserServiceImpl implements UserService {
             return find.getIsTeacher();
         } catch (ServiceLayerException e) {
             throw e;
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }

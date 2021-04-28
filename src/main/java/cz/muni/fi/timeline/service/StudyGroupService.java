@@ -51,7 +51,7 @@ public interface StudyGroupService {
      * @param id id of the study group
      * @return study group with requested id
      */
-    Optional<StudyGroup> findById(long id);
+    Optional<StudyGroup> findById(Long id);
 
     /**
      *finds all study groups from databasae

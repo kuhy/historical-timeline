@@ -32,6 +32,14 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
     @Override
     public void createTimelineInStudyGroup(HistoricalTimeline timeline, StudyGroup studyGroup) {
+        if (timeline == null) {
+            throw new IllegalArgumentException("Historical timeline is null.");
+        }
+
+        if (studyGroup == null) {
+            throw new IllegalArgumentException("Study group is null.");
+        }
+
         try {
             historicalTimelineDao.create(timeline);
 
@@ -51,6 +59,10 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
     @Override
     public void updateTimeline(HistoricalTimeline timeline) {
+        if (timeline == null) {
+            throw new IllegalArgumentException("Historical timeline is null.");
+        }
+
         try {
             historicalTimelineDao.update(timeline);
         } catch (Exception e) {
@@ -60,6 +72,10 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
     @Override
     public void removeTimeline(HistoricalTimeline timeline) {
+        if (timeline == null) {
+            throw new IllegalArgumentException("Historical timeline is null.");
+        }
+
         try {
             historicalTimelineDao.remove(timeline);
         } catch (Exception e) {
@@ -69,6 +85,10 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
     @Override
     public Optional<HistoricalTimeline> findTimelineById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id is null.");
+        }
+
         try {
             return historicalTimelineDao.findById(id);
         } catch (Exception e) {
@@ -78,6 +98,10 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
     @Override
     public List<HistoricalTimeline> findTimelineByName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("Name is null.");
+        }
+
         try {
             return historicalTimelineDao.findByName(name);
         } catch (Exception e) {

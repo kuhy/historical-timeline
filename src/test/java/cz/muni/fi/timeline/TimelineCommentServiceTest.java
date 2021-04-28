@@ -135,4 +135,33 @@ public class TimelineCommentServiceTest {
         Mockito.verifyNoMoreInteractions(timelineCommentDaoMock);
         Mockito.verifyNoInteractions(timelineDaoMock);
     }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateTimelineCommentInTimelineNullComment() {
+        HistoricalTimeline romanEmpire = new HistoricalTimeline();
+        romanEmpire.setId(1L);
+        romanEmpire.setName("Roman Empire");
+
+        timelineCommentService.createTimelineCommentInTimeline(null, romanEmpire);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testCreateTimelineCommentInTimelineNullTimeline() {
+        timelineCommentService.createTimelineCommentInTimeline(comment, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveTimelineCommentNull() {
+        timelineCommentService.removeTimelineComment(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateTimelineCommentNull() {
+        timelineCommentService.updateTimelineComment(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindTimelineCommentByIdNull() {
+        timelineCommentService.findTimelineCommentById(null);
+    }
 }

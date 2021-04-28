@@ -256,4 +256,49 @@ public class UserServiceTest {
 
         verifyNoInteractions(encoder);
     }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRegisterUserNullUser() {
+        userService.registerUser(null, "password");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRegisterUserNullPassword() {
+        userService.registerUser(teacher1, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testAuthenticateUserNullUser() {
+        userService.authenticateUser(null, "passowrd");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testAuthenticateUserNullPassword() {
+        userService.authenticateUser(teacher1, null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testUpdateUserNull() {
+        userService.updateUser(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testRemoveUserNull() {
+        userService.removeUser(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByIdNull() {
+        userService.findById(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testFindByUserNameNull() {
+        userService.findByUsername(null);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testIsTeacherNull() {
+        userService.isTeacher(null);
+    }
 }

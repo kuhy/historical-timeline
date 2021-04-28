@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author Matej Macák
  */
 @Service
-public class StudyGroupServiceImpl implements StudyGroupService{
+public class StudyGroupServiceImpl implements StudyGroupService {
 
     private final StudyGroupDao studyGroupDao;
 
@@ -28,6 +28,9 @@ public class StudyGroupServiceImpl implements StudyGroupService{
 
     @Override
     public void createStudyGroup(StudyGroup studyGroup) {
+        if (studyGroup == null) {
+            throw new IllegalArgumentException("Study group is null.");
+        }
 
         try {
             studyGroupDao.create(studyGroup);
@@ -38,6 +41,10 @@ public class StudyGroupServiceImpl implements StudyGroupService{
 
     @Override
     public void updateStudyGroup(StudyGroup studyGroup) {
+        if (studyGroup == null) {
+            throw new IllegalArgumentException("Study group is null.");
+        }
+
         try {
             studyGroupDao.update(studyGroup);
         } catch (Exception e) {
@@ -47,6 +54,10 @@ public class StudyGroupServiceImpl implements StudyGroupService{
 
     @Override
     public void removeStudyGroup(StudyGroup studyGroup) {
+        if (studyGroup == null) {
+            throw new IllegalArgumentException("Study group is null.");
+        }
+
         try {
             studyGroupDao.remove(studyGroup);
         } catch (Exception e) {
@@ -56,6 +67,14 @@ public class StudyGroupServiceImpl implements StudyGroupService{
 
     @Override
     public void addUserToStudyGroup(StudyGroup studyGroup, User user) throws UserAlreadyInStudyGroupException {
+        if (studyGroup == null) {
+            throw new IllegalArgumentException("Study group is null.");
+        }
+
+        if (user == null) {
+            throw new IllegalArgumentException("User is null.");
+        }
+
         try {
             StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
                 new ServiceLayerException("Study group with the given id does not exist.")
@@ -78,6 +97,14 @@ public class StudyGroupServiceImpl implements StudyGroupService{
 
     @Override
     public void removeUserFromStudyGroup(StudyGroup studyGroup, User user) throws UserNotInStudyGroupException {
+        if (studyGroup == null) {
+            throw new IllegalArgumentException("Study group is null.");
+        }
+
+        if (user == null) {
+            throw new IllegalArgumentException("User is null.");
+        }
+
         try {
             StudyGroup group = studyGroupDao.findById(studyGroup.getId()).orElseThrow(() ->
                 new ServiceLayerException("Study group with the given id does not exist.")
@@ -99,7 +126,11 @@ public class StudyGroupServiceImpl implements StudyGroupService{
     }
 
     @Override
-    public Optional<StudyGroup> findById(long id) {
+    public Optional<StudyGroup> findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id is null.");
+        }
+
         try {
             return studyGroupDao.findById(id);
         } catch (Exception e) {
