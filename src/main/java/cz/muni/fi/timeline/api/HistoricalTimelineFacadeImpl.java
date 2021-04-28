@@ -1,4 +1,4 @@
-package cz.muni.fi.timeline.api;
+/**package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.*;
 import cz.muni.fi.timeline.entity.HistoricalEvent;
@@ -21,7 +21,7 @@ import java.util.Optional;
  * Implementation of historical timeline facade
  * @author Matej Macák
  */
-@Service
+/*@Service
 @Transactional
 public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
 
@@ -83,7 +83,7 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
 
     /*Event */
 
-    @Override
+ /*   @Override
     public Long createHistoricalEvent(HistoricalEventCreateDTO historicalEventCreateDTO) {
         HistoricalEvent mappedEvent = beanMappingService.mapTo(historicalEventCreateDTO, HistoricalEvent.class);
         eventService.createEvent(mappedEvent);
@@ -174,3 +174,4 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
         return beanMappingService.mapTo(commentService.findAllComments(), TimelineCommentDTO.class);
     }
 }
+*/
