@@ -1,4 +1,4 @@
-package cz.muni.fi.timeline.api;
+/*package cz.muni.fi.timeline.api;
 
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
@@ -22,7 +22,7 @@ import java.util.Optional;
  *
  * @author Tri Le Mau
  */
-@Service
+/*@Service
 @Transactional
 public class StudyGroupFacadeImpl implements StudyGroupFacade {
 
@@ -102,3 +102,4 @@ public class StudyGroupFacadeImpl implements StudyGroupFacade {
         return beanMappingService.mapTo(studyGroupService.findAllStudyGroups(), StudyGroupDTO.class);
     }
 }
+*/

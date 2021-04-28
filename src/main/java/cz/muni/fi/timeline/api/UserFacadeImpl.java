@@ -4,7 +4,7 @@ import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;
 import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
 import cz.muni.fi.timeline.entity.User;
-import cz.muni.fi.timeline.mapper.BeanMappingService;
+import cz.muni.fi.timeline.mapper.Mapper;
 import cz.muni.fi.timeline.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -22,37 +22,37 @@ import java.util.Optional;
 public class UserFacadeImpl implements UserFacade{
 
     private final UserService userService;
-    private final BeanMappingService beanMappingService;
+    private final Mapper mapper;
 
     @Inject
-    public UserFacadeImpl(UserService userService,BeanMappingService beanMappingService){
+    public UserFacadeImpl(UserService userService,Mapper mapper){
         this.userService = userService;
-        this.beanMappingService = beanMappingService;
+        this.mapper = mapper;
     }
 
     @Override
     public Optional<UserDTO> findUserById(Long id) {
         Optional<User> user = userService.findById(id);
 
-        if (user.isEmpty()) {
+        if (!user.isPresent()) {
             return Optional.empty();
         }
-        return Optional.of(beanMappingService.mapTo(user.get(), UserDTO.class));
+        return Optional.of(mapper.userToDTO(user.get()));
     }
 
     @Override
     public Optional <UserDTO> findUserByUsername(String username) {
         Optional<User> user = userService.findByUsername(username);
-        if (user.isEmpty()) {
+        if (!user.isPresent()) {
             return Optional.empty();
         }
 
-        return Optional.of(beanMappingService.mapTo(user.get(), UserDTO.class));
+        return Optional.of(mapper.userToDTO(user.get()));
     }
 
     @Override
     public Long updateUser(UserDTO userDTO) {
-        User user = beanMappingService.mapTo(userDTO, User.class);
+        User user = mapper.UserDTOToUser(userDTO);
         userService.updateUser(user);
         return user.getId();
 
@@ -60,24 +60,26 @@ public class UserFacadeImpl implements UserFacade{
 
     @Override
     public Long registerUser(UserCreateDTO userCreateDTO, String unencryptedPassword) {
-        User userEntity = beanMappingService.mapTo(userCreateDTO, User.class);
+        User userEntity = mapper.UserCreateDTOToUser(userCreateDTO);
         userService.registerUser(userEntity, unencryptedPassword);
         return userEntity.getId();
     }
 
+
     @Override
     public List<UserDTO> getAllUsers() {
-        return beanMappingService.mapTo(userService.getAllUsers(), UserDTO.class);
+        return mapper.userDTOListToUser(userService.getAllUsers());
+
     }
 
     @Override
     public List<UserDTO> getAllTeachers() {
-        return beanMappingService.mapTo(userService.getAllTeachers(), UserDTO.class);
+        return mapper.userDTOListToUser(userService.getAllTeachers());
     }
 
     @Override
     public List<UserDTO> getAllStudents() {
-        return beanMappingService.mapTo(userService.getAllStudents(), UserDTO.class);
+        return mapper.userDTOListToUser(userService.getAllStudents());
     }
 
     @Override
@@ -90,7 +92,7 @@ public class UserFacadeImpl implements UserFacade{
 
     @Override
     public boolean isTeacher(UserDTO userDTO) {
-        return userService.isTeacher(beanMappingService.mapTo(userDTO, User.class));
+        return userService.isTeacher(mapper.UserDTOToUser(userDTO));
 
     }
 

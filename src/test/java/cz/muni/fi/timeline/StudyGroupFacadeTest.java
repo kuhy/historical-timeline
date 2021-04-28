@@ -1,4 +1,4 @@
-package cz.muni.fi.timeline;
+/*package cz.muni.fi.timeline;
 
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.StudyGroupFacade;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
  * Tests for StudyGroup Facade
  * @author Tri Le Mau
  */
-@ContextConfiguration(classes = HistoricalTimelineApplicationContext.class)
+/*@ContextConfiguration(classes = HistoricalTimelineApplicationContext.class)
 public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
 
     @Mock
@@ -177,3 +177,4 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
         verifyNoInteractions(userService);
     }
 }
+*/

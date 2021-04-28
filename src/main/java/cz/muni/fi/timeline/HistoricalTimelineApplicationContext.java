@@ -1,11 +1,12 @@
 package cz.muni.fi.timeline;
 
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
-import cz.muni.fi.timeline.mapper.BeanMappingService;
+//import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
 import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import com.github.dozermapper.core.Mapper;
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +31,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories
-@ComponentScan(basePackageClasses = {HistoricalTimelineDao.class, HistoricalTimelineService.class, BeanMappingService.class})
+@ComponentScan(basePackageClasses = {HistoricalTimelineDao.class, HistoricalTimelineService.class, cz.muni.fi.timeline.mapper.Mapper.class})
 public class HistoricalTimelineApplicationContext {
 
     @Bean
@@ -66,6 +67,11 @@ public class HistoricalTimelineApplicationContext {
     @Bean
     public Mapper dozer(){
         return DozerBeanMapperBuilder.buildDefault();
+    }
+
+    @Bean
+    public cz.muni.fi.timeline.mapper.Mapper offerWebMapper() {
+        return Mappers.getMapper(cz.muni.fi.timeline.mapper.Mapper.class);
     }
 
     @Bean

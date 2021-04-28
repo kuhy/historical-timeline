@@ -1,4 +1,4 @@
-package cz.muni.fi.timeline.mapper;
+/**package cz.muni.fi.timeline.mapper;
 
 import com.github.dozermapper.core.Mapper;
 import org.springframework.stereotype.Service;
@@ -33,3 +33,4 @@ public class BeanMappingServiceImpl implements BeanMappingService {
     	return dozer;
     }
 }
+**/
