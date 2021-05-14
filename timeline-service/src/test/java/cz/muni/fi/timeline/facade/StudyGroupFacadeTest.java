@@ -1,26 +1,23 @@
 package cz.muni.fi.timeline.facade;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.StudyGroupFacade;
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
+import cz.muni.fi.timeline.mapper.BeanMappingServiceImpl;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.api.exception.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.api.exception.UserNotInStudyGroupException;
 import cz.muni.fi.timeline.service.UserService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
-
-import javax.inject.Inject;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +29,7 @@ import static org.mockito.Mockito.*;
  * Tests for StudyGroup Facade
  * @author Tri Le Mau
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
+public class StudyGroupFacadeTest {
 
     @Mock
     private StudyGroupService studyGroupService;
@@ -41,8 +37,8 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
     @Mock
     private UserService userService;
 
-    @Inject
-    private BeanMappingService beanMappingService;
+    // TODO @Mock
+    private final BeanMappingService beanMappingService = new BeanMappingServiceImpl(DozerBeanMapperBuilder.buildDefault());
 
     private StudyGroupFacade studyGroupFacade;
 

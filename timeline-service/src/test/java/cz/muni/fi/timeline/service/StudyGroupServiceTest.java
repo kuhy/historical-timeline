@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.service;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
 import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
@@ -9,8 +8,6 @@ import cz.muni.fi.timeline.api.exception.UserNotInStudyGroupException;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -26,8 +23,7 @@ import static org.mockito.Mockito.*;
  * Tests for service of study groups
  * @author Matej Macák
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class StudyGroupServiceTest extends AbstractTestNGSpringContextTests {
+public class StudyGroupServiceTest {
 
     @Mock
     private StudyGroupDao studyGroupDao;

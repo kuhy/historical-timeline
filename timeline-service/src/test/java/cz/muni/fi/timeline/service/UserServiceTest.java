@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.service;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
 import cz.muni.fi.timeline.dao.UserDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
@@ -9,8 +8,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -28,8 +25,7 @@ import static org.mockito.Mockito.*;
  *
  * @author Tri Le Mau
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class UserServiceTest extends AbstractTestNGSpringContextTests {
+public class UserServiceTest {
     @Mock
     private UserDao userDao;
 

@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.service;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
 import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
 import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
@@ -9,8 +8,6 @@ import cz.muni.fi.timeline.service.exception.ServiceLayerException;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -27,8 +24,7 @@ import static org.mockito.Mockito.when;
  *
  * @author Ondřej Kuhejda
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class HistoricalTimelineServiceTest extends AbstractTestNGSpringContextTests {
+public class HistoricalTimelineServiceTest {
 
     @Mock
     private HistoricalTimelineDao timelineDaoMock;

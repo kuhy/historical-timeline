@@ -12,9 +12,9 @@ import cz.muni.fi.timeline.api.exception.UserNotInStudyGroupException;
 import cz.muni.fi.timeline.service.UserService;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,9 +27,9 @@ import java.util.Optional;
 @Transactional
 public class StudyGroupFacadeImpl implements StudyGroupFacade {
 
-    final private StudyGroupService studyGroupService;
-    final private UserService userService;
-    final private BeanMappingService beanMappingService;
+    private final StudyGroupService studyGroupService;
+    private final UserService userService;
+    private final BeanMappingService beanMappingService;
 
     @Inject
     public StudyGroupFacadeImpl(StudyGroupService studyGroupService, UserService userService, BeanMappingService beanMappingService) {

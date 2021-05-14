@@ -12,9 +12,9 @@ import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.service.TimelineCommentService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,11 +26,11 @@ import java.util.Optional;
 @Transactional
 public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
 
-    final private HistoricalTimelineService timelineService;
-    final private HistoricalEventService eventService;
-    final private TimelineCommentService commentService;
-    final private StudyGroupService studyGroupService;
-    final private BeanMappingService beanMappingService;
+    private final HistoricalTimelineService timelineService;
+    private final HistoricalEventService eventService;
+    private final TimelineCommentService commentService;
+    private final StudyGroupService studyGroupService;
+    private final BeanMappingService beanMappingService;
 
     @Inject
     public HistoricalTimelineFacadeImpl(HistoricalTimelineService timelineService, HistoricalEventService eventService, TimelineCommentService commentService, StudyGroupService studyGroupService, BeanMappingService beanMappingService) {

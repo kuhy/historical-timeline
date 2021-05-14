@@ -1,23 +1,20 @@
 package cz.muni.fi.timeline.facade;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.UserFacade;
 import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;
 import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
 import cz.muni.fi.timeline.entity.User;
+import cz.muni.fi.timeline.mapper.BeanMappingServiceImpl;
 import cz.muni.fi.timeline.service.UserService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import javax.inject.Inject;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,13 +27,12 @@ import static org.mockito.Mockito.*;
  *
  * @author Karolína Veselá
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class UserFacadeTest extends AbstractTestNGSpringContextTests {
+public class UserFacadeTest {
     @Mock
     private UserService userService;
 
-    @Inject
-    private BeanMappingService beanMappingService;
+    // TODO @Mock
+    private final BeanMappingService beanMappingService = new BeanMappingServiceImpl(DozerBeanMapperBuilder.buildDefault());
 
     private UserFacade userFacade;
 

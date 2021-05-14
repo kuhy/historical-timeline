@@ -8,9 +8,9 @@ import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +26,7 @@ public class UserFacadeImpl implements UserFacade {
     private final BeanMappingService beanMappingService;
 
     @Inject
-    public UserFacadeImpl(UserService userService,BeanMappingService beanMappingService){
+    public UserFacadeImpl(UserService userService, BeanMappingService beanMappingService){
         this.userService = userService;
         this.beanMappingService = beanMappingService;
     }
