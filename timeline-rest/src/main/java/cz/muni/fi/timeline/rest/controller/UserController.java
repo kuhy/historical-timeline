@@ -17,6 +17,9 @@ import javax.inject.Inject;
 import java.util.List;
 
 
+/**
+ * @author Tri Le Mau
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -36,4 +39,21 @@ public class UserController {
         CollectionModel<EntityModel<UserDTO>> userCollectionModel = userModelAssembler.toCollectionModel(allUsers);
         return new ResponseEntity<>(userCollectionModel, HttpStatus.OK);
     }
+
+    // TODO getUser
+    // GET /{id}
+
+    // TODO removeUser
+    // DELETE /{id}
+
+    // TODO isTeacher
+    // GET /teacher
+
+    // TODO login
+    // GET /login/{name}/password/{pass}
+    // see https://github.com/445343/PA165-DnDProject/blob/5165d85dfdb9fe9026539d0edf3976f0d37464a2/rest/src/main/java/cz/fi/muni/PA165/rest/controllers/UserController.java
+
+    // TODO logout
+    // GET /logout
+    // see https://github.com/445343/PA165-DnDProject/blob/5165d85dfdb9fe9026539d0edf3976f0d37464a2/rest/src/main/java/cz/fi/muni/PA165/rest/controllers/UserController.java
 }

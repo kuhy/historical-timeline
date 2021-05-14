@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import cz.muni.fi.timeline.rest.assembler.UserModelAssembler;
-import cz.muni.fi.timeline.rest.controller.UserController;
+import cz.muni.fi.timeline.rest.assembler.HistoricalTimelineAssembler;
+import cz.muni.fi.timeline.rest.controller.HistoricalTimelineController;
 import org.springframework.context.annotation.*;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -22,7 +22,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @Import({TimelineServiceApplicationContext.class, TimelineDataApplicationContext.class})
-@ComponentScan(basePackageClasses = {UserModelAssembler.class, UserController.class}) // TODO change to Timeline...
+@ComponentScan(basePackageClasses = {HistoricalTimelineAssembler.class, HistoricalTimelineController.class})
 public class TimelineRestApplicationContext implements WebMvcConfigurer {
 
     @Override
