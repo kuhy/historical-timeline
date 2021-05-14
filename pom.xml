@@ -9,6 +9,7 @@
         <module>timeline-service</module>
         <module>timeline-api</module>
         <module>timeline-rest</module>
+        <module>timeline-data</module>
     </modules>
 
     <parent>

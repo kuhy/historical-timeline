@@ -21,7 +21,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-@Import(TimelineServiceApplicationContext.class)
+@Import({TimelineServiceApplicationContext.class, TimelineDataApplicationContext.class})
 @ComponentScan(basePackageClasses = {UserModelAssembler.class, UserController.class}) // TODO change to Timeline...
 public class TimelineRestApplicationContext implements WebMvcConfigurer {
 

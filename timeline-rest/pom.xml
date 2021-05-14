@@ -23,6 +23,11 @@
             <artifactId>timeline-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>cz.muni.fi.timeline</groupId>
+            <artifactId>timeline-data</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
