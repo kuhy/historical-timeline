@@ -26,7 +26,7 @@ public class UserFacadeImpl implements UserFacade {
     private final BeanMappingService beanMappingService;
 
     @Inject
-    public UserFacadeImpl(UserService userService,BeanMappingService beanMappingService){
+    public UserFacadeImpl(UserService userService, BeanMappingService beanMappingService){
         this.userService = userService;
         this.beanMappingService = beanMappingService;
     }

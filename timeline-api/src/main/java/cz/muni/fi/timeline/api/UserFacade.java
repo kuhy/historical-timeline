@@ -77,7 +77,7 @@ public interface UserFacade {
 
     /**
      * remove user with given id
-     * @param id of the removen user
+     * @param id of the user to be removed
      */
     void removeUser(Long id);
 }

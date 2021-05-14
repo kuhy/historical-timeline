@@ -26,11 +26,11 @@ import java.util.Optional;
 @Transactional
 public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
 
-    final private HistoricalTimelineService timelineService;
-    final private HistoricalEventService eventService;
-    final private TimelineCommentService commentService;
-    final private StudyGroupService studyGroupService;
-    final private BeanMappingService beanMappingService;
+    private final HistoricalTimelineService timelineService;
+    private final HistoricalEventService eventService;
+    private final TimelineCommentService commentService;
+    private final StudyGroupService studyGroupService;
+    private final BeanMappingService beanMappingService;
 
     @Inject
     public HistoricalTimelineFacadeImpl(HistoricalTimelineService timelineService, HistoricalEventService eventService, TimelineCommentService commentService, StudyGroupService studyGroupService, BeanMappingService beanMappingService) {

@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.service;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
 import cz.muni.fi.timeline.dao.HistoricalEventDao;
 import cz.muni.fi.timeline.dao.HistoricalTimelineDao;
 import cz.muni.fi.timeline.entity.HistoricalEvent;
@@ -8,9 +7,6 @@ import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import org.mockito.Mock;
 
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -28,18 +24,16 @@ import static org.mockito.Mockito.*;
  * Tests for Historical Event Service
  * @author Karolína Veselá
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class HistoricalEventServiceTest extends AbstractTestNGSpringContextTests {
+public class HistoricalEventServiceTest {
     @Mock
-    public HistoricalEventDao historicalEventDao;
+    private HistoricalEventDao historicalEventDao;
 
     @Mock
-    public HistoricalTimelineDao historicalTimelineDao;
+    private HistoricalTimelineDao historicalTimelineDao;
 
     private AutoCloseable closeable;
 
-    @Autowired
-    public HistoricalEventService historicalEventService;
+    private HistoricalEventService historicalEventService;
 
     //events
     private HistoricalEvent event1;
