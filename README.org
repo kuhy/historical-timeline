@@ -41,7 +41,26 @@ group and add a comment to them. Searching among all events is also possible.
    - when everything is ok, merge the branch
 ** Milestones
    - when the milestone will be completed, we will merge =develop= to the =master=
-*** TODO Milestone 2
+*** TODO Milestone 3
+    DEADLINE: <2021-05-23 Sun>
+    - first set of tasks:
+      - Stefan
+        - implement REST controller and assembler for =User=
+        - secure REST API using =WebSecurityConfigurerAdapter=
+          - check the [[https://github.com/445343/PA165-DnDProject][following project]]
+          - add "roles" to the project (based on =isTeacher=)
+          - hold information about logged =User= in =UserServiceImpl=
+      - Matej
+        - implement REST controller and assembler for =StudyGroup=
+        - prepopulate database with data using =TimelineDataLoaderImpl=
+          (in =timeline-data= module)
+        - move =createHistoricalTimeline= to the =StudyGroupFacadeImpl=
+          - rename it to =createTimelineInStudyGroup=
+          - you will need also to update tests
+      - Kája
+        - implement REST controller and assembler for =HistoricalEvent=, =HistoricalTimeline=
+          and =TimelineComment=
+*** DONE Milestone 2
     DEADLINE: <2021-04-30 Fri>
     - change the layout of your project to a Multimodule Maven project (tutorial here http://maven.apache.org/guides/getting-started/index.html) Your project should have 3 separate modules:
       - DAO layer
