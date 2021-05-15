@@ -94,19 +94,6 @@ public class HistoricalTimelineFacadeTest {
         autoCloseable.close();
     }
 
-    @Test
-    public void createHistoricalTimelineTest(){
-        HistoricalTimelineCreateDTO timelineCreateDTO = beanMappingService.mapTo(timeline, HistoricalTimelineCreateDTO.class);
-        when(studyGroupService.findById(studyGroup.getId())).thenReturn(Optional.of(studyGroup));
-        historicalTimelineFacade.createHistoricalTimeline(timelineCreateDTO,studyGroup.getId());
-
-        verify(timelineService, times(1)).createTimelineInStudyGroup(any(HistoricalTimeline.class),any(StudyGroup.class));
-        verify(studyGroupService, times(1)).findById(studyGroup.getId());
-        verifyNoMoreInteractions(timelineService);
-        verifyNoMoreInteractions(studyGroupService);
-        verifyNoInteractions(eventService);
-        verifyNoInteractions(commentService);
-    }
 
     @Test
     public void testGetHistoricalTimelineWithExistingId() {
