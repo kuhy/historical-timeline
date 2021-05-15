@@ -41,16 +41,6 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
         this.beanMappingService = beanMappingService;
     }
 
-    @Override
-    public Long createHistoricalTimeline(HistoricalTimelineCreateDTO historicalTimelineCreateDTO, Long studyGroupId) {
-        HistoricalTimeline mappedTimeline = beanMappingService.mapTo(historicalTimelineCreateDTO, HistoricalTimeline.class);
-        StudyGroup group = studyGroupService.findById(studyGroupId).orElseThrow(() ->
-                new IllegalArgumentException("Group with given id does not exist.")
-        );
-
-        timelineService.createTimelineInStudyGroup(mappedTimeline, group);
-        return mappedTimeline.getId();
-    }
 
     @Override
     public Optional<HistoricalTimelineDTO> getHistoricalTimelineWithId(Long id) {

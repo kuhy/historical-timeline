@@ -1,6 +1,10 @@
 package cz.muni.fi.timeline.facade;
 
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import cz.muni.fi.timeline.api.dto.HistoricalEventCreateDTO;
+import cz.muni.fi.timeline.api.dto.HistoricalTimelineCreateDTO;
+import cz.muni.fi.timeline.entity.HistoricalEvent;
+import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.StudyGroupFacade;
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
@@ -8,6 +12,7 @@ import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.mapper.BeanMappingServiceImpl;
+import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.api.exception.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.api.exception.UserNotInStudyGroupException;
@@ -37,6 +42,9 @@ public class StudyGroupFacadeTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private HistoricalTimelineService timelineService;
+
     // TODO @Mock
     private final BeanMappingService beanMappingService = new BeanMappingServiceImpl(DozerBeanMapperBuilder.buildDefault());
 
@@ -46,6 +54,7 @@ public class StudyGroupFacadeTest {
 
     private User user;
     private StudyGroup studyGroup;
+    private HistoricalTimeline timeline;
 
     @BeforeMethod
     public void prepareEntities() {
@@ -60,12 +69,16 @@ public class StudyGroupFacadeTest {
         studyGroup = new StudyGroup();
         studyGroup.setId(1L);
         studyGroup.setName("English group");
+
+        timeline = new HistoricalTimeline();
+        timeline.setName("Ancient Rome");
+        timeline.setId(2L);
     }
 
     @BeforeMethod
     public void openMocks() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        studyGroupFacade = new StudyGroupFacadeImpl(studyGroupService, userService, beanMappingService);
+        studyGroupFacade = new StudyGroupFacadeImpl(studyGroupService, userService, timelineService, beanMappingService);
     }
 
     @AfterMethod
@@ -169,6 +182,19 @@ public class StudyGroupFacadeTest {
         Assert.assertEquals(get, mappedList);
 
         verify(studyGroupService, times(1)).findAllStudyGroups();
+        verifyNoMoreInteractions(studyGroupService);
+        verifyNoInteractions(userService);
+    }
+
+    @Test
+    public void testCreateTimelineInStudyGroup() {
+        HistoricalTimelineCreateDTO timelineCreateDTO = beanMappingService.mapTo(timeline, HistoricalTimelineCreateDTO.class);
+        when(studyGroupService.findById(studyGroup.getId())).thenReturn(Optional.of(studyGroup));
+        studyGroupFacade.createTimelineInStudyGroup(timelineCreateDTO, studyGroup.getId());
+
+        verify(timelineService, times(1)).createTimelineInStudyGroup(any(HistoricalTimeline.class),any(StudyGroup.class));
+        verify(studyGroupService, times(1)).findById(studyGroup.getId());
+        verifyNoMoreInteractions(timelineService);
         verifyNoMoreInteractions(studyGroupService);
         verifyNoInteractions(userService);
     }
