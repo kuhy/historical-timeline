@@ -5,7 +5,7 @@ import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;
 import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
 import cz.muni.fi.timeline.rest.assembler.UserModelAssembler;
-import cz.muni.fi.timeline.rest.exceptions.ResourceNotFoundException;
+import cz.muni.fi.timeline.rest.exception.ResourceNotFoundException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpEntity;
