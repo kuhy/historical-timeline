@@ -2,7 +2,7 @@ package cz.muni.fi.timeline.rest.controller;
 
 import cz.muni.fi.timeline.api.HistoricalTimelineFacade;
 import cz.muni.fi.timeline.api.dto.*;
-import cz.muni.fi.timeline.rest.exceptions.ResourceNotFoundException;
+import cz.muni.fi.timeline.rest.exception.ResourceNotFoundException;
 import cz.muni.fi.timeline.rest.assembler.HistoricalTimelineAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -55,7 +55,7 @@ public class HistoricalTimelineController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<CollectionModel<HistoricalTimelineDTO>> getTimelines() {
+    public final HttpEntity<CollectionModel<EntityModel<HistoricalTimelineDTO>>> getTimelines() {
         List<HistoricalTimelineDTO> timelines =  historicalTimelineFacade.getAllHistoricalTimelines();
         CollectionModel<EntityModel<HistoricalTimelineDTO>> timelinesCollectionModel = historicalTimelineAssembler.toCollectionModel(timelines);
         return new ResponseEntity<>(timelinesCollectionModel, HttpStatus.OK);
@@ -63,12 +63,12 @@ public class HistoricalTimelineController {
 
     @RequestMapping(value ="/{id}/comments/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Long> createCommentInTimeline(@RequestBody() TimelineCommentCreateDTO timelineCommentCreateDTO, @PathVariable("id") long id) {
-        return new ResponseEntity<>(historicalTimelineFacade.createTimelineComment(timelineCommentCreateDTO,id));
+        return new ResponseEntity<>(historicalTimelineFacade.createTimelineComment(timelineCommentCreateDTO,id),HttpStatus.OK);
     }
 
     @RequestMapping(value ="{/{id}/events/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Long> createEventInTimeline(@RequestBody() HistoricalEventCreateDTO historicalEventCreateDTO, @PathVariable("id") long id) {
-        return new ResponseEntity<>(historicalTimelineFacade.createEventInTimeline(historicalEventCreateDTO,id));
+        return new ResponseEntity<>(historicalTimelineFacade.createEventInTimeline(historicalEventCreateDTO,id), HttpStatus.OK);
     }
 
 }

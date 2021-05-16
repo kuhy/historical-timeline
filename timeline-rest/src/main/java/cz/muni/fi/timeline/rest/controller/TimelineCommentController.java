@@ -2,7 +2,7 @@ package cz.muni.fi.timeline.rest.controller;
 
 import cz.muni.fi.timeline.api.HistoricalTimelineFacade;
 import cz.muni.fi.timeline.api.dto.TimelineCommentDTO;
-import cz.muni.fi.timeline.rest.exceptions.ResourceNotFoundException;
+import cz.muni.fi.timeline.rest.exception.ResourceNotFoundException;
 import cz.muni.fi.timeline.rest.assembler.TimelineCommentAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
@@ -58,7 +58,7 @@ public class TimelineCommentController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<CollectionModel<TimelineCommentDTO>> getComments() {
+    public final HttpEntity<CollectionModel<EntityModel<TimelineCommentDTO>>> getComments() {
         List<TimelineCommentDTO> timelineCommentDTOS =  historicalTimelineFacade.getAllTimelineComments();
         CollectionModel<EntityModel<TimelineCommentDTO>> commentCollectionModel = timelineCommentAssembler.toCollectionModel(timelineCommentDTOS);
         return new ResponseEntity<>(commentCollectionModel,HttpStatus.OK);

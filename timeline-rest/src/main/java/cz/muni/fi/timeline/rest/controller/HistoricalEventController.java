@@ -2,10 +2,9 @@ package cz.muni.fi.timeline.rest.controller;
 
 import cz.muni.fi.timeline.api.dto.HistoricalEventDTO;
 
-import cz.muni.fi.timeline.entity.HistoricalEvent;
 import cz.muni.fi.timeline.rest.assembler.HistoricalEventAssembler;
 
-import cz.muni.fi.timeline.rest.exceptions.ResourceNotFoundException;
+import cz.muni.fi.timeline.rest.exception.ResourceNotFoundException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpEntity;
@@ -41,7 +40,7 @@ public class HistoricalEventController {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<EntityModel<HistoricalEventDTO> getEvent(@PathVariable("id") long id) {
+    public final HttpEntity<EntityModel<HistoricalEventDTO>> getEvent(@PathVariable("id") long id) {
         Optional <HistoricalEventDTO> historicalEventDTO = historicalTimelineFacade.getHistoricalEventWithId(id);
         if (!historicalEventDTO.isPresent()) {
             throw new ResourceNotFoundException();
@@ -60,7 +59,7 @@ public class HistoricalEventController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<CollectionModel<EntityModel<HistoricalEvent>>> getEvents() {
+    public final HttpEntity<CollectionModel<EntityModel<HistoricalEventDTO>>> getEvents() {
         List<HistoricalEventDTO> eventDTOS = historicalTimelineFacade.getAllHistoricalEvents();
 
         CollectionModel<EntityModel<HistoricalEventDTO>> eventCollectionModel = historicalEventAssembler.toCollectionModel(eventDTOS);
