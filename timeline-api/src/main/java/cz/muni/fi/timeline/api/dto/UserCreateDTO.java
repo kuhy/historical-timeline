@@ -24,8 +24,6 @@ public class UserCreateDTO {
     @NotNull
     @Size(min = 2, max = 500)
     private String username;
-    @NotNull
-    private String hashedPassword;
 
     private Boolean isTeacher;
 
@@ -37,12 +35,11 @@ public class UserCreateDTO {
         UserCreateDTO that = (UserCreateDTO) o;
         return Objects.equals(getFirstName(), that.getFirstName())
                 && Objects.equals(getLastName(), that.getLastName())
-                && Objects.equals(getUsername(), that.getUsername())
-                && Objects.equals(getHashedPassword(), that.getHashedPassword());
+                && Objects.equals(getUsername(), that.getUsername());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getFirstName(), getLastName(), getUsername(), getHashedPassword());
+        return Objects.hash(getFirstName(), getLastName(), getUsername());
     }
 }

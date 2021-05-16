@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 
@@ -16,7 +17,9 @@ import java.util.Objects;
 @Setter
 public class UserAuthenticateDTO {
     @NotNull
-    private long id;
+    @Size(min = 2, max = 500)
+    private String username;
+
     @NotNull
     private String password;
 
@@ -25,11 +28,12 @@ public class UserAuthenticateDTO {
         if (this == o) return true;
         if (!(o instanceof UserAuthenticateDTO)) return false;
         UserAuthenticateDTO that = (UserAuthenticateDTO) o;
-        return Objects.equals(getId(), that.getId());
+        return Objects.equals(getUsername(), that.getUsername())
+                && Objects.equals(getPassword(), that.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getUsername(), getPassword());
     }
 }
