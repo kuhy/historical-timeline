@@ -176,12 +176,12 @@ public class UserFacadeTest {
     @Test
     public void testAuthenticateUser(){
         when(userService.authenticateUser(user,"134")).thenReturn(true);
-        when(userService.findById(user.getId())).thenReturn(Optional.of(user));
+        when(userService.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
         UserAuthenticateDTO userAuthenticateDTO = beanMappingService.mapTo(user, UserAuthenticateDTO.class);
         userAuthenticateDTO.setPassword("134");
         Assert.assertTrue(userFacade.authenticate(userAuthenticateDTO));
-        verify(userService, times(1)).findById(anyLong());
+        verify(userService, times(1)).findByUsername(user.getUsername());
         verify(userService, times(1)).authenticateUser(any(User.class),anyString());
         verifyNoMoreInteractions(userService);
     }

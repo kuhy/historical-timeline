@@ -85,8 +85,8 @@ public class UserFacadeImpl implements UserFacade {
     public boolean authenticate(UserAuthenticateDTO userAuthenticateDTO) {
 
         return userService.authenticateUser(
-                userService.findById(userAuthenticateDTO.getId()).orElseThrow(() ->
-                new IllegalArgumentException("User with given id does not exist.")), userAuthenticateDTO.getPassword());
+                userService.findByUsername(userAuthenticateDTO.getUsername()).orElseThrow(() ->
+                new IllegalArgumentException("User with given username does not exist.")), userAuthenticateDTO.getPassword());
     }
 
     @Override
