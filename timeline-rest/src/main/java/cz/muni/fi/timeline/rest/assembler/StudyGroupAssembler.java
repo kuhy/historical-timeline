@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 /**
+ * Converts StudyGroupDTO instance into groupModel,
+ * which is later rendered into HAL JSON format with _links.
  * @author Matej Macák
  */
 public class StudyGroupAssembler implements RepresentationModelAssembler<StudyGroupDTO, EntityModel<StudyGroupDTO>> {

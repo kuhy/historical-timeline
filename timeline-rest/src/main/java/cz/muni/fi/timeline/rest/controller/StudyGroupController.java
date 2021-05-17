@@ -39,8 +39,6 @@ public class StudyGroupController {
         this.studyGroupAssembler = studyGroupAssembler;
     }
 
-    // getStudyGroup
-    // GET /{id}
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final Optional<StudyGroupDTO> getStudyGroup(@PathVariable("id") long id){
         logger.debug("rest getStudyGroup({})", id);
@@ -48,8 +46,6 @@ public class StudyGroupController {
         return studyGroupDTO;
     }
 
-    // removeStudyGroup
-    // DELETE /{id}
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void deleteStudyGroup(@PathVariable("id") long id) throws Exception {
         logger.debug("rest deleteStudyGroup({})", id);
@@ -60,8 +56,6 @@ public class StudyGroupController {
         }
     }
 
-    // updateStudyGroup
-    // PUT /{id}
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public final Optional<StudyGroupDTO> changePrice(@PathVariable("id") long id, @RequestBody StudyGroupDTO updatedGroup) throws Exception {
@@ -77,16 +71,12 @@ public class StudyGroupController {
 
     }
 
-    // getAllStudyGroups
-    // GET /
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final List<StudyGroupDTO> getAllStudyGroups() {
         logger.debug("rest getAllStudyGroups()");
         return studyGroupFacade.getAllStudyGroups();
     }
 
-    //  createStudyGroup
-    // POST /create
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public final Optional<StudyGroupDTO> createStudyGroup(@RequestBody StudyGroupCreateDTO studyGroupCreateDTO) throws Exception {
@@ -101,18 +91,12 @@ public class StudyGroupController {
         }
     }
 
-    // TODO createTimelineInStudyGroup
-    // POST /{id}/timelines/create
-
     @RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final Optional<StudyGroupDTO> createTimelineInStudyGroup(HistoricalTimelineCreateDTO historicalTimelineCreateDTO, long groupId){
+    public final Optional<StudyGroupDTO> createTimelineInStudyGroup(HistoricalTimelineCreateDTO historicalTimelineCreateDTO,@PathVariable("id") long groupId){
         Long id = studyGroupFacade.createTimelineInStudyGroup(historicalTimelineCreateDTO, groupId);
         return studyGroupFacade.getStudyGroupWithId(id);
     }
-    
-    // removeUserFromStudyGroup
-    // DELETE /users/{id}
-    //TODO not so sure about this
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void removeUserFromStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("id") long userId) throws UserNotInStudyGroupException {
         logger.debug("rest removeUserFromStudyGroup");
@@ -120,8 +104,6 @@ public class StudyGroupController {
         studyGroupFacade.removeUserFromStudyGroup(studyGroupId, userId);
     }
 
-    // TODO addUserToStudyGroup
-    // PUT /users/{id}
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public final void addUserToStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("id") long userId) throws UserNotInStudyGroupException, UserAlreadyInStudyGroupException {
         logger.debug("rest addUserFromStudyGroup");
