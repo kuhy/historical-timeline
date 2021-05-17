@@ -6,6 +6,7 @@ import cz.muni.fi.timeline.rest.controller.StudyGroupController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
+import org.springframework.stereotype.Component;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
  * which is later rendered into HAL JSON format with _links.
  * @author Matej Macák
  */
+@Component
 public class StudyGroupAssembler implements RepresentationModelAssembler<StudyGroupDTO, EntityModel<StudyGroupDTO>> {
     @Override
     public EntityModel<StudyGroupDTO> toModel(StudyGroupDTO entity) {
