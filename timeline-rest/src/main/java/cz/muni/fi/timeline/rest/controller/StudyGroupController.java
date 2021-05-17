@@ -84,6 +84,9 @@ public class StudyGroupController {
 
         logger.debug("rest updateStudyGroup({})", id);
 
+        updatedGroup.setId(id);
+        //FIXME
+
         return new ResponseEntity<>(studyGroupFacade.updateStudyGroup(updatedGroup), HttpStatus.OK);
 
     }
@@ -133,8 +136,8 @@ public class StudyGroupController {
      * @return response entity
      * @throws UserNotInStudyGroupException
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> removeUserFromStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("id") long userId) throws UserNotInStudyGroupException {
+    @RequestMapping(value = "/{id}/users/{user_id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final ResponseEntity<Void> removeUserFromStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserNotInStudyGroupException {
         logger.debug("rest removeUserFromStudyGroup");
 
         studyGroupFacade.removeUserFromStudyGroup(studyGroupId, userId);
