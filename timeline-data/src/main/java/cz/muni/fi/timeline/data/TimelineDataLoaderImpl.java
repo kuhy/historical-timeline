@@ -100,7 +100,7 @@ public class TimelineDataLoaderImpl implements TimelineDataLoader {
         TimelineComment comment8 = createComment("Not Germany", user13, timeline3);
         TimelineComment comment9 = createComment("Shortcut is EU", user14, timeline5);
 
-        // TODO Events
+        // Events
         HistoricalEvent event1 = createEvent("Funeral of Pope", LocalDate.of(2005,4,8), "Rome", "Peter", timeline1);
         HistoricalEvent event2 = createEvent("Birth of Jesus", LocalDate.of(0,12,24), "Betlehem", "Son of Maria", timeline1);
         HistoricalEvent event3 = createEvent("Battle of Thermophyls", LocalDate.of(75,8,19), "Thermopyles", "Bravery of Sparta", timeline2);
