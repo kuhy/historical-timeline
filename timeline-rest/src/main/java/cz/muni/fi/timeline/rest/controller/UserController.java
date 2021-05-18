@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public class UserController {
         this.userModelAssembler = userModelAssembler;
     }
 
+    @RolesAllowed("ROLE_TEACHER")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CollectionModel<EntityModel<UserDTO>>> getAllUsers() {
         List<UserDTO> allUsers = userFacade.getAllUsers();
@@ -46,6 +48,7 @@ public class UserController {
         return new ResponseEntity<>(userCollectionModel, HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CollectionModel<EntityModel<UserDTO>>> getAllTeachers() {
         List<UserDTO> allUsers = userFacade.getAllTeachers();
@@ -53,6 +56,7 @@ public class UserController {
         return new ResponseEntity<>(userCollectionModel, HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/students",produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CollectionModel<EntityModel<UserDTO>>> getAllStudent() {
         List<UserDTO> allUsers = userFacade.getAllStudents();
@@ -60,6 +64,7 @@ public class UserController {
         return new ResponseEntity<>(userCollectionModel, HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<UserDTO>> getUserById(@PathVariable Long id) {
         Optional<UserDTO> userDTO = userFacade.findUserById(id);
@@ -71,6 +76,7 @@ public class UserController {
         return new ResponseEntity<>(userModelAssembler.toModel(userDTO.get()), HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<UserDTO>> getUserByUsername(@PathVariable String username) {
         Optional<UserDTO> userDTO = userFacade.findUserByUsername(username);
@@ -82,23 +88,27 @@ public class UserController {
         return new ResponseEntity<>(userModelAssembler.toModel(userDTO.get()), HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_TEACHER")
     @PutMapping(value = "/{user}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<Long> updateUser(@PathVariable UserDTO user) {
         return new ResponseEntity<>(userFacade.updateUser(user), HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_TEACHER")
     @DeleteMapping(value = "/{id}")
     public HttpEntity<Void> deleteUser(@PathVariable Long id) {
         userFacade.removeUser(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/isteacher/{teacher}")
     public HttpEntity<Boolean> isTeacher(@PathVariable UserDTO teacher) {
         return new ResponseEntity<>(userFacade.isTeacher(teacher), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/user/{user}/{unencryptedPassword}}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RolesAllowed("ROLE_TEACHER")
+    @PostMapping(value = "/register/{user}/{unencryptedPassword}}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<Long> registerUser(@PathVariable UserCreateDTO user, @PathVariable String unencryptedPassword) {
         if (userFacade.findUserByUsername(user.getUsername()).isPresent()) {
             throw new ResourceAlreadyExistsException();
@@ -119,12 +129,14 @@ public class UserController {
         return new ResponseEntity<>(userFacade.loginUser(user), HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_USER")
     @GetMapping(value = "/logout")
     public HttpEntity<Void> logoutUser() {
         userFacade.logoutUser();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RolesAllowed("ROLE_USER")
     @GetMapping(value = "/loggedinuser")
     public HttpEntity<EntityModel<UserDTO>> getLoggedInUser() {
         Optional<UserDTO> userDTO = userFacade.getLoggedInUser();

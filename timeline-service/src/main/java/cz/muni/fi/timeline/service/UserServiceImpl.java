@@ -83,12 +83,16 @@ public class UserServiceImpl implements UserService {
                 userDetails.getAuthorities()
         ));
 
+        System.out.println("Logged user " +  userDetails.getUsername());
+        System.out.println("Logged user: " + SecurityContextHolder.getContext().getAuthentication().getName());
+
         return true;
     }
 
     @Override
     public void logoutUser() {
         SecurityContextHolder.clearContext();
+        System.out.println("Logged out user.");
     }
 
     @Override
@@ -96,9 +100,11 @@ public class UserServiceImpl implements UserService {
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
         if (user == null) {
+            System.out.println("No logged in user.");
             return Optional.empty();
         }
 
+        System.out.println("Logged user: " + user.getName());
         return findByUsername(user.getName());
     }
 
