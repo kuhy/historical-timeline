@@ -138,13 +138,32 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testAuthenticateUser() {
+    public void testLoginUserAndLogout() {
+        when(userDao.findByUserName(student1.getUsername())).thenReturn(Optional.ofNullable(student1));
+
+        Assert.assertEquals(userService.getLoggedInUser(), Optional.empty());
+        Assert.assertFalse(userService.isUserLoggedIn());
+
+        // Login
         when(encoder.matches(anyString(), anyString())).thenReturn(true);
-        Assert.assertTrue(userService.authenticateUser(student1, "hashedPassword"));
+        Assert.assertTrue(userService.loginUser(student1, "hashedPassword"));
 
-        verifyNoInteractions(userDao);
+        Optional<User> find = userService.getLoggedInUser();
+        Assert.assertTrue(find.isPresent());
+        Assert.assertEquals(find.get(), student1);
+        Assert.assertTrue(userService.isUserLoggedIn());
 
+        verify(userDao, times(1)).findByUserName(student1.getUsername());
         verify(encoder, times(1)).matches(anyString(), anyString());
+        verifyNoMoreInteractions(userDao);
+        verifyNoMoreInteractions(encoder);
+
+        // Logout
+        userService.logoutUser();
+        Assert.assertEquals(userService.getLoggedInUser(), Optional.empty());
+        Assert.assertFalse(userService.isUserLoggedIn());
+
+        verifyNoMoreInteractions(userDao);
         verifyNoMoreInteractions(encoder);
     }
 
@@ -262,13 +281,13 @@ public class UserServiceTest {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testAuthenticateUserNullUser() {
-        userService.authenticateUser(null, "passowrd");
+    public void testLoginuserUserNullUser() {
+        userService.loginUser(null, "passowrd");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testAuthenticateUserNullPassword() {
-        userService.authenticateUser(teacher1, null);
+    public void testLoginuserUserNullPassword() {
+        userService.loginUser(teacher1, null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

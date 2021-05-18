@@ -21,13 +21,32 @@ public interface UserService {
     void registerUser(User user, String unencryptedPassword);
 
     /**
-     * Authenticate user with given password.
+     * Login user with given password.
      *
-     * @param user User to be authenticated
-     * @param password password used for authenticating the User
-     * @return True if user was successfully authenticated, False otherwise
+     * @param user User to be logged in
+     * @param password password used for User login
+     * @return True if user login was successful, False otherwise
      */
-    boolean authenticateUser(User user, String password);
+    boolean loginUser(User user, String password);
+
+    /**
+     * Logs out current User
+     */
+    void logoutUser();
+
+    /**
+     * Returns current user that is logged in.
+     *
+     * @return current user if logged in, empty otherwise
+     */
+    Optional<User> getLoggedInUser();
+
+    /**
+     * Checks if an User is currently logged in.
+     *
+     * @return true if an User is logged in, otherwise false
+     */
+    boolean isUserLoggedIn();
 
     /**
      * Updates User information.

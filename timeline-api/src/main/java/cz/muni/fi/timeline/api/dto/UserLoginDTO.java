@@ -15,7 +15,7 @@ import java.util.Objects;
  */
 @Getter
 @Setter
-public class UserAuthenticateDTO {
+public class UserLoginDTO {
     @NotNull
     @Size(min = 2, max = 500)
     private String username;
@@ -26,8 +26,8 @@ public class UserAuthenticateDTO {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserAuthenticateDTO)) return false;
-        UserAuthenticateDTO that = (UserAuthenticateDTO) o;
+        if (!(o instanceof UserLoginDTO)) return false;
+        UserLoginDTO that = (UserLoginDTO) o;
         return Objects.equals(getUsername(), that.getUsername())
                 && Objects.equals(getPassword(), that.getPassword());
     }
