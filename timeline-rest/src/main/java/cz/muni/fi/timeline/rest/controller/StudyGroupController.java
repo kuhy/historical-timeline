@@ -151,8 +151,8 @@ public class StudyGroupController {
      * @return response entity
      * @throws UserAlreadyInStudyGroupException
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> addUserToStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("id") long userId) throws UserAlreadyInStudyGroupException {
+    @RequestMapping(value = "/{id}/users/{user_id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final ResponseEntity<Void> addUserToStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserAlreadyInStudyGroupException {
         logger.debug("rest addUserFromStudyGroup");
 
         studyGroupFacade.addUserToStudyGroup(studyGroupId, userId);
