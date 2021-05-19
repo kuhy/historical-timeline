@@ -87,6 +87,10 @@ public class StudyGroup implements Serializable {
         historicalTimelines.remove(timeline);
     }
 
+    public Set<HistoricalTimeline> getHistoricalTimelines() {
+        return Collections.unmodifiableSet(historicalTimelines);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

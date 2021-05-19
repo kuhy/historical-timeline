@@ -132,7 +132,8 @@ public class StudyGroupServiceImpl implements StudyGroupService {
         }
 
         try {
-            return studyGroupDao.findById(id);
+            Optional<StudyGroup> group = studyGroupDao.findById(id);
+            return group;
         } catch (Exception e) {
             throw new ServiceLayerException(e.getMessage());
         }
