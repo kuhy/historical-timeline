@@ -124,8 +124,9 @@ public class StudyGroupController {
      * @param groupId id of the group where timeline will be created
      * @return response entity
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> createTimelineInStudyGroup(HistoricalTimelineCreateDTO historicalTimelineCreateDTO,@PathVariable("id") long groupId){
+    @RequestMapping(value = "/{id}/timelines/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final ResponseEntity<Long> createTimelineInStudyGroup(@RequestBody() HistoricalTimelineCreateDTO historicalTimelineCreateDTO,@PathVariable("id") long groupId){
+
         return new ResponseEntity<>(studyGroupFacade.createTimelineInStudyGroup(historicalTimelineCreateDTO,groupId),HttpStatus.OK);
     }
 

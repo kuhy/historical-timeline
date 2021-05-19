@@ -48,7 +48,6 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
             );
 
             group.addHistoricalTimeline(timeline);
-
             studyGroupDao.update(group);
         } catch (ServiceLayerException e) {
             throw e;
