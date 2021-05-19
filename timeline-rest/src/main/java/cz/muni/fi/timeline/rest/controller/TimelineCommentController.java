@@ -1,24 +1,84 @@
 package cz.muni.fi.timeline.rest.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import cz.muni.fi.timeline.api.HistoricalTimelineFacade;
+import cz.muni.fi.timeline.api.dto.TimelineCommentDTO;
+import cz.muni.fi.timeline.rest.exception.ResourceNotFoundException;
+import cz.muni.fi.timeline.rest.assembler.TimelineCommentAssembler;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
+import java.util.List;
+import java.util.Optional;
 
 
 /**
+ * rest cotroller for TimelineComment
+ *
  * @author Karolína Veselá
  */
 @RestController
 @RequestMapping("/comments")
 public class TimelineCommentController {
-    // TODO getComment
-    // GET /{id}
 
-    // TODO removeComment
-    // DELETE /{id}
+    private final HistoricalTimelineFacade historicalTimelineFacade;
+    private final TimelineCommentAssembler timelineCommentAssembler;
 
-    // TODO updateComment
-    // PUT /{id}
+    @Inject
+    public TimelineCommentController(HistoricalTimelineFacade historicalTimelineFacade, TimelineCommentAssembler timelineCommentAssembler) {
+        this.historicalTimelineFacade = historicalTimelineFacade;
+        this.timelineCommentAssembler = timelineCommentAssembler;
+    }
 
-    // TODO getAllComments
-    // GET /
+    /**
+     * get comment with given id
+     * @param id if of the returned comment
+     * @return comment with given id
+     */
+    @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final HttpEntity<EntityModel<TimelineCommentDTO>> getComment(@PathVariable("id") long id) {
+        Optional<TimelineCommentDTO> timelineCommentDTO =  historicalTimelineFacade.getTimelineCommentWithId(id);
+        if (!timelineCommentDTO.isPresent()){
+            throw new ResourceNotFoundException();
+        }
+        return new ResponseEntity<>(timelineCommentAssembler.toModel(timelineCommentDTO.get()), HttpStatus.OK);
+    }
+
+    /**
+     * remove comment with given id
+     * @param id id of removed comment
+     * @return http status
+     */
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final ResponseEntity<Void> removeComment(@PathVariable("id") long id) {
+        historicalTimelineFacade.removeHistoricalTimeline(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    /**
+     * update comment with given id
+     * @param id of the updated comment
+     * @param timelineCommentDTO comment with new parameters
+     * @return id of the updated comment
+     */
+    @RequestMapping(value = "/{id}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final ResponseEntity<Long> updateComment(@PathVariable("id") long id, @RequestBody TimelineCommentDTO timelineCommentDTO) {
+        return new ResponseEntity<>(historicalTimelineFacade.updateTimelineComment(timelineCommentDTO),HttpStatus.OK);
+    }
+
+    /**
+     * returns all comments
+     * @return all comments
+     */
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public final HttpEntity<CollectionModel<EntityModel<TimelineCommentDTO>>> getComments() {
+        List<TimelineCommentDTO> timelineCommentDTOS =  historicalTimelineFacade.getAllTimelineComments();
+        CollectionModel<EntityModel<TimelineCommentDTO>> commentCollectionModel = timelineCommentAssembler.toCollectionModel(timelineCommentDTOS);
+        return new ResponseEntity<>(commentCollectionModel,HttpStatus.OK);
+    }
 }
