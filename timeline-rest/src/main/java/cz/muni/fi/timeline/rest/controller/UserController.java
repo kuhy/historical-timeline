@@ -5,8 +5,10 @@ import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
 import cz.muni.fi.timeline.api.dto.UserLoginDTO;
 import cz.muni.fi.timeline.rest.assembler.UserModelAssembler;
+import cz.muni.fi.timeline.rest.exception.InvalidLoginCredentialsException;
 import cz.muni.fi.timeline.rest.exception.ResourceAlreadyExistsException;
 import cz.muni.fi.timeline.rest.exception.ResourceNotFoundException;
+import cz.muni.fi.timeline.rest.exception.UserAlreadyLoggedInException;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpEntity;
@@ -120,13 +122,18 @@ public class UserController {
     @GetMapping(value = "/login/{username}/{unencryptedPassword}")
     public HttpEntity<Boolean> loginUser(@PathVariable String username, @PathVariable String unencryptedPassword) {
         if (userFacade.isLoggedInUser()) {
-            return new ResponseEntity<>(false, HttpStatus.OK);
+            throw new UserAlreadyLoggedInException();
         }
 
         UserLoginDTO user = new UserLoginDTO();
         user.setUsername(username);
         user.setPassword(unencryptedPassword);
-        return new ResponseEntity<>(userFacade.loginUser(user), HttpStatus.OK);
+
+        if (!userFacade.loginUser(user)) {
+            throw new InvalidLoginCredentialsException();
+        }
+
+        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
     @RolesAllowed("ROLE_USER")
