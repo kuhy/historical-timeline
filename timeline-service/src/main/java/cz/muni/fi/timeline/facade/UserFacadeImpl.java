@@ -1,9 +1,9 @@
 package cz.muni.fi.timeline.facade;
 
 import cz.muni.fi.timeline.api.UserFacade;
-import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;
 import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
+import cz.muni.fi.timeline.api.dto.UserLoginDTO;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.service.UserService;
@@ -82,11 +82,32 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public boolean authenticate(UserAuthenticateDTO userAuthenticateDTO) {
+    public boolean loginUser(UserLoginDTO userLoginDTO) {
 
-        return userService.authenticateUser(
-                userService.findById(userAuthenticateDTO.getId()).orElseThrow(() ->
-                new IllegalArgumentException("User with given id does not exist.")), userAuthenticateDTO.getPassword());
+        return userService.loginUser(
+                userService.findByUsername(userLoginDTO.getUsername()).orElseThrow(() ->
+                new IllegalArgumentException("User with given username does not exist.")), userLoginDTO.getPassword());
+    }
+
+    @Override
+    public void logoutUser() {
+        userService.logoutUser();
+    }
+
+    @Override
+    public Optional<UserDTO> getLoggedInUser() {
+        Optional<User> user = userService.getLoggedInUser();
+
+        if (user.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(beanMappingService.mapTo(user.get(), UserDTO.class));
+    }
+
+    @Override
+    public boolean isLoggedInUser() {
+        return userService.isUserLoggedIn();
     }
 
     @Override

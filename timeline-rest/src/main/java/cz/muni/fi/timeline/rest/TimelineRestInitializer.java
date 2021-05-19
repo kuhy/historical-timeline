@@ -3,6 +3,7 @@ package cz.muni.fi.timeline.rest;
 import javax.servlet.Filter;
 
 import cz.muni.fi.timeline.TimelineRestApplicationContext;
+import cz.muni.fi.timeline.rest.config.SecurityConfiguration;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
@@ -13,7 +14,7 @@ public class TimelineRestInitializer extends AbstractAnnotationConfigDispatcherS
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{TimelineRestApplicationContext.class};
+        return new Class[]{TimelineRestApplicationContext.class, SecurityConfiguration.class};
     }
 
     @Override
