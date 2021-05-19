@@ -22,8 +22,6 @@ import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
 
-// TODO javadoc
-// TODO roles
 /**
  * REST Controller for Users
  *
@@ -42,6 +40,11 @@ public class UserController {
         this.userModelAssembler = userModelAssembler;
     }
 
+    /**
+     * Get all Users.
+     *
+     * @return all users
+     */
     @RolesAllowed("ROLE_TEACHER")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CollectionModel<EntityModel<UserDTO>>> getAllUsers() {
@@ -50,6 +53,11 @@ public class UserController {
         return new ResponseEntity<>(userCollectionModel, HttpStatus.OK);
     }
 
+    /**
+     * Get all Teachers.
+     *
+     * @return all teachers
+     */
     @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CollectionModel<EntityModel<UserDTO>>> getAllTeachers() {
@@ -58,6 +66,11 @@ public class UserController {
         return new ResponseEntity<>(userCollectionModel, HttpStatus.OK);
     }
 
+    /**
+     * Get all Students.
+     *
+     * @return all students
+     */
     @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/students",produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CollectionModel<EntityModel<UserDTO>>> getAllStudent() {
@@ -66,6 +79,12 @@ public class UserController {
         return new ResponseEntity<>(userCollectionModel, HttpStatus.OK);
     }
 
+    /**
+     * Get User with given id.
+     *
+     * @param id User's id
+     * @return User with given id
+     */
     @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<UserDTO>> getUserById(@PathVariable Long id) {
@@ -78,6 +97,12 @@ public class UserController {
         return new ResponseEntity<>(userModelAssembler.toModel(userDTO.get()), HttpStatus.OK);
     }
 
+    /**
+     * Get User with given username.
+     *
+     * @param username User's username
+     * @return User with given username
+     */
     @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<UserDTO>> getUserByUsername(@PathVariable String username) {
@@ -90,12 +115,24 @@ public class UserController {
         return new ResponseEntity<>(userModelAssembler.toModel(userDTO.get()), HttpStatus.OK);
     }
 
+    /**
+     * Updates User.
+     *
+     * @param user User to be updated
+     * @return Id of updated User
+     */
     @RolesAllowed("ROLE_TEACHER")
     @PutMapping(value = "/{user}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<Long> updateUser(@PathVariable UserDTO user) {
         return new ResponseEntity<>(userFacade.updateUser(user), HttpStatus.OK);
     }
 
+    /**
+     * Deletes User with given id
+     *
+     * @param id User's id
+     * @return Response of api call, no return value
+     */
     @RolesAllowed("ROLE_TEACHER")
     @DeleteMapping(value = "/{id}")
     public HttpEntity<Void> deleteUser(@PathVariable Long id) {
@@ -103,12 +140,25 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * Checks if User is a teacher
+     *
+     * @param user User to be checked
+     * @return true if User is a teacher, false otherwise
+     */
     @RolesAllowed("ROLE_TEACHER")
     @GetMapping(value = "/isteacher/{teacher}")
-    public HttpEntity<Boolean> isTeacher(@PathVariable UserDTO teacher) {
-        return new ResponseEntity<>(userFacade.isTeacher(teacher), HttpStatus.OK);
+    public HttpEntity<Boolean> isTeacher(@PathVariable UserDTO user) {
+        return new ResponseEntity<>(userFacade.isTeacher(user), HttpStatus.OK);
     }
 
+    /**
+     * Registers a new User.
+     *
+     * @param user User to be registered
+     * @param unencryptedPassword User's password
+     * @return User's Id
+     */
     @RolesAllowed("ROLE_TEACHER")
     @PostMapping(value = "/register/{user}/{unencryptedPassword}}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<Long> registerUser(@PathVariable UserCreateDTO user, @PathVariable String unencryptedPassword) {
@@ -119,6 +169,13 @@ public class UserController {
         return new ResponseEntity<>(userFacade.registerUser(user, unencryptedPassword), HttpStatus.OK);
     }
 
+    /**
+     * Logs User in.
+     *
+     * @param username User's username
+     * @param unencryptedPassword User's password
+     * @return true if User was successfully logged in, false otherwise
+     */
     @GetMapping(value = "/login/{username}/{unencryptedPassword}")
     public HttpEntity<Boolean> loginUser(@PathVariable String username, @PathVariable String unencryptedPassword) {
         if (userFacade.isLoggedInUser()) {
@@ -136,6 +193,11 @@ public class UserController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    /**
+     * Log out current User.
+     *
+     * @return Response of api call, no return value
+     */
     @RolesAllowed("ROLE_USER")
     @GetMapping(value = "/logout")
     public HttpEntity<Void> logoutUser() {
@@ -143,6 +205,11 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * Get current user which is logged in.
+     *
+     * @return User which is logged in.
+     */
     @RolesAllowed("ROLE_USER")
     @GetMapping(value = "/loggedinuser")
     public HttpEntity<EntityModel<UserDTO>> getLoggedInUser() {
