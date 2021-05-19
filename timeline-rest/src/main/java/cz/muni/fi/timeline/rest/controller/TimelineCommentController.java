@@ -10,10 +10,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -21,6 +18,8 @@ import java.util.Optional;
 
 
 /**
+ * rest cotroller for TimelineComment
+ *
  * @author Karolína Veselá
  */
 @RestController
@@ -36,6 +35,11 @@ public class TimelineCommentController {
         this.timelineCommentAssembler = timelineCommentAssembler;
     }
 
+    /**
+     * get comment with given id
+     * @param id if of the returned comment
+     * @return comment with given id
+     */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<EntityModel<TimelineCommentDTO>> getComment(@PathVariable("id") long id) {
         Optional<TimelineCommentDTO> timelineCommentDTO =  historicalTimelineFacade.getTimelineCommentWithId(id);
@@ -45,18 +49,32 @@ public class TimelineCommentController {
         return new ResponseEntity<>(timelineCommentAssembler.toModel(timelineCommentDTO.get()), HttpStatus.OK);
     }
 
+    /**
+     * remove comment with given id
+     * @param id id of removed comment
+     * @return http status
+     */
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Void> removeComment(@PathVariable("id") long id) {
         historicalTimelineFacade.removeHistoricalTimeline(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * update comment with given id
+     * @param id of the updated comment
+     * @param timelineCommentDTO comment with new parameters
+     * @return id of the updated comment
+     */
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> updateComment(@PathVariable("id") long id) {
-        TimelineCommentDTO timelineCommentDTO = historicalTimelineFacade.getTimelineCommentWithId(id).get();
+    public final ResponseEntity<Long> updateComment(@PathVariable("id") long id, @RequestBody TimelineCommentDTO timelineCommentDTO) {
         return new ResponseEntity<>(historicalTimelineFacade.updateTimelineComment(timelineCommentDTO),HttpStatus.OK);
     }
 
+    /**
+     * returns all comments
+     * @return all comments
+     */
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<CollectionModel<EntityModel<TimelineCommentDTO>>> getComments() {
         List<TimelineCommentDTO> timelineCommentDTOS =  historicalTimelineFacade.getAllTimelineComments();
