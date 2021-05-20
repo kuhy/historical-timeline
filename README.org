@@ -15,96 +15,29 @@ group and add a comment to them. Searching among all events is also possible.
 * How to build it
   Use the Maven wrapper to build the project:
   #+BEGIN_SRC sh
-  ./mvnw clean install
+    ./mvnw clean install
   #+END_SRC
-* What needs to be done
-** Tasks
-   - create a separate branch for every task
-     - use =git checkout -b name-of-my-branch develop=
-     - use following prefix for branch name: =feature-=
-   - commit all of your work to this branch
-     - capitalize the subject line of the commit message
-     - use the imperative mood in the subject line
-   - do not write boilerplate code; use Lombok!
-   - check if the program can be build using =./mvnw clean install=
-     - this will also run tests
-   - check if every class that you created has =javadoc= with =@author= tag
-   - check if every public field and method that you created has =javadoc=
-     - except simple getters and setters
-     - except methods that you =@Override=
-   - crosscheck all project requirements
-   - create a PR from your branch to the branch called =develop=
-   - assign PR to the subsequent team member (based on the following table)
-** Code review
-   - every team member is responsible to do code review for the PRs that he is assigned to
-   - also crosscheck everything that was mentioned above
-   - when everything is ok, merge the branch
-** Milestones
-   - when the milestone will be completed, we will merge =develop= to the =master=
-*** TODO Milestone 3
-    DEADLINE: <2021-05-23 Sun>
-    - first set of tasks:
-      - Stefan
-        - implement REST controller and assembler for =User=
-        - secure REST API using =WebSecurityConfigurerAdapter=
-          - check the [[https://github.com/445343/PA165-DnDProject][following project]]
-          - add "roles" to the project (based on =isTeacher=)
-          - hold information about logged =User= in =UserServiceImpl=
-      - Matej
-        - implement REST controller and assembler for =StudyGroup=
-        - prepopulate database with data using =TimelineDataLoaderImpl=
-          (in =timeline-data= module)
-        - move =createHistoricalTimeline= to the =StudyGroupFacadeImpl=
-          - rename it to =createTimelineInStudyGroup=
-          - you will need also to update tests
-      - Kája
-        - implement REST controller and assembler for =HistoricalEvent=, =HistoricalTimeline=
-          and =TimelineComment=
-*** DONE Milestone 2
-    DEADLINE: <2021-04-30 Fri>
-    - change the layout of your project to a Multimodule Maven project (tutorial here http://maven.apache.org/guides/getting-started/index.html) Your project should have 3 separate modules:
-      - DAO layer
-      - Service Layer and Facade Layer implementation
-      - API layer - just DTOs and facade interfaces!
-    - there must be extensive unit tests for the service layer (particularly for your two business functions) and all the tests of the service layer must use Mock DAO objects;
-    - *Stefan's task is to refactor User (entity, DAO, test) and rewrite javadoc.*
-    - first task is to implement services (and create interfaces for them):
-      - crosscheck each service with use-case diagram, DAO and facade API
-      - make sure that =DataAccessException= or its subclass is thrown in case of any exception on the DAO layer
-      - you must have at least two non-trivial business functions on Service Layer (the example project contains several of them). Service layer is not always just a place to delegate to DAOs.
-      - check [[https://www.javaguides.net/2018/07/handle-nullpointerexception-in-controller-service-and-dao-layer-using-java-8-optional-class.html][this tutorial on use of Optionals inside the service layer]]
-      | Task          | Deadline | =User= | =StudyGroup= | =HistoricalTimeline= | =TimelineComment= | =HistoricalEvent= |
-      | *Service*     | 23. 4.   | Stefan | Matej        | Kuhy                 | Kuhy              | Kája              |
-      | *Code review* | 23. 4.   | Kája   | Kuhy         | Stefan               | Matej             | Matej             |
-      - *we will have a call on 19. 4. and we will reflect on our work*
-    - second task is to implement facades and DTOs
-      - the Facade layer will use the Service layer and the Service layer will use the DAO layer;
-      - implement simple unit tests for the facade layer. Just one simple test per method is enough. This is mainly so that it’s easy to verify the Facade layer;
-      - implement the Facade layer interfaces and implementations.
-      - everything that should happen in the system must be available through these interfaces (creating entities, deleting them etc);
-      - other points about the Facade and Service layers:
-        - all the classes must be wired via dependency injection. Your service objects should obtain an instance of the EntityManager that way;
-        - all the facade interfaces must not reference entities, but Transfer Objects only;
-        - all service interfaces must reference only entities, not Data Transfer Objects;
-        - you can use the Dozer framework (or similar) to map entity instances to transfer objects. The mapping may be done on Facade Layer;
-        - the Facade layer is used to drive transactions;
-      | Task           | Deadline | =User= | =StudyGroup= | =HistoricalTimeline= | Milestone1 comments |
-      | *Facade + DTO* | 25. 4.   | Kája   | Stefan       | Matej                | Kuhy                |
-*** DONE Milestone 1
-    DEADLINE: <2021-04-07 Wed>
-    - *create a project wiki with a project description*
-    - create 4 entity classes for your project if you are a team of four (rule: one entity for each team member).
-    - *implement properly equals and hash code for these entities*
-    - create a DAO layer interface (with proper Javadoc).
-    - create the JPA implementation of the DAO classes (CRUD operations are enough for the first milestone).
-    - create tests for the DAO classes (you can use an in-memory database).
-    - *we will have a call on 6. 4. and we will reflect on our work*
-    | Task          | Deadline | =Student= | =StudyGroup= | =HistoricalTimeline= | =TimelineComment= | =Teacher= | =HistoricalEvent= |
-    |---------------+----------+-----------+--------------+----------------------+-------------------+-----------+-------------------|
-    | *Class*       | 2. 4.    | Stefan    | Stefan       | Kuhy                 | Kuhy              | Kája      | Matej             |
-    | *DAO*         | 4. 4.    | Matej     | Matej        | Stefan               | Stefan            | Kuhy      | Kája              |
-    | *Tests*       | 6. 4.    | Kája      | Kája         | Matej                | Matej             | Stefan    | Kuhy              |
-    | *Check tests* | 6. 4.    | Kuhy      | Kuhy         | Kája                 | Kája              | Matej     | Stefan            |
+
+  The whole application can be then executed as follows:
+  #+BEGIN_SRC sh
+    cd timeline
+    ../mvnw
+  #+END_SRC
+
+  The user interface is then accessible at =http://localhost:8080/pa165= and REST API at
+  =http://localhost:8080/pa165/rest=. More information about the REST API is in [[./timeline-rest/README.org][this README]].
+
+  The REST API and also the web application can be executed independently. For more information
+  about this, visit the README of the corresponding module.
+* Project structure
+  The =historrical-timeline= project is split into following modules:
+  - [[./timeline][=timeline=]] :: Module that merges =timeline-ui= and =timeline-rest= into one WAR.
+  - [[./timeline-api][=timeline-api=]] :: Public API for =historical-timeline=.
+  - [[./timeline-data][=timeline-data=]] :: Contains sample data for the project.
+  - [[./timeline-persistence][=timeline-persistence=]] :: Module responsible for data persistence in the database.
+  - [[./timeline-rest][=timeline-rest=]] :: REST interface for =historical-timeline=.
+  - [[./timeline-service][=timeline-service=]] :: Implementation of public API and service logic.
+  - [[./timeline-ui][=timeline-ui=]] :: Web application developed in /Angular/.
 * Use-case diagram
   #+BEGIN_SRC plantuml :file images/use-case_diagram.svg :exports results
     left to right direction

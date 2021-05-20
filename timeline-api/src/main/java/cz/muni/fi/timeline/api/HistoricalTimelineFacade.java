@@ -85,7 +85,7 @@ public interface HistoricalTimelineFacade {
     // Comment
 
     /**
-     * creates comment in timeline
+     * creates comment in timeline on behalf of logged in user
      * @param timelineCommentCreateDTO comment used for creation
      * @param timelineId id of timeline
      * @return id of created comment

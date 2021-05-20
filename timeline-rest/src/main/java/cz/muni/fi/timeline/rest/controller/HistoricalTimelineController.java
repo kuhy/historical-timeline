@@ -96,7 +96,7 @@ public class HistoricalTimelineController {
     @RolesAllowed("ROLE_USER")
     @PostMapping(value ="/{id}/comments/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> createCommentInTimeline(@RequestBody TimelineCommentCreateDTO timelineCommentCreateDTO, @PathVariable("id") long id) {
-        return new ResponseEntity<>(historicalTimelineFacade.createTimelineComment(timelineCommentCreateDTO,id),HttpStatus.OK);
+        return new ResponseEntity<>(historicalTimelineFacade.createTimelineComment(timelineCommentCreateDTO, id),HttpStatus.OK);
     }
 
     /**
