@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,7 @@ public class HistoricalTimelineController {
      * @param id id of returned timeline
      * @return timeline with given id
      */
+    @RolesAllowed("ROLE_USER")
     @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<EntityModel<HistoricalTimelineDTO>> getTimeline(@PathVariable("id") long id) {
         Optional<HistoricalTimelineDTO> historicalTimelineDTO = historicalTimelineFacade.getHistoricalTimelineWithId(id);
@@ -53,6 +55,7 @@ public class HistoricalTimelineController {
      * @param id id of removed timeline
      * @return http status
      */
+    @RolesAllowed("ROLE_TEACHER")
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Void> removeTimeline(@PathVariable("id") long id) {
 
@@ -66,6 +69,7 @@ public class HistoricalTimelineController {
      * @param historicalTimelineDTO timeline with new parameters
      * @return id of updated timeline
      */
+    @RolesAllowed("ROLE_TEACHER")
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Long> updateTimeline(@PathVariable("id") long id, @RequestBody HistoricalTimelineDTO historicalTimelineDTO) {
         return new ResponseEntity<>(historicalTimelineFacade.updateHistoricalTimeline(historicalTimelineDTO), HttpStatus.OK);
@@ -75,6 +79,7 @@ public class HistoricalTimelineController {
      * returns all timelines
      * @return all timelines
      */
+    @RolesAllowed("ROLE_USER")
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<CollectionModel<EntityModel<HistoricalTimelineDTO>>> getTimelines() {
         List<HistoricalTimelineDTO> timelines =  historicalTimelineFacade.getAllHistoricalTimelines();
@@ -88,6 +93,7 @@ public class HistoricalTimelineController {
      * @param id id of timeline in which is the comment created
      * @return id of created comment
      */
+    @RolesAllowed("ROLE_USER")
     @RequestMapping(value ="/{id}/comments/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Long> createCommentInTimeline(@RequestBody() TimelineCommentCreateDTO timelineCommentCreateDTO, @PathVariable("id") long id) {
         return new ResponseEntity<>(historicalTimelineFacade.createTimelineComment(timelineCommentCreateDTO,id),HttpStatus.OK);
@@ -99,6 +105,7 @@ public class HistoricalTimelineController {
      * @param id id of timeline in which is the event created
      * @return id of created event
      */
+    @RolesAllowed("ROLE_TEACHER")
     @RequestMapping(value ="{/{id}/events/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Long> createEventInTimeline(@RequestBody() HistoricalEventCreateDTO historicalEventCreateDTO, @PathVariable("id") long id) {
         return new ResponseEntity<>(historicalTimelineFacade.createEventInTimeline(historicalEventCreateDTO,id), HttpStatus.OK);

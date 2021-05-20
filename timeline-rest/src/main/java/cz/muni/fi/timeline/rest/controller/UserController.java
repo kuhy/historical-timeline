@@ -90,7 +90,7 @@ public class UserController {
     public HttpEntity<EntityModel<UserDTO>> getUserById(@PathVariable Long id) {
         Optional<UserDTO> userDTO = userFacade.findUserById(id);
 
-        if (!userDTO.isPresent()) {
+        if (userDTO.isEmpty()) {
             throw new ResourceNotFoundException();
         }
 
@@ -108,7 +108,7 @@ public class UserController {
     public HttpEntity<EntityModel<UserDTO>> getUserByUsername(@PathVariable String username) {
         Optional<UserDTO> userDTO = userFacade.findUserByUsername(username);
 
-        if (!userDTO.isPresent()) {
+        if (userDTO.isEmpty()) {
             throw new ResourceNotFoundException();
         }
 
@@ -215,7 +215,7 @@ public class UserController {
     public HttpEntity<EntityModel<UserDTO>> getLoggedInUser() {
         Optional<UserDTO> userDTO = userFacade.getLoggedInUser();
 
-        if (!userDTO.isPresent()) {
+        if (userDTO.isEmpty()) {
             throw new ResourceNotFoundException();
         }
 

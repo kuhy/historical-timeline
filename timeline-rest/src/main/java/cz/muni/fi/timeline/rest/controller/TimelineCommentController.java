@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
@@ -40,10 +41,11 @@ public class TimelineCommentController {
      * @param id if of the returned comment
      * @return comment with given id
      */
+    @RolesAllowed("ROLE_USER")
     @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<EntityModel<TimelineCommentDTO>> getComment(@PathVariable("id") long id) {
         Optional<TimelineCommentDTO> timelineCommentDTO =  historicalTimelineFacade.getTimelineCommentWithId(id);
-        if (!timelineCommentDTO.isPresent()){
+        if (timelineCommentDTO.isEmpty()){
             throw new ResourceNotFoundException();
         }
         return new ResponseEntity<>(timelineCommentAssembler.toModel(timelineCommentDTO.get()), HttpStatus.OK);
@@ -54,6 +56,7 @@ public class TimelineCommentController {
      * @param id id of removed comment
      * @return http status
      */
+    @RolesAllowed("ROLE_USER")
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Void> removeComment(@PathVariable("id") long id) {
         historicalTimelineFacade.removeHistoricalTimeline(id);
@@ -66,8 +69,10 @@ public class TimelineCommentController {
      * @param timelineCommentDTO comment with new parameters
      * @return id of the updated comment
      */
+    @RolesAllowed("ROLE_USER")
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Long> updateComment(@PathVariable("id") long id, @RequestBody TimelineCommentDTO timelineCommentDTO) {
+        timelineCommentDTO.setId(id);
         return new ResponseEntity<>(historicalTimelineFacade.updateTimelineComment(timelineCommentDTO),HttpStatus.OK);
     }
 
@@ -75,6 +80,7 @@ public class TimelineCommentController {
      * returns all comments
      * @return all comments
      */
+    @RolesAllowed("ROLE_USER")
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<CollectionModel<EntityModel<TimelineCommentDTO>>> getComments() {
         List<TimelineCommentDTO> timelineCommentDTOS =  historicalTimelineFacade.getAllTimelineComments();
