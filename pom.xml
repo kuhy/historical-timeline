@@ -10,6 +10,8 @@
         <module>timeline-api</module>
         <module>timeline-rest</module>
         <module>timeline-data</module>
+        <module>timeline-ui</module>
+        <module>timeline</module>
     </modules>
 
     <parent>
