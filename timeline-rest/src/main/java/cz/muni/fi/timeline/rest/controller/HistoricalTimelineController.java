@@ -44,7 +44,7 @@ public class HistoricalTimelineController {
     @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final HttpEntity<EntityModel<HistoricalTimelineDTO>> getTimeline(@PathVariable("id") long id) {
         Optional<HistoricalTimelineDTO> historicalTimelineDTO = historicalTimelineFacade.getHistoricalTimelineWithId(id);
-        if (!historicalTimelineDTO.isPresent()){
+        if (historicalTimelineDTO.isEmpty()){
             throw new ResourceNotFoundException();
         }
         return new ResponseEntity<>(historicalTimelineAssembler.toModel(historicalTimelineDTO.get()), HttpStatus.OK);
@@ -72,6 +72,7 @@ public class HistoricalTimelineController {
     @RolesAllowed("ROLE_TEACHER")
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public final ResponseEntity<Long> updateTimeline(@PathVariable("id") long id, @RequestBody HistoricalTimelineDTO historicalTimelineDTO) {
+        historicalTimelineDTO.setId(id);
         return new ResponseEntity<>(historicalTimelineFacade.updateHistoricalTimeline(historicalTimelineDTO), HttpStatus.OK);
     }
 
@@ -95,7 +96,7 @@ public class HistoricalTimelineController {
      */
     @RolesAllowed("ROLE_USER")
     @RequestMapping(value ="/{id}/comments/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> createCommentInTimeline(@RequestBody() TimelineCommentCreateDTO timelineCommentCreateDTO, @PathVariable("id") long id) {
+    public final ResponseEntity<Long> createCommentInTimeline(@RequestBody TimelineCommentCreateDTO timelineCommentCreateDTO, @PathVariable("id") long id) {
         return new ResponseEntity<>(historicalTimelineFacade.createTimelineComment(timelineCommentCreateDTO,id),HttpStatus.OK);
     }
 
@@ -107,7 +108,7 @@ public class HistoricalTimelineController {
      */
     @RolesAllowed("ROLE_TEACHER")
     @RequestMapping(value ="{/{id}/events/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> createEventInTimeline(@RequestBody() HistoricalEventCreateDTO historicalEventCreateDTO, @PathVariable("id") long id) {
+    public final ResponseEntity<Long> createEventInTimeline(@RequestBody HistoricalEventCreateDTO historicalEventCreateDTO, @PathVariable("id") long id) {
         return new ResponseEntity<>(historicalTimelineFacade.createEventInTimeline(historicalEventCreateDTO,id), HttpStatus.OK);
     }
 

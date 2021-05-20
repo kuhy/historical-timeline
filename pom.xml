@@ -8,8 +8,8 @@
         <module>timeline-persistence</module>
         <module>timeline-service</module>
         <module>timeline-api</module>
-        <module>timeline-rest</module>
         <module>timeline-data</module>
+        <module>timeline-rest</module>
         <module>timeline-ui</module>
         <module>timeline</module>
     </modules>

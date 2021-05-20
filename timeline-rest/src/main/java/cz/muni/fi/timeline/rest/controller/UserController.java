@@ -86,7 +86,7 @@ public class UserController {
      * @return User with given id
      */
     @RolesAllowed("ROLE_TEACHER")
-    @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<UserDTO>> getUserById(@PathVariable Long id) {
         Optional<UserDTO> userDTO = userFacade.findUserById(id);
 
@@ -104,7 +104,7 @@ public class UserController {
      * @return User with given username
      */
     @RolesAllowed("ROLE_TEACHER")
-    @GetMapping(value = "/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/by_username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<UserDTO>> getUserByUsername(@PathVariable String username) {
         Optional<UserDTO> userDTO = userFacade.findUserByUsername(username);
 
@@ -122,8 +122,9 @@ public class UserController {
      * @return Id of updated User
      */
     @RolesAllowed("ROLE_TEACHER")
-    @PutMapping(value = "/{user}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<Long> updateUser(@PathVariable UserDTO user) {
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<Long> updateUser(@RequestBody UserDTO user, @PathVariable Long id) {
+        user.setId(id);
         return new ResponseEntity<>(userFacade.updateUser(user), HttpStatus.OK);
     }
 
@@ -143,12 +144,14 @@ public class UserController {
     /**
      * Checks if User is a teacher
      *
-     * @param user User to be checked
+     * @param id id of User to be checked
      * @return true if User is a teacher, false otherwise
      */
     @RolesAllowed("ROLE_TEACHER")
-    @GetMapping(value = "/isteacher/{teacher}")
-    public HttpEntity<Boolean> isTeacher(@PathVariable UserDTO user) {
+    @GetMapping(value = "/{id}/is_teacher")
+    public HttpEntity<Boolean> isTeacher(@PathVariable Long id) {
+        UserDTO user = new UserDTO();
+        user.setId(id);
         return new ResponseEntity<>(userFacade.isTeacher(user), HttpStatus.OK);
     }
 
@@ -160,7 +163,7 @@ public class UserController {
      * @return User's Id
      */
     @RolesAllowed("ROLE_TEACHER")
-    @PostMapping(value = "/register/{user}/{unencryptedPassword}}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/register/{user}/{unencryptedPassword}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<Long> registerUser(@PathVariable UserCreateDTO user, @PathVariable String unencryptedPassword) {
         if (userFacade.findUserByUsername(user.getUsername()).isPresent()) {
             throw new ResourceAlreadyExistsException();
@@ -211,7 +214,7 @@ public class UserController {
      * @return User which is logged in.
      */
     @RolesAllowed("ROLE_USER")
-    @GetMapping(value = "/loggedinuser")
+    @GetMapping(value = "/logged_in_user")
     public HttpEntity<EntityModel<UserDTO>> getLoggedInUser() {
         Optional<UserDTO> userDTO = userFacade.getLoggedInUser();
 
