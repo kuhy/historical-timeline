@@ -49,8 +49,8 @@ public class StudyGroupController {
      * @return study group with given id
      */
     @RolesAllowed("ROLE_USER")
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<EntityModel<StudyGroupDTO>> getStudyGroup(@PathVariable("id") long id){
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<EntityModel<StudyGroupDTO>> getStudyGroup(@PathVariable("id") long id){
         logger.debug("rest getStudyGroup({})", id);
 
         Optional<StudyGroupDTO> studyGroupDTO = studyGroupFacade.getStudyGroupWithId(id);
@@ -67,8 +67,8 @@ public class StudyGroupController {
      * @return http status
      */
     @RolesAllowed("ROLE_TEACHER")
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> deleteStudyGroup(@PathVariable("id") long id) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteStudyGroup(@PathVariable("id") long id) {
         logger.debug("rest deleteStudyGroup({})", id);
 
         studyGroupFacade.removeStudyGroup(id);
@@ -82,9 +82,8 @@ public class StudyGroupController {
      * @return http status
      */
     @RolesAllowed("ROLE_TEACHER")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> updateStudyGroup(@PathVariable("id") long id, @RequestBody StudyGroupDTO updatedGroup){
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> updateStudyGroup(@PathVariable("id") long id, @RequestBody StudyGroupDTO updatedGroup){
         logger.debug("rest updateStudyGroup({})", id);
 
         updatedGroup.setId(id);
@@ -97,8 +96,8 @@ public class StudyGroupController {
      * @return all study groups
      */
     @RolesAllowed("ROLE_USER")
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<CollectionModel<EntityModel<StudyGroupDTO>>> getAllStudyGroups() {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<CollectionModel<EntityModel<StudyGroupDTO>>> getAllStudyGroups() {
         logger.debug("rest getAllStudyGroups()");
 
         List<StudyGroupDTO> allGroups = studyGroupFacade.getAllStudyGroups();
@@ -112,10 +111,8 @@ public class StudyGroupController {
      * @return response entity
      */
     @RolesAllowed("ROLE_TEACHER")
-    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> createStudyGroup(@RequestBody StudyGroupCreateDTO studyGroupCreateDTO){
-
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> createStudyGroup(@RequestBody StudyGroupCreateDTO studyGroupCreateDTO){
         logger.debug("rest createStudyGroup()");
 
         return new ResponseEntity<>(studyGroupFacade.createStudyGroup(studyGroupCreateDTO), HttpStatus.OK);
@@ -128,8 +125,8 @@ public class StudyGroupController {
      * @return response entity
      */
     @RolesAllowed("ROLE_TEACHER")
-    @RequestMapping(value = "/{id}/timelines/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> createTimelineInStudyGroup(@RequestBody() HistoricalTimelineCreateDTO historicalTimelineCreateDTO,@PathVariable("id") long groupId){
+    @PostMapping(value = "/{id}/timelines/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> createTimelineInStudyGroup(@RequestBody HistoricalTimelineCreateDTO historicalTimelineCreateDTO,@PathVariable("id") long groupId){
 
         return new ResponseEntity<>(studyGroupFacade.createTimelineInStudyGroup(historicalTimelineCreateDTO,groupId),HttpStatus.OK);
     }
@@ -142,8 +139,8 @@ public class StudyGroupController {
      * @throws UserNotInStudyGroupException
      */
     @RolesAllowed("ROLE_USER")
-    @RequestMapping(value = "/{id}/users/{user_id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> removeUserFromStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserNotInStudyGroupException {
+    @DeleteMapping(value = "/{id}/users/{user_id}")
+    public ResponseEntity<Void> removeUserFromStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserNotInStudyGroupException {
         logger.debug("rest removeUserFromStudyGroup");
 
         studyGroupFacade.removeUserFromStudyGroup(studyGroupId, userId);
@@ -158,8 +155,8 @@ public class StudyGroupController {
      * @throws UserAlreadyInStudyGroupException
      */
     @RolesAllowed("ROLE_TEACHER")
-    @RequestMapping(value = "/{id}/users/{user_id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> addUserToStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserAlreadyInStudyGroupException {
+    @PutMapping(value = "/{id}/users/{user_id}")
+    public ResponseEntity<Void> addUserToStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserAlreadyInStudyGroupException {
         logger.debug("rest addUserFromStudyGroup");
 
         studyGroupFacade.addUserToStudyGroup(studyGroupId, userId);

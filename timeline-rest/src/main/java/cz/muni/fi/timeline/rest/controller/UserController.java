@@ -72,7 +72,7 @@ public class UserController {
      * @return all students
      */
     @RolesAllowed("ROLE_TEACHER")
-    @GetMapping(value = "/students",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<CollectionModel<EntityModel<UserDTO>>> getAllStudent() {
         List<UserDTO> allUsers = userFacade.getAllStudents();
         CollectionModel<EntityModel<UserDTO>> userCollectionModel = userModelAssembler.toCollectionModel(allUsers);
@@ -86,7 +86,7 @@ public class UserController {
      * @return User with given id
      */
     @RolesAllowed("ROLE_TEACHER")
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}")
     public HttpEntity<EntityModel<UserDTO>> getUserById(@PathVariable Long id) {
         Optional<UserDTO> userDTO = userFacade.findUserById(id);
 

@@ -45,8 +45,8 @@ public class HistoricalEventController {
      * @return event with given id
      */
     @RolesAllowed("ROLE_USER")
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<EntityModel<HistoricalEventDTO>> getEvent(@PathVariable("id") long id) {
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<EntityModel<HistoricalEventDTO>> getEvent(@PathVariable("id") long id) {
         Optional <HistoricalEventDTO> historicalEventDTO = historicalTimelineFacade.getHistoricalEventWithId(id);
         if (historicalEventDTO.isEmpty()) {
             throw new ResourceNotFoundException();
@@ -60,8 +60,8 @@ public class HistoricalEventController {
      * @return http status
      */
     @RolesAllowed("ROLE_TEACHER")
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> removeEvent(@PathVariable("id") long id) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> removeEvent(@PathVariable("id") long id) {
         historicalTimelineFacade.removeHistoricalEvent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -73,8 +73,8 @@ public class HistoricalEventController {
      * @return id of the updated event
      */
     @RolesAllowed("ROLE_TEACHER")
-    @RequestMapping(value = "/{id}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> updateEvent(@PathVariable("id") long id, @RequestBody HistoricalEventDTO historicalEventDTO) {
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> updateEvent(@PathVariable("id") long id, @RequestBody HistoricalEventDTO historicalEventDTO) {
         historicalEventDTO.setId(id);
         return new ResponseEntity<>(historicalTimelineFacade.updateHistoricalEvent(historicalEventDTO), HttpStatus.OK);
     }
@@ -84,8 +84,8 @@ public class HistoricalEventController {
      * @return all events
      */
     @RolesAllowed("ROLE_USER")
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<CollectionModel<EntityModel<HistoricalEventDTO>>> getEvents() {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<CollectionModel<EntityModel<HistoricalEventDTO>>> getEvents() {
         List<HistoricalEventDTO> eventDTOS = historicalTimelineFacade.getAllHistoricalEvents();
 
         CollectionModel<EntityModel<HistoricalEventDTO>> eventCollectionModel = historicalEventAssembler.toCollectionModel(eventDTOS);
