@@ -33,8 +33,8 @@ public class StudyGroupController {
 
     final static Logger logger = LoggerFactory.getLogger(StudyGroupController.class);
 
-    private StudyGroupFacade studyGroupFacade;
-    private StudyGroupAssembler studyGroupAssembler;
+    private final StudyGroupFacade studyGroupFacade;
+    private final StudyGroupAssembler studyGroupAssembler;
 
     @Inject
     public StudyGroupController(StudyGroupFacade groupFacade, StudyGroupAssembler studyGroupAssembler){

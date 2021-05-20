@@ -1,0 +1,32 @@
+<div class="content">
+  <p class="h1">Study Groups</p>
+  <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+<!--      <th>Admin</th>-->
+<!--      <th>Show Heroes</th>-->
+<!--      <th>Delete User</th>-->
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let group of studyGroups">
+      <td>{{group.id}}</td>
+      <td>{{group.name}}</td>
+<!--      <td><a class="button is-success" (click)="heroesModal(user.id)">-->
+<!--                        <span class="icon is-small">-->
+<!--                          <i class="fas fa-eye"></i>-->
+<!--                        </span>-->
+<!--        <span>Show Heroes</span>-->
+<!--      </a></td>-->
+<!--      <td><a *ngIf="!user.admin" class="button is-danger" (click)="deleteUser(user.id)">-->
+<!--                        <span class="icon is-small">-->
+<!--                          <i class="fas fa-trash"></i>-->
+<!--                        </span>-->
+<!--        <span>Delete User</span>-->
+<!--      </a></td>-->
+    </tr>
+    </tbody>
+  </table>
+</div>
