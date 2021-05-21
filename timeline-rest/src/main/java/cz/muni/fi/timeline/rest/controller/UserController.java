@@ -156,6 +156,18 @@ public class UserController {
     }
 
     /**
+     * Checks if current user is a teacher
+     *
+     * @return true if current user is a teacher, false otherwise
+     */
+    @RolesAllowed("ROLE_USER")
+    @GetMapping(value = "/is_teacher")
+    public HttpEntity<Boolean> isTeacher() {
+        return new ResponseEntity<>(userFacade.getLoggedInUser().orElseThrow(ResourceNotFoundException::new)
+            .getIsTeacher(), HttpStatus.OK);
+    }
+
+    /**
      * Registers a new User.
      *
      * @param user User to be registered

@@ -1,32 +1,102 @@
-<div class="content">
-  <p class="h1">Study Groups</p>
-  <table class="table is-striped is-narrow is-hoverable is-fullwidth">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-<!--      <th>Admin</th>-->
-<!--      <th>Show Heroes</th>-->
-<!--      <th>Delete User</th>-->
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let group of studyGroups">
-      <td>{{group.id}}</td>
-      <td>{{group.name}}</td>
-<!--      <td><a class="button is-success" (click)="heroesModal(user.id)">-->
-<!--                        <span class="icon is-small">-->
-<!--                          <i class="fas fa-eye"></i>-->
-<!--                        </span>-->
-<!--        <span>Show Heroes</span>-->
-<!--      </a></td>-->
-<!--      <td><a *ngIf="!user.admin" class="button is-danger" (click)="deleteUser(user.id)">-->
-<!--                        <span class="icon is-small">-->
-<!--                          <i class="fas fa-trash"></i>-->
-<!--                        </span>-->
-<!--        <span>Delete User</span>-->
-<!--      </a></td>-->
-    </tr>
-    </tbody>
-  </table>
+<div>
+  <div class="content">
+    <p class="h1">Study Groups</p>
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let group of studyGroups">
+        <td>{{group.id}}</td>
+        <td>{{group.name}}</td>
+        <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateGroupModal(group.id)">
+                        <span class="icon is-small">
+                          <i class="fas fa-trash"></i>
+                        </span>
+          <span>Update</span>
+        </a></td>
+        <td><a *ngIf="isTeacher" class="button is-danger" (click)="deleteGroup(group.id)">
+                        <span class="icon is-small">
+                          <i class="fas fa-trash"></i>
+                        </span>
+          <span>Delete</span>
+        </a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="isTeacher">
+    <button class="btn btn-primary" (click)="createGroupModal()">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Create new group
+    </button>
+  </div>
+
+  <div *ngIf="showUpdateGroupModal">
+    <div (click)="showUpdateGroupModal=!showUpdateGroupModal" class="modal-background"></div>
+    <div class="modal-card">
+      <section class="modal-card-body">
+        <div class="content">
+          <form [formGroup]="updateForm" (submit)="updateGroup()">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" formControlName="name" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && fu.name.errors }"/>
+              <div *ngIf="submitted && fu.name.errors" class="invalid-feedback">
+                <div *ngIf="fu.name.errors.required">Name is required</div>
+              </div>
+            </div>
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <button [disabled]="loading" class="btn btn-primary">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  Update
+                </button>
+                <div class="level-item">
+                  <a (click)="closeUpdateGroupModal()" class="button">Close</a>
+                </div>
+              </div>
+            </nav>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div *ngIf="showCreateGroupModal">
+    <div (click)="showCreateGroupModal=!showCreateGroupModal" class="modal-background"></div>
+    <div class="modal-card">
+      <section class="modal-card-body">
+        <div class="content">
+          <form [formGroup]="createForm" (submit)="createGroup()">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" formControlName="name" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && fc.name.errors }"/>
+              <div *ngIf="submitted && fc.name.errors" class="invalid-feedback">
+                <div *ngIf="fc.name.errors.required">Name is required</div>
+              </div>
+            </div>
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <button [disabled]="loading" class="btn btn-primary">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  Create
+                </button>
+                <div class="level-item">
+                  <a (click)="closeCreateGroupModal()" class="button">Close</a>
+                </div>
+              </div>
+            </nav>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
 </div>
