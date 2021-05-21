@@ -86,7 +86,7 @@ public class UserController {
      * @return User with given id
      */
     @RolesAllowed("ROLE_TEACHER")
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public HttpEntity<EntityModel<UserDTO>> getUserById(@PathVariable Long id) {
         Optional<UserDTO> userDTO = userFacade.findUserById(id);
 
