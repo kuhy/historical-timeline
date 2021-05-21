@@ -30,4 +30,16 @@ export class UserService {
       return handleError(error)
     }))
   }
+
+  isUserLoggedIn(): Observable<any> {
+    return this.http.get(`${this.apiURL}/is_logged_in`).pipe(catchError(error => {
+      return handleError(error)
+    }))
+  }
+
+  logout() {
+    return this.http.get(`${this.apiURL}/logout`).pipe(catchError(error => {
+      return handleError(error,"Logout unsuccessful!");
+    }));
+  }
 }

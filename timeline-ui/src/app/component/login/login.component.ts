@@ -21,7 +21,14 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userService.isUserLoggedIn().subscribe(response => {
+      if (response) {
+        // user is already logged in
+        this.router.navigate(['/groups']);
+      }
+    })
+  }
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }

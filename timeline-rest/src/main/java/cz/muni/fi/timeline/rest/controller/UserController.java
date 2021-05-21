@@ -209,6 +209,16 @@ public class UserController {
     }
 
     /**
+     * Checks if there is some logged in user.
+     *
+     * @return true if there is some logged in user
+     */
+    @GetMapping(value = "/is_logged_in")
+    public HttpEntity<Boolean> isUserLoggedIn() {
+        return new ResponseEntity<>(userFacade.isLoggedInUser(), HttpStatus.OK);
+    }
+
+    /**
      * Log out current User.
      *
      * @return Response of api call, no return value
