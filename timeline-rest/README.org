@@ -29,7 +29,7 @@
 
   Add new comment to this timeline:
   #+BEGIN_SRC sh
-    http POST :8080/pa165/rest/timelines/23 text='Hi!'
+    http POST :8080/pa165/rest/timelines/23/comments/create text='Hi!'
   #+END_SRC
 
   Remove historical event with =id= equal to 42:
