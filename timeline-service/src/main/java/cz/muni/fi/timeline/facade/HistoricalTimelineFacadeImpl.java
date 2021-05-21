@@ -4,13 +4,9 @@ import cz.muni.fi.timeline.api.HistoricalTimelineFacade;
 import cz.muni.fi.timeline.api.dto.*;
 import cz.muni.fi.timeline.entity.HistoricalEvent;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
-import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.TimelineComment;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
-import cz.muni.fi.timeline.service.HistoricalEventService;
-import cz.muni.fi.timeline.service.HistoricalTimelineService;
-import cz.muni.fi.timeline.service.StudyGroupService;
-import cz.muni.fi.timeline.service.TimelineCommentService;
+import cz.muni.fi.timeline.service.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,14 +26,18 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
     private final HistoricalEventService eventService;
     private final TimelineCommentService commentService;
     private final StudyGroupService studyGroupService;
+    private final UserService userService;
     private final BeanMappingService beanMappingService;
 
     @Inject
-    public HistoricalTimelineFacadeImpl(HistoricalTimelineService timelineService, HistoricalEventService eventService, TimelineCommentService commentService, StudyGroupService studyGroupService, BeanMappingService beanMappingService) {
+    public HistoricalTimelineFacadeImpl(HistoricalTimelineService timelineService, HistoricalEventService eventService,
+                                        TimelineCommentService commentService, StudyGroupService studyGroupService,
+                                        UserService userService, BeanMappingService beanMappingService) {
         this.timelineService = timelineService;
         this.eventService = eventService;
         this.commentService = commentService;
         this.studyGroupService = studyGroupService;
+        this.userService = userService;
         this.beanMappingService = beanMappingService;
     }
 
@@ -130,6 +130,9 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
         HistoricalTimeline timeline = timelineService.findTimelineById(timelineId).orElseThrow(() ->
                 new IllegalArgumentException("Timeline with given id does not exist.")
         );
+
+        mappedComment.setUser(userService.getLoggedInUser().orElseThrow(() ->
+            new IllegalStateException("There is no logged in user.")));
 
         commentService.createTimelineCommentInTimeline(mappedComment, timeline);
         return mappedComment.getId();

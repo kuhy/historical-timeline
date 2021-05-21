@@ -1,0 +1,10 @@
+<div>
+  <h1>Historical timeline</h1>
+  <div *ngIf="router.url != '/login'">
+    <button class="btn btn-primary" (click)="logout()">
+      Logout
+    </button>
+  </div>
+</div>
+<hr>
+<router-outlet></router-outlet>

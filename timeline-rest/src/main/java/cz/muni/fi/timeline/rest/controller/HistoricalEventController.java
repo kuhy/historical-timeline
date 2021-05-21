@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import cz.muni.fi.timeline.api.HistoricalTimelineFacade;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
@@ -43,10 +44,11 @@ public class HistoricalEventController {
      * @param id id of returned event
      * @return event with given id
      */
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<EntityModel<HistoricalEventDTO>> getEvent(@PathVariable("id") long id) {
+    @RolesAllowed("ROLE_USER")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<EntityModel<HistoricalEventDTO>> getEvent(@PathVariable("id") long id) {
         Optional <HistoricalEventDTO> historicalEventDTO = historicalTimelineFacade.getHistoricalEventWithId(id);
-        if (!historicalEventDTO.isPresent()) {
+        if (historicalEventDTO.isEmpty()) {
             throw new ResourceNotFoundException();
         }
         return new ResponseEntity<>(historicalEventAssembler.toModel(historicalEventDTO.get()), HttpStatus.OK);
@@ -57,8 +59,9 @@ public class HistoricalEventController {
      * @param id id of the removed event
      * @return http status
      */
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> removeEvent(@PathVariable("id") long id) {
+    @RolesAllowed("ROLE_TEACHER")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> removeEvent(@PathVariable("id") long id) {
         historicalTimelineFacade.removeHistoricalEvent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -69,8 +72,10 @@ public class HistoricalEventController {
      * @param historicalEventDTO event with new parameters
      * @return id of the updated event
      */
-    @RequestMapping(value = "/{id}",method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> updateEvent(@PathVariable("id") long id, @RequestBody HistoricalEventDTO historicalEventDTO) {
+    @RolesAllowed("ROLE_TEACHER")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> updateEvent(@PathVariable("id") long id, @RequestBody HistoricalEventDTO historicalEventDTO) {
+        historicalEventDTO.setId(id);
         return new ResponseEntity<>(historicalTimelineFacade.updateHistoricalEvent(historicalEventDTO), HttpStatus.OK);
     }
 
@@ -78,8 +83,9 @@ public class HistoricalEventController {
      * returns all events
      * @return all events
      */
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<CollectionModel<EntityModel<HistoricalEventDTO>>> getEvents() {
+    @RolesAllowed("ROLE_USER")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<CollectionModel<EntityModel<HistoricalEventDTO>>> getEvents() {
         List<HistoricalEventDTO> eventDTOS = historicalTimelineFacade.getAllHistoricalEvents();
 
         CollectionModel<EntityModel<HistoricalEventDTO>> eventCollectionModel = historicalEventAssembler.toCollectionModel(eventDTOS);

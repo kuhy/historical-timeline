@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>timeline-rest</artifactId>
+    <artifactId>timeline</artifactId>
     <packaging>war</packaging>
 
     <properties>
@@ -20,49 +20,20 @@
     <dependencies>
         <dependency>
             <groupId>cz.muni.fi.timeline</groupId>
-            <artifactId>timeline-service</artifactId>
+            <artifactId>timeline-rest</artifactId>
             <version>${project.parent.version}</version>
+            <type>war</type>
         </dependency>
         <dependency>
             <groupId>cz.muni.fi.timeline</groupId>
-            <artifactId>timeline-data</artifactId>
+            <artifactId>timeline-ui</artifactId>
             <version>${project.parent.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.hateoas</groupId>
-            <artifactId>spring-hateoas</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-config</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>jsr250-api</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
         <dependency>
@@ -81,6 +52,28 @@
         <finalName>pa165</finalName>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>${project.parent.basedir}/timeline-ui/dist/timeline-ui</directory>
+                        </resource>
+                    </webResources>
+                    <overlays>
+                        <overlay>
+                            <groupId>cz.muni.fi.timeline</groupId>
+                            <artifactId>timeline-rest</artifactId>
+                        </overlay>
+                        <overlay>
+                            <!-- empty groupId/artifactId represents the current build -->
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
+
             <!-- embedded tomcat -->
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>

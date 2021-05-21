@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
@@ -33,8 +34,8 @@ public class StudyGroupController {
 
     final static Logger logger = LoggerFactory.getLogger(StudyGroupController.class);
 
-    private StudyGroupFacade studyGroupFacade;
-    private StudyGroupAssembler studyGroupAssembler;
+    private final StudyGroupFacade studyGroupFacade;
+    private final StudyGroupAssembler studyGroupAssembler;
 
     @Inject
     public StudyGroupController(StudyGroupFacade groupFacade, StudyGroupAssembler studyGroupAssembler){
@@ -47,12 +48,13 @@ public class StudyGroupController {
      * @param id id of the group
      * @return study group with given id
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<EntityModel<StudyGroupDTO>> getStudyGroup(@PathVariable("id") long id){
+    @RolesAllowed("ROLE_USER")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<EntityModel<StudyGroupDTO>> getStudyGroup(@PathVariable("id") long id){
         logger.debug("rest getStudyGroup({})", id);
 
         Optional<StudyGroupDTO> studyGroupDTO = studyGroupFacade.getStudyGroupWithId(id);
-        if (!studyGroupDTO.isPresent()) {
+        if (studyGroupDTO.isEmpty()) {
             throw new ResourceNotFoundException();
         }
 
@@ -64,8 +66,9 @@ public class StudyGroupController {
      * @param id of the group to be removed
      * @return http status
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> deleteStudyGroup(@PathVariable("id") long id) {
+    @RolesAllowed("ROLE_TEACHER")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteStudyGroup(@PathVariable("id") long id) {
         logger.debug("rest deleteStudyGroup({})", id);
 
         studyGroupFacade.removeStudyGroup(id);
@@ -78,15 +81,12 @@ public class StudyGroupController {
      * @param updatedGroup study group with new parameters
      * @return http status
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> updateStudyGroup(@PathVariable("id") long id, @RequestBody StudyGroupDTO updatedGroup){
-
+    @RolesAllowed("ROLE_TEACHER")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> updateStudyGroup(@PathVariable("id") long id, @RequestBody StudyGroupDTO updatedGroup){
         logger.debug("rest updateStudyGroup({})", id);
 
         updatedGroup.setId(id);
-        //FIXME
-
         return new ResponseEntity<>(studyGroupFacade.updateStudyGroup(updatedGroup), HttpStatus.OK);
 
     }
@@ -95,8 +95,9 @@ public class StudyGroupController {
      * return all study group
      * @return all study groups
      */
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final HttpEntity<CollectionModel<EntityModel<StudyGroupDTO>>> getAllStudyGroups() {
+    @RolesAllowed("ROLE_USER")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<CollectionModel<EntityModel<StudyGroupDTO>>> getAllStudyGroups() {
         logger.debug("rest getAllStudyGroups()");
 
         List<StudyGroupDTO> allGroups = studyGroupFacade.getAllStudyGroups();
@@ -109,10 +110,9 @@ public class StudyGroupController {
      * @param studyGroupCreateDTO study group to be created
      * @return response entity
      */
-    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> createStudyGroup(@RequestBody StudyGroupCreateDTO studyGroupCreateDTO){
-
+    @RolesAllowed("ROLE_TEACHER")
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> createStudyGroup(@RequestBody StudyGroupCreateDTO studyGroupCreateDTO){
         logger.debug("rest createStudyGroup()");
 
         return new ResponseEntity<>(studyGroupFacade.createStudyGroup(studyGroupCreateDTO), HttpStatus.OK);
@@ -124,8 +124,9 @@ public class StudyGroupController {
      * @param groupId id of the group where timeline will be created
      * @return response entity
      */
-    @RequestMapping(value = "/{id}/timelines/create", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Long> createTimelineInStudyGroup(@RequestBody() HistoricalTimelineCreateDTO historicalTimelineCreateDTO,@PathVariable("id") long groupId){
+    @RolesAllowed("ROLE_TEACHER")
+    @PostMapping(value = "/{id}/timelines/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Long> createTimelineInStudyGroup(@RequestBody HistoricalTimelineCreateDTO historicalTimelineCreateDTO,@PathVariable("id") long groupId){
 
         return new ResponseEntity<>(studyGroupFacade.createTimelineInStudyGroup(historicalTimelineCreateDTO,groupId),HttpStatus.OK);
     }
@@ -137,8 +138,9 @@ public class StudyGroupController {
      * @return response entity
      * @throws UserNotInStudyGroupException
      */
-    @RequestMapping(value = "/{id}/users/{user_id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> removeUserFromStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserNotInStudyGroupException {
+    @RolesAllowed("ROLE_USER")
+    @DeleteMapping(value = "/{id}/users/{user_id}")
+    public ResponseEntity<Void> removeUserFromStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserNotInStudyGroupException {
         logger.debug("rest removeUserFromStudyGroup");
 
         studyGroupFacade.removeUserFromStudyGroup(studyGroupId, userId);
@@ -152,8 +154,9 @@ public class StudyGroupController {
      * @return response entity
      * @throws UserAlreadyInStudyGroupException
      */
-    @RequestMapping(value = "/{id}/users/{user_id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public final ResponseEntity<Void> addUserToStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserAlreadyInStudyGroupException {
+    @RolesAllowed("ROLE_TEACHER")
+    @PutMapping(value = "/{id}/users/{user_id}")
+    public ResponseEntity<Void> addUserToStudyGroup(@PathVariable("id") long studyGroupId, @PathVariable("user_id") long userId) throws UserAlreadyInStudyGroupException {
         logger.debug("rest addUserFromStudyGroup");
 
         studyGroupFacade.addUserToStudyGroup(studyGroupId, userId);

@@ -38,6 +38,9 @@ public class HistoricalTimelineFacadeTest {
     @Mock
     private StudyGroupService studyGroupService;
 
+    @Mock
+    private UserService userService;
+
     // TODO @Mock
     private final BeanMappingService beanMappingService = new BeanMappingServiceImpl(DozerBeanMapperBuilder.buildDefault());
 
@@ -86,7 +89,8 @@ public class HistoricalTimelineFacadeTest {
     @BeforeMethod
     public void openMocks() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        historicalTimelineFacade = new HistoricalTimelineFacadeImpl(timelineService,eventService,commentService,studyGroupService,beanMappingService);
+        historicalTimelineFacade = new HistoricalTimelineFacadeImpl(timelineService, eventService, commentService,
+            studyGroupService, userService, beanMappingService);
     }
 
     @AfterMethod
@@ -271,6 +275,7 @@ public class HistoricalTimelineFacadeTest {
     public void createTimelineComment(){
         TimelineCommentCreateDTO timelineCommentCreateDTO = beanMappingService.mapTo(event, TimelineCommentCreateDTO.class);
         when(timelineService.findTimelineById(timeline.getId())).thenReturn(Optional.of(timeline));
+        when(userService.getLoggedInUser()).thenReturn(Optional.of(user1));
         historicalTimelineFacade.createTimelineComment(timelineCommentCreateDTO,timeline.getId());
 
         verify(commentService, times(1)).createTimelineCommentInTimeline(any(TimelineComment.class),any(HistoricalTimeline.class));
