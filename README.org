@@ -24,13 +24,13 @@ group and add a comment to them. Searching among all events is also possible.
     ../mvnw
   #+END_SRC
 
-  The user interface is then accessible at =http://localhost:8080/pa165= and REST API at
-  =http://localhost:8080/pa165/rest=. More information about the REST API is in [[./timeline-rest/README.org][this README]].
+  The user interface is then accessible at [[http://localhost:8080/pa165]] and REST API at
+  [[http://localhost:8080/pa165/rest]]. More information about the REST API is in [[./timeline-rest/README.org][this README]].
 
   The REST API and also the web application can be executed independently. For more information
   about this, visit the README of the corresponding module.
 * Project structure
-  The =historrical-timeline= project is split into following modules:
+  The =historical-timeline= project is split into following modules:
   - [[./timeline][=timeline=]] :: Module that merges =timeline-ui= and =timeline-rest= into one WAR.
   - [[./timeline-api][=timeline-api=]] :: Public API for =historical-timeline=.
   - [[./timeline-data][=timeline-data=]] :: Contains sample data for the project.

@@ -1,6 +1,8 @@
 {
-  "/pa165/rest": {
+  "/pa165/rest/*": {
     "target": "http://localhost:8080",
-    "secure": false
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }
