@@ -1,33 +1,31 @@
 <div>
   <div class="content">
-    <p class="h1">Study Groups</p>
+    <p class="h1">Historical timelines of study group</p>
+    <div>
+      <button class="btn btn-primary" (click)="backToStudyGroups()">
+        Back to study groups
+      </button>
+    </div>
     <table class="table is-striped is-narrow is-hoverable is-fullwidth">
       <thead>
       <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Show</th>
         <th>Update</th>
         <th>Delete</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let group of studyGroups">
-        <td>{{group.id}}</td>
-        <td>{{group.name}}</td>
-        <td><a class="button is-danger" (click)="showTimelines(group.id)">
-                        <span class="icon is-small">
-                          <i class="fas fa-trash"></i>
-                        </span>
-          <span>Show</span>
-        </a></td>
-        <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateGroupModal(group.id)">
+      <tr *ngFor="let historicalTimeline of historicalTimelines">
+        <td>{{historicalTimeline.id}}</td>
+        <td>{{historicalTimeline.name}}</td>
+        <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateHistoricalTimelineModal(historicalTimeline.id)">
                         <span class="icon is-small">
                           <i class="fas fa-trash"></i>
                         </span>
           <span>Update</span>
         </a></td>
-        <td><a *ngIf="isTeacher" class="button is-danger" (click)="deleteGroup(group.id)">
+        <td><a *ngIf="isTeacher" class="button is-danger" (click)="deleteHistoricalTimeline(historicalTimeline.id)">
                         <span class="icon is-small">
                           <i class="fas fa-trash"></i>
                         </span>
@@ -39,23 +37,23 @@
   </div>
 
   <div *ngIf="isTeacher">
-    <button class="btn btn-primary" (click)="createGroupModal()">
-      Create new group
+    <button class="btn btn-primary" (click)="createHistoricalTimelineModal()">
+      Create new historical timeline
     </button>
   </div>
 
-  <div *ngIf="showUpdateGroupModal">
-    <div (click)="showUpdateGroupModal=!showUpdateGroupModal" class="modal-background"></div>
+  <div *ngIf="showUpdateHistoricalTimelineModal">
+    <div (click)="showUpdateHistoricalTimelineModal=!showUpdateHistoricalTimelineModal" class="modal-background"></div>
     <div class="modal-card">
       <section class="modal-card-body">
         <div class="content">
-          <form [formGroup]="updateForm" (submit)="updateGroup()">
+          <form [formGroup]="updateForm" (submit)="updateHistoricalTimeline()">
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" formControlName="name" class="form-control"
-                     [ngClass]="{ 'is-invalid': submitted && fu.name.errors }"/>
-              <div *ngIf="submitted && fu.name.errors" class="invalid-feedback">
-                <div *ngIf="fu.name.errors.required">Name is required</div>
+                     [ngClass]="{ 'is-invalid': submitted && formUpdate.name.errors }"/>
+              <div *ngIf="submitted && formUpdate.name.errors" class="invalid-feedback">
+                <div *ngIf="formUpdate.name.errors.required">Name is required</div>
               </div>
             </div>
             <nav class="level is-mobile">
@@ -65,7 +63,7 @@
                   Update
                 </button>
                 <div class="level-item">
-                  <a (click)="closeUpdateGroupModal()" class="button">Close</a>
+                  <a (click)="closeUpdateHistoricalTimelineModal()" class="button">Close</a>
                 </div>
               </div>
             </nav>
@@ -75,18 +73,18 @@
     </div>
   </div>
 
-  <div *ngIf="showCreateGroupModal">
-    <div (click)="showCreateGroupModal=!showCreateGroupModal" class="modal-background"></div>
+  <div *ngIf="showCreateHistoricalTimelineModal">
+    <div (click)="showCreateHistoricalTimelineModal=!showCreateHistoricalTimelineModal" class="modal-background"></div>
     <div class="modal-card">
       <section class="modal-card-body">
         <div class="content">
-          <form [formGroup]="createForm" (submit)="createGroup()">
+          <form [formGroup]="createForm" (submit)="createHistoricalTimeline()">
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" formControlName="name" class="form-control"
-                     [ngClass]="{ 'is-invalid': submitted && fc.name.errors }"/>
-              <div *ngIf="submitted && fc.name.errors" class="invalid-feedback">
-                <div *ngIf="fc.name.errors.required">Name is required</div>
+                     [ngClass]="{ 'is-invalid': submitted && formCreate.name.errors }"/>
+              <div *ngIf="submitted && formCreate.name.errors" class="invalid-feedback">
+                <div *ngIf="formCreate.name.errors.required">Name is required</div>
               </div>
             </div>
             <nav class="level is-mobile">
@@ -96,7 +94,7 @@
                   Create
                 </button>
                 <div class="level-item">
-                  <a (click)="closeCreateGroupModal()" class="button">Close</a>
+                  <a (click)="closeCreateHistoricalTimelineModal()" class="button">Close</a>
                 </div>
               </div>
             </nav>

@@ -7,12 +7,14 @@ import {StudyGroupComponent} from './component/study-group/study-group.component
 import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import { LoginComponent } from './component/login/login.component';
+import { HistoricalTimelineComponent } from './component/historical-timeline/historical-timeline.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudyGroupComponent,
-    LoginComponent
+    LoginComponent,
+    HistoricalTimelineComponent
   ],
   imports: [
     BrowserModule,
