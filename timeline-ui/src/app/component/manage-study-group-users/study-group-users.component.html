@@ -1,0 +1,40 @@
+<div>
+  <div class="content">
+    <p class="h1">Study group users</p>
+    <div>
+      <button class="btn btn-primary" (click)="backToStudyGroups()">
+        Back to study groups
+      </button>
+    </div>
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+      <tr>
+        <th>Username</th>
+        <th>Fisrt name</th>
+        <th>Last name</th>
+        <th>Add user</th>
+        <th>Remove user</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{user.username}}</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td><a *ngIf="isTeacher" class="button is-danger" (click)="addUserToStudyGroup(user.id)">
+                        <span class="icon is-small">
+                          <i class="fas fa-trash"></i>
+                        </span>
+          <span>Add user</span>
+        </a></td>
+        <td><a *ngIf="isTeacher" class="button is-danger" (click)="removeUserFromStudyGroup(user.id)">
+                        <span class="icon is-small">
+                          <i class="fas fa-trash"></i>
+                        </span>
+          <span>Remove user</span>
+        </a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

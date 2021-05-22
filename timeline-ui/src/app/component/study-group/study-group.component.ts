@@ -136,7 +136,7 @@ export class StudyGroupComponent implements OnInit {
 
   // ========== Add user ==========
 
-  addUser(studyGroupId: number) {
-    this.router.navigate([`/groups/add_user/${studyGroupId}`])
+  manageUsers(studyGroupId: number) {
+    this.router.navigate([`/groups/manage_users/${studyGroupId}`])
   }
 }
