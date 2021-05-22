@@ -1,0 +1,104 @@
+<div>
+  <div class="content">
+    <p class="h1">Comments of historical event</p>
+    <div>
+      <button class="btn btn-primary" (click)="backToTimeline()">
+        Back to historical event
+      </button>
+    </div>
+    <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+      <thead>
+      <tr>
+        <th>Text</th>
+        <th>Author</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let comment of timelineComments">
+        <td>{{comment.text}}</td>
+        <td>{{comment.user}}</td>
+        <td><a class="button is-danger" (click)="updateCommentModal(comment)">
+                        <span class="icon is-small">
+                          <i class="fas fa-trash"></i>
+                        </span>
+          <span>Update</span>
+        </a></td>
+        <td><a class="button is-danger" (click)="deleteComment(comment.id)">
+                        <span class="icon is-small">
+                          <i class="fas fa-trash"></i>
+                        </span>
+          <span>Delete</span>
+        </a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <button class="btn btn-primary" (click)="createCommentModal()">
+      Create new historical event
+    </button>
+  </div>
+
+  <div *ngIf="showUpdateModal">
+    <div (click)="showUpdateModal=!showUpdateModal" class="modal-background"></div>
+    <div class="modal-card">
+      <section class="modal-card-body">
+        <div class="content">
+          <form [formGroup]="updateForm" (submit)="updateComment()">
+            <div class="form-group">
+              <label for="text">Text</label>
+              <input type="text" formControlName="text" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && formUpdate.text.errors }"/>
+              <div *ngIf="submitted && formUpdate.text.errors" class="invalid-feedback">
+                <div *ngIf="formUpdate.text.errors.required">text is required</div>
+              </div>
+            </div>
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <button [disabled]="loading" class="btn btn-primary">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  Update
+                </button>
+                <div class="level-item">
+                  <a (click)="closeUpdateModal()" class="button">Close</a>
+                </div>
+              </div>
+            </nav>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div *ngIf="showCreateModal">
+    <div (click)="showCreateModal=!showCreateModal" class="modal-background"></div>
+    <div class="modal-card">
+      <section class="modal-card-body">
+        <div class="content">
+          <form [formGroup]="createForm" (submit)="createComment()">
+            <div class="form-group">
+              <label for="text">Text</label>
+              <input type="text" formControlName="text" class="form-control"
+                     [ngClass]="{ 'is-invalid': submitted && formUpdate.text.errors }"/>
+              <div *ngIf="submitted && formUpdate.text.errors" class="invalid-feedback">
+                <div *ngIf="formUpdate.text.errors.required">text is required</div>
+              </div>
+            </div>
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <button [disabled]="loading" class="btn btn-primary">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  Create
+                </button>
+                <div class="level-item">
+                  <a (click)="closeCreateModal()" class="button">Close</a>
+                </div>
+              </div>
+            </nav>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

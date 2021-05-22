@@ -10,6 +10,7 @@ import { LoginComponent } from './component/login/login.component';
 import { HistoricalTimelineComponent } from './component/historical-timeline/historical-timeline.component';
 import { HistoricalEventComponent } from './component/historical-event/historical-event.component';
 import { AddUserToGroupComponent } from './component/add-user-to-group/add-user-to-group.component';
+import { TimelineCommentComponent } from './component/timeline-comment/timeline-comment.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AddUserToGroupComponent } from './component/add-user-to-group/add-user-
     LoginComponent,
     HistoricalTimelineComponent,
     HistoricalEventComponent,
-    AddUserToGroupComponent
+    AddUserToGroupComponent,
+    TimelineCommentComponent
   ],
   imports: [
     BrowserModule,

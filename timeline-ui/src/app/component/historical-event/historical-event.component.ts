@@ -95,10 +95,17 @@ export class HistoricalEventComponent implements OnInit {
     return this.updateForm.controls
   }
 
-  updateHistoricalEventModal(id: number) {
+  updateHistoricalEventModal(event: HistoricalEventDTO) {
     this.closeCreateModal()
 
-    this.updateDTO.id = id
+    this.updateDTO = event
+
+    this.updateForm.setValue({
+      name: this.updateDTO.name,
+      description: this.updateDTO.description,
+      date: this.updateDTO.date, // TODO format
+      location: this.updateDTO.location
+    })
 
     this.showUpdateModal = true
     this.submitted = false
@@ -118,6 +125,10 @@ export class HistoricalEventComponent implements OnInit {
     this.updateDTO.location = this.formUpdate.location.value
     this.updateDTO.date = this.formUpdate.date.value // TODO different date format
     // this.updateDTO.image = this.formUpdate.image.value // TODO image
+
+    this.historicalEventService.updateHistoricalEvent(this.updateDTO).subscribe(response => {
+      this.loadHistoricalEvents()
+    })
 
     this.loading = false
     this.closeUpdateModal()
@@ -142,6 +153,7 @@ export class HistoricalEventComponent implements OnInit {
   }
 
   createHistoricalEvent() {
+    // TODO not working
     this.submitted = true
 
     if (this.createForm.invalid) {
@@ -151,10 +163,10 @@ export class HistoricalEventComponent implements OnInit {
     this.loading = true
 
     let event = new HistoricalEventCreateDTO()
-    event.name = this.formUpdate.name.value
-    event.description = this.formUpdate.description.value
-    event.location = this.formUpdate.location.value
-    event.date = this.formUpdate.date.value // TODO different date format
+    event.name = this.formCreate.name.value
+    event.description = this.formCreate.description.value
+    event.location = this.formCreate.location.value
+    event.date = this.formCreate.date.value // TODO different date format
     this.historicalTimelineService.addEventToTimeline(this.historicalTimelineId, event).subscribe(response => {
       this.loadHistoricalEvents()
     })

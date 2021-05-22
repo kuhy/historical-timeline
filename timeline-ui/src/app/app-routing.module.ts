@@ -5,6 +5,7 @@ import {LoginComponent} from "./component/login/login.component";
 import {HistoricalTimelineComponent} from "./component/historical-timeline/historical-timeline.component";
 import {AddUserToGroupComponent} from "./component/add-user-to-group/add-user-to-group.component";
 import {HistoricalEventComponent} from "./component/historical-event/historical-event.component";
+import {TimelineCommentComponent} from "./component/timeline-comment/timeline-comment.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path: 'groups', component: StudyGroupComponent},
   {path: 'groups/:studyGroupId', component: HistoricalTimelineComponent},
   {path: 'groups/add_user/:studyGroupId', component: AddUserToGroupComponent},
-  {path: 'groups/:studyGroupId/timeline/:timelineId', component: HistoricalEventComponent}
+  {path: 'groups/:studyGroupId/timeline/events/:timelineId', component: HistoricalEventComponent},
+  {path: 'groups/:studyGroupId/timeline/comments/:timelineId', component: TimelineCommentComponent}
 ];
 
 @NgModule({

@@ -159,12 +159,12 @@ export class HistoricalTimelineComponent implements OnInit {
   // ========== Show Historical Events ==========
 
   showHistoricalEvents(timelineId: number) {
-    this.router.navigate([`/groups/${this.studyGroupId}/timeline/${timelineId}`]);
+    this.router.navigate([`/groups/${this.studyGroupId}/timeline/events/${timelineId}`]);
   }
 
   // ========== Show Comments ==========
 
   showComments(timelineId: number) {
-    // TODO
+    this.router.navigate([`/groups/${this.studyGroupId}/timeline/comments/${timelineId}`]);
   }
 }
