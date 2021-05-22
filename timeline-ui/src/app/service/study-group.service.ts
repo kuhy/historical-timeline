@@ -5,6 +5,7 @@ import {catchError} from "rxjs/operators";
 import {handleError} from "../script/error";
 import {StudyGroupDTO} from "../dto/study-group-dto";
 import {HistoricalTimelineCreateDTO} from "../dto/historical-timeline-create-dto";
+import {StudyGroupCreateDTO} from "../dto/study-group-create-dto";
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class StudyGroupService {
     }));
   }
 
-  createGroup(createGroupDTO: StudyGroupDTO): Observable<any> {
+  createGroup(createGroupDTO: StudyGroupCreateDTO): Observable<any> {
     return this.http.post(`${this.apiURL}/create`, createGroupDTO).pipe(catchError(error => {
       return handleError(error)
     }));
@@ -45,7 +46,7 @@ export class StudyGroupService {
     }));
   }
 
-  addHistoricalTimeline(studyGroupId: number, createHistoricalTimelineDTO: HistoricalTimelineCreateDTO) {
+  addHistoricalTimeline(studyGroupId: number, createHistoricalTimelineDTO: HistoricalTimelineCreateDTO): Observable<any> {
     return this.http.post(`${this.apiURL}/${studyGroupId}/timelines/create`, createHistoricalTimelineDTO).pipe(catchError(error => {
       return handleError(error)
     }));

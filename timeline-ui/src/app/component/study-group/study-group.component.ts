@@ -4,6 +4,7 @@ import {StudyGroupDTO} from "../../dto/study-group-dto";
 import {UserService} from "../../service/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {StudyGroupCreateDTO} from "../../dto/study-group-create-dto";
 
 @Component({
   selector: 'app-study-groups',
@@ -113,7 +114,7 @@ export class StudyGroupComponent implements OnInit {
     }
 
     this.loading = true;
-    let group = new StudyGroupDTO();
+    let group = new StudyGroupCreateDTO();
     group.name = this.fc.name.value;
     this.studyGroupService.createGroup(group).subscribe(response => {
       this.loadStudyGroups();
@@ -129,7 +130,13 @@ export class StudyGroupComponent implements OnInit {
 
   // ========== Show timelines ==========
 
-  showTimelines(id: number) {
-    this.router.navigate([`/groups/${id}`]);
+  showTimelines(studyGroupId: number) {
+    this.router.navigate([`/groups/${studyGroupId}`]);
+  }
+
+  // ========== Add user ==========
+
+  addUser(studyGroupId: number) {
+    this.router.navigate([`/groups/add_user/${studyGroupId}`])
   }
 }

@@ -3,12 +3,16 @@ import {RouterModule, Routes} from '@angular/router';
 import {StudyGroupComponent} from "./component/study-group/study-group.component";
 import {LoginComponent} from "./component/login/login.component";
 import {HistoricalTimelineComponent} from "./component/historical-timeline/historical-timeline.component";
+import {AddUserToGroupComponent} from "./component/add-user-to-group/add-user-to-group.component";
+import {HistoricalEventComponent} from "./component/historical-event/historical-event.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'groups', component: StudyGroupComponent},
-  {path: 'groups/:id', component: HistoricalTimelineComponent}
+  {path: 'groups/:studyGroupId', component: HistoricalTimelineComponent},
+  {path: 'groups/add_user/:studyGroupId', component: AddUserToGroupComponent},
+  {path: 'groups/:studyGroupId/timeline/:timelineId', component: HistoricalEventComponent}
 ];
 
 @NgModule({

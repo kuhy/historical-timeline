@@ -1,9 +1,20 @@
 <div>
   <h1>Historical timeline</h1>
   <div *ngIf="router.url != '/login'">
+    <button class="btn btn-primary" (click)="studyGroups()">
+      Study groups
+    </button>
+    <button class="btn btn-primary" (click)="users()">
+      Users TODO access only teachers
+    </button>
+  </div>
+  <div *ngIf="router.url != '/login'">
     <button class="btn btn-primary" (click)="logout()">
       Logout
     </button>
+  </div>
+  <div *ngIf="router.url != '/login'">
+
   </div>
 </div>
 <hr>

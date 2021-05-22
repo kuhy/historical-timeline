@@ -8,13 +8,17 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import { LoginComponent } from './component/login/login.component';
 import { HistoricalTimelineComponent } from './component/historical-timeline/historical-timeline.component';
+import { HistoricalEventComponent } from './component/historical-event/historical-event.component';
+import { AddUserToGroupComponent } from './component/add-user-to-group/add-user-to-group.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StudyGroupComponent,
     LoginComponent,
-    HistoricalTimelineComponent
+    HistoricalTimelineComponent,
+    HistoricalEventComponent,
+    AddUserToGroupComponent
   ],
   imports: [
     BrowserModule,

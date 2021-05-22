@@ -9,16 +9,28 @@
     <table class="table is-striped is-narrow is-hoverable is-fullwidth">
       <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
-        <th>Update</th>
-        <th>Delete</th>
+        <th *ngIf="isTeacher">Events</th>
+        <th *ngIf="isTeacher">Comments</th>
+        <th *ngIf="isTeacher">Update</th>
+        <th *ngIf="isTeacher">Delete</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let historicalTimeline of historicalTimelines">
-        <td>{{historicalTimeline.id}}</td>
         <td>{{historicalTimeline.name}}</td>
+        <td><a class="button is-danger" (click)="showHistoricalEvents(historicalTimeline.id)">
+                        <span class="icon is-small">
+                          <i class="fas fa-trash"></i>
+                        </span>
+          <span>Show</span>
+        </a></td>
+        <td><a class="button is-danger" (click)="showComments(historicalTimeline.id)">
+                        <span class="icon is-small">
+                          <i class="fas fa-trash"></i>
+                        </span>
+          <span>Show</span>
+        </a></td>
         <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateHistoricalTimelineModal(historicalTimeline.id)">
                         <span class="icon is-small">
                           <i class="fas fa-trash"></i>

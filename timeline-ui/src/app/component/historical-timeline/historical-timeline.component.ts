@@ -37,7 +37,7 @@ export class HistoricalTimelineComponent implements OnInit {
     this.studyGroupId = 0
 
     this.activatedRoute.paramMap.subscribe(params => {
-      this.studyGroupId = Number(params.get('id'))
+      this.studyGroupId = Number(params.get('studyGroupId'))
     })
 
     this.updateHistoricalTimelineDTO = new HistoricalTimelineDTO()
@@ -150,9 +150,21 @@ export class HistoricalTimelineComponent implements OnInit {
     this.showCreateHistoricalTimelineModal = false
   }
 
-  // ========== Other functions ==========
+  // ========== Back to Study Groups ==========
 
   backToStudyGroups() {
     this.router.navigate([`/groups`]);
+  }
+
+  // ========== Show Historical Events ==========
+
+  showHistoricalEvents(timelineId: number) {
+    this.router.navigate([`/groups/${this.studyGroupId}/timeline/${timelineId}`]);
+  }
+
+  // ========== Show Comments ==========
+
+  showComments(timelineId: number) {
+    // TODO
   }
 }
