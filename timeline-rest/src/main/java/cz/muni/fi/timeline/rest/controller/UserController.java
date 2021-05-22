@@ -175,8 +175,8 @@ public class UserController {
      * @return User's Id
      */
     @RolesAllowed("ROLE_TEACHER")
-    @PostMapping(value = "/register/{user}/{unencryptedPassword}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public HttpEntity<Long> registerUser(@PathVariable UserCreateDTO user, @PathVariable String unencryptedPassword) {
+    @PostMapping(value = "/register/{unencryptedPassword}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public HttpEntity<Long> registerUser(@RequestBody UserCreateDTO user, @PathVariable String unencryptedPassword) {
         if (userFacade.findUserByUsername(user.getUsername()).isPresent()) {
             throw new ResourceAlreadyExistsException();
         }
