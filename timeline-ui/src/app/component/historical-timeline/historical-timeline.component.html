@@ -1,14 +1,6 @@
 <div>
   <div>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <div class="sidenav">
-        <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-        <button style="margin-top: 40px" class="dropdown-btn" (click)="backToStudyGroups()" >Study Groups
-        </button>
-        <button class="dropdown-btn" (click)="logout()">
-          Logout
-        </button>
-      </div>
     <div class="main_window">
       <div class="content">
         <p class="h1">Historical timelines of study group</p>
@@ -16,8 +8,8 @@
           <thead>
           <tr>
             <th>Name</th>
-            <th *ngIf="isTeacher">Events</th>
-            <th *ngIf="isTeacher">Comments</th>
+            <th>Events</th>
+            <th>Comments</th>
             <th *ngIf="isTeacher">Update</th>
             <th *ngIf="isTeacher">Delete</th>
           </tr>
@@ -46,12 +38,14 @@
         </table>
       </div>
       <div class="wrapper">
-          <div *ngIf="isTeacher">
-            <button class="buttonblack" (click)="createHistoricalTimelineModal()">
+          <div>
+            <button  *ngIf="isTeacher" class="buttonblack" (click)="createHistoricalTimelineModal()">
               Create new historical timeline
             </button>
+            <button class="buttonblack" (click)="backToStudyGroups()">
+              Back to study groups
+            </button>
           </div>
-
           <div *ngIf="showUpdateHistoricalTimelineModal">
             <div (click)="showUpdateHistoricalTimelineModal=!showUpdateHistoricalTimelineModal" class="modal-background"></div>
             <div class="modal-card">
@@ -129,11 +123,6 @@
               </section>
             </div>
           </div>
-              <div>
-                <button class="buttonblack" (click)="backToStudyGroups()">
-                  Back to study groups
-                </button>
-              </div>
         </div>
     </div>
   </div>

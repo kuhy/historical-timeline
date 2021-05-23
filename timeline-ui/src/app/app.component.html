@@ -1,8 +1,20 @@
 <div style="background-color: #151414; height: 80px">
   <div style="vertical-align: center">
-  <h1 style="text-align: center"><b style="font-family: 'Helvetica'; color: #808080; font-size: 60px">Historical timeline</b></h1>
-
-</div>
+    <h1 style="text-align: center"><b style="font-family: 'Helvetica'; color: #808080; font-size: 60px">Historical timeline</b></h1>
+  </div>
+  <div *ngIf="showMenu" class="sidenav">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+    <button style="margin-top: 40px" class="dropdown-btn" (click)="studyGroups()">
+      Study Groups
+    </button>
+    <button *ngIf="isTeacher" class="dropdown-btn" (click)="users()">
+      Users
+    </button>
+    <button class="dropdown-btn" (click)="logout()">
+      Logout
+    </button>
+  </div>
 </div>
 <router-outlet></router-outlet>
 
