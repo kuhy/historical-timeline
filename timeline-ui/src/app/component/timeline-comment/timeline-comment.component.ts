@@ -6,10 +6,9 @@ import {HistoricalEventService} from "../../service/historical-event.service";
 import {UserService} from "../../service/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TimelineCommentService} from "../../service/timeline-comment.service";
-import {HistoricalEventDTO} from "../../dto/historical-event-dto";
-import {HistoricalEventCreateDTO} from "../../dto/historical-event-create-dto";
 import {TimelineCommentCreateDTO} from "../../dto/timeline-comment-create-dto";
 import {UserDTO} from "../../dto/user-dto";
+import {faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-timeline-comment',
@@ -17,6 +16,8 @@ import {UserDTO} from "../../dto/user-dto";
   styleUrls: ['./timeline-comment.component.css']
 })
 export class TimelineCommentComponent implements OnInit {
+  faEdit = faEdit
+  faTrash = faTrash
 
   studyGroupId: number
   historicalTimelineId: number

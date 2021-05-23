@@ -3,6 +3,7 @@ import {UserDTO} from "../../dto/user-dto";
 import {UserService} from "../../service/user.service";
 import {StudyGroupService} from "../../service/study-group.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {faUserMinus, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-manage-study-group-users',
@@ -10,6 +11,8 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./study-group-users.component.css']
 })
 export class StudyGroupUsersComponent implements OnInit {
+  faUserPlus = faUserPlus
+  faUserMinus = faUserMinus
 
   studyGroupId: number
   isTeacher = false

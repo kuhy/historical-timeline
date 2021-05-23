@@ -26,27 +26,19 @@
           <tr *ngFor="let historicalTimeline of historicalTimelines">
             <td>{{historicalTimeline.name}}</td>
             <td><a class="button is-danger" (click)="showHistoricalEvents(historicalTimeline.id)">
-                            <span class="icon is-small">
-                              <i class="fas fa-trash"></i>
-                            </span>
+              <fa-icon [icon]="faEye"></fa-icon>
               <span>Show</span>
             </a></td>
             <td><a class="button is-danger" (click)="showComments(historicalTimeline.id)">
-                            <span class="icon is-small">
-                              <i class="fas fa-trash"></i>
-                            </span>
+              <fa-icon [icon]="faEye"></fa-icon>
               <span>Show</span>
             </a></td>
             <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateHistoricalTimelineModal(historicalTimeline.id)">
-                            <span class="icon is-small">
-                              <i class="fas fa-trash"></i>
-                            </span>
+              <fa-icon [icon]="faEdit"></fa-icon>
               <span>Update</span>
             </a></td>
             <td><a *ngIf="isTeacher" class="button is-danger" (click)="deleteHistoricalTimeline(historicalTimeline.id)">
-                            <span class="icon is-small">
-                              <i class="fas fa-trash"></i>
-                            </span>
+              <fa-icon [icon]="faTrash"></fa-icon>
               <span>Delete</span>
             </a></td>
           </tr>

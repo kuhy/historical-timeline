@@ -6,6 +6,7 @@ import {HistoricalTimelineCreateDTO} from "../../dto/historical-timeline-create-
 import {UserService} from "../../service/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {StudyGroupService} from "../../service/study-group.service";
+import {faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-historical-timeline',
@@ -13,6 +14,9 @@ import {StudyGroupService} from "../../service/study-group.service";
   styleUrls: ['./historical-timeline.component.css']
 })
 export class HistoricalTimelineComponent implements OnInit {
+  faEye = faEye
+  faEdit = faEdit
+  faTrash = faTrash
 
   studyGroupId: number
   isTeacher = false

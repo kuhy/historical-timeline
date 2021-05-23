@@ -16,6 +16,8 @@
           <tr>
             <th>Text</th>
             <th>Author</th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
           </thead>
           <tbody>
@@ -23,15 +25,11 @@
             <td>{{comment.text}}</td>
             <td>{{comment.user}}</td>
             <td><a class="button is-danger" (click)="updateCommentModal(comment)">
-                            <span class="icon is-small">
-                              <i class="fas fa-trash"></i>
-                            </span>
+              <fa-icon [icon]="faEdit"></fa-icon>
               <span>Update</span>
             </a></td>
             <td><a class="button is-danger" (click)="deleteComment(comment.id)">
-                            <span class="icon is-small">
-                              <i class="fas fa-trash"></i>
-                            </span>
+              <fa-icon [icon]="faTrash"></fa-icon>
               <span>Delete</span>
             </a></td>
           </tr>
@@ -41,7 +39,7 @@
       <div class="wrapper">
         <div>
           <button class="buttonblack" (click)="createCommentModal()">
-            Create new historical event
+            Add comment
           </button>
         </div>
             <button class="buttonblack" (click)="backToTimeline()">

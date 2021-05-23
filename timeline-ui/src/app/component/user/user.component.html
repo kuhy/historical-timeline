@@ -11,6 +11,8 @@
         <th>Fisrt name</th>
         <th>Last name</th>
         <th>Is teacher</th>
+        <th>Update</th>
+        <th>Delete</th>
       </tr>
       </thead>
       <tbody>
@@ -21,15 +23,11 @@
         <td>{{user.lastName}}</td>
         <td>{{user.isTeacher}}</td>
         <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateUserModal(user.id)">
-                        <span class="icon is-small">
-                          <i class="fas fa-trash"></i>
-                        </span>
+          <fa-icon [icon]="faEdit"></fa-icon>
           <span>Update</span>
         </a></td>
         <td><a *ngIf="isTeacher" class="button is-danger" (click)="deleteUser(user.id)">
-                        <span class="icon is-small">
-                          <i class="fas fa-trash"></i>
-                        </span>
+          <fa-icon [icon]="faTrash"></fa-icon>
           <span>Delete</span>
         </a></td>
       </tr>
@@ -38,7 +36,7 @@
   </div>
 
   <div *ngIf="isTeacher">
-    <button class="btn btn-primary" (click)="createUserModal()">
+    <button class="buttonblack" (click)="createUserModal()">
       Create new user
     </button>
   </div>
@@ -83,7 +81,7 @@
             </div>
             <nav class="level is-mobile">
               <div class="level-left">
-                <button [disabled]="loading" class="btn btn-primary">
+                <button [disabled]="loading" class="buttonblack">
                   <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                   Update
                 </button>
@@ -139,7 +137,7 @@
               </div>
               <nav class="level is-mobile">
                 <div class="level-left">
-                  <button [disabled]="loading" class="btn btn-primary">
+                  <button [disabled]="loading" class="buttonblack">
                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                     Create
                   </button>

@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {HistoricalEventDTO} from "../../dto/historical-event-dto";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {HistoricalTimelineService} from "../../service/historical-timeline.service";
-import {StudyGroupService} from "../../service/study-group.service";
 import {UserService} from "../../service/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HistoricalEventService} from "../../service/historical-event.service";
-import validate = WebAssembly.validate;
-import {HistoricalTimelineCreateDTO} from "../../dto/historical-timeline-create-dto";
 import {HistoricalEventCreateDTO} from "../../dto/historical-event-create-dto";
+import {faEdit, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-historical-event',
@@ -16,6 +14,9 @@ import {HistoricalEventCreateDTO} from "../../dto/historical-event-create-dto";
   styleUrls: ['./historical-event.component.css']
 })
 export class HistoricalEventComponent implements OnInit {
+  faEye = faEye
+  faEdit = faEdit
+  faTrash = faTrash
 
   studyGroupId: number
   historicalTimelineId: number

@@ -5,6 +5,7 @@ import {UserService} from "../../service/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {StudyGroupCreateDTO} from "../../dto/study-group-create-dto";
+import {faEdit, faEye, faTrash, faUserEdit} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-study-groups',
@@ -12,6 +13,10 @@ import {StudyGroupCreateDTO} from "../../dto/study-group-create-dto";
   styleUrls: ['./study-group.component.css']
 })
 export class StudyGroupComponent implements OnInit {
+  faTrash = faTrash;
+  faEye = faEye
+  faEdit = faEdit
+  faUserEdit = faUserEdit
 
   studyGroups: StudyGroupDTO[] = [];
   isTeacher = false;

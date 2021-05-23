@@ -10,9 +10,9 @@ import { LoginComponent } from './component/login/login.component';
 import { UserComponent } from './component/user/user.component';
 import { HistoricalTimelineComponent } from './component/historical-timeline/historical-timeline.component';
 import { HistoricalEventComponent } from './component/historical-event/historical-event.component';
-import { AddUserToGroupComponent } from './component/add-user-to-group/add-user-to-group.component';
 import { TimelineCommentComponent } from './component/timeline-comment/timeline-comment.component';
 import { StudyGroupUsersComponent } from './component/manage-study-group-users/study-group-users.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,6 @@ import { StudyGroupUsersComponent } from './component/manage-study-group-users/s
     UserComponent,
     HistoricalTimelineComponent,
     HistoricalEventComponent,
-    AddUserToGroupComponent,
     TimelineCommentComponent,
     StudyGroupUsersComponent
   ],
@@ -30,7 +29,8 @@ import { StudyGroupUsersComponent } from './component/manage-study-group-users/s
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

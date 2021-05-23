@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {UserDTO} from "../../dto/user-dto";
 import {UserService} from "../../service/user.service";
-import {StudyGroupDTO} from "../../dto/study-group-dto";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserUpdateDto} from "../../dto/user-update-dto";
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-user',
@@ -11,6 +11,8 @@ import {UserUpdateDto} from "../../dto/user-update-dto";
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+  faEdit = faEdit
+  faTrash = faTrash
 
   isTeacher:boolean = false;
   users: UserDTO[] = [];

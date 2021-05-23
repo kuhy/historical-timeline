@@ -29,21 +29,15 @@
           <td>{{historicalEvent.date}}</td>
           <td>{{historicalEvent.location}}</td>
           <td><a *ngIf="isTeacher" class="button is-danger" (click)="showImage(historicalEvent.id)">
-                          <span class="icon is-small">
-                            <i class="fas fa-trash"></i>
-                          </span>
+            <fa-icon [icon]="faEye"></fa-icon>
             <span>Show</span>
           </a></td>
           <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateHistoricalEventModal(historicalEvent)">
-                          <span class="icon is-small">
-                            <i class="fas fa-trash"></i>
-                          </span>
+            <fa-icon [icon]="faEdit"></fa-icon>
             <span>Update</span>
           </a></td>
           <td><a *ngIf="isTeacher" class="button is-danger" (click)="deleteHistoricalEvent(historicalEvent.id)">
-                          <span class="icon is-small">
-                            <i class="fas fa-trash"></i>
-                          </span>
+            <fa-icon [icon]="faTrash"></fa-icon>
             <span>Delete</span>
           </a></td>
         </tr>
