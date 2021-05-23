@@ -74,6 +74,22 @@
                         <div *ngIf="formUpdate.name.errors.required">Name is required</div>
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label for="events">Events</label>
+                      <input type="text" formControlName="events" class="form-control"
+                             [ngClass]="{ 'is-invalid': submitted && formUpdate.name.errors }"/>
+                      <div *ngIf="submitted && formUpdate.name.errors" class="invalid-feedback">
+                        <div *ngIf="formUpdate.name.errors.required">Name is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="comments">Comments</label>
+                      <input type="text" formControlName="comments" class="form-control"
+                             [ngClass]="{ 'is-invalid': submitted && formUpdate.name.errors }"/>
+                      <div *ngIf="submitted && formUpdate.name.errors" class="invalid-feedback">
+                        <div *ngIf="formUpdate.name.errors.required">Name is required</div>
+                      </div>
+                    </div>
                     <nav class="level is-mobile">
                       <div class="level-left">
                         <button [disabled]="loading" class="buttonblack">
