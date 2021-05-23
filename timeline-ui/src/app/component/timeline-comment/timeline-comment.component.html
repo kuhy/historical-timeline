@@ -1,13 +1,5 @@
 <div>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <div class="sidenav">
-      <a class="active" href="#"><i class="fa fa-fw fa-home"></i> Home</a>
-      <button style="margin-top: 40px" class="dropdown-btn" (click)="backToStudyGroups()" >Study Groups
-      </button>
-      <button class="dropdown-btn" (click)="logout()">
-        Logout
-      </button>
-    </div>
     <div class="main_window">
       <div class="content">
         <p class="h1">Comments of historical event</p>
@@ -41,10 +33,10 @@
           <button class="buttonblack" (click)="createCommentModal()">
             Add comment
           </button>
+          <button class="buttonblack" (click)="backToTimeline()">
+            Back to historical event
+          </button>
         </div>
-            <button class="buttonblack" (click)="backToTimeline()">
-              Back to historical event
-            </button>
       </div>
       <div *ngIf="showUpdateModal">
         <div (click)="showUpdateModal=!showUpdateModal" class="modal-background"></div>
