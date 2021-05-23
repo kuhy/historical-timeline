@@ -12,6 +12,7 @@ import { HistoricalTimelineComponent } from './component/historical-timeline/his
 import { HistoricalEventComponent } from './component/historical-event/historical-event.component';
 import { AddUserToGroupComponent } from './component/add-user-to-group/add-user-to-group.component';
 import { TimelineCommentComponent } from './component/timeline-comment/timeline-comment.component';
+import { StudyGroupUsersComponent } from './component/manage-study-group-users/study-group-users.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TimelineCommentComponent } from './component/timeline-comment/timeline-
     HistoricalTimelineComponent,
     HistoricalEventComponent,
     AddUserToGroupComponent,
-    TimelineCommentComponent
+    TimelineCommentComponent,
+    StudyGroupUsersComponent
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@
             <tr>
               <th>Name</th>
               <th>Timelines</th>
-              <th *ngIf="isTeacher">Add user</th>
+              <th *ngIf="isTeacher">Manage user</th>
               <th *ngIf="isTeacher">Update</th>
               <th *ngIf="isTeacher">Delete</th>
             </tr>
@@ -32,11 +32,11 @@
                               </span>
                 <span>Show</span>
               </a></td>
-              <td><a *ngIf="isTeacher" class="button is-danger" (click)="addUser(group.id)">
+              <td><a *ngIf="isTeacher" class="button is-danger" (click)="manageUsers(group.id)">
                               <span class="icon is-small">
                                 <i class="fas fa-trash"></i>
                               </span>
-                <span>Add user</span>
+                <span>Manage users</span>
               </a></td>
               <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateGroupModal(group.id)">
                               <span class="icon is-small">
@@ -54,7 +54,6 @@
             </tbody>
           </table>
         </div>
-
         <div *ngIf="isTeacher">
           <button class="buttonblack" (click)="createGroupModal()">
             Create new group

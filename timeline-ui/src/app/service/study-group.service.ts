@@ -51,4 +51,17 @@ export class StudyGroupService {
       return handleError(error)
     }));
   }
+
+  addUserToStudyGroup(studyGroupId: number, userId: number) {
+    // TODO studyGroupId should not be passed in put ?
+    return this.http.put(`${this.apiURL}/${studyGroupId}/users/${userId}`, studyGroupId).pipe(catchError(error => {
+      return handleError(error)
+    }));
+  }
+
+  removeUserFromStudyGroup(studyGroupId: number, userId: number) {
+    return this.http.delete(`${this.apiURL}/${studyGroupId}/users/${userId}`).pipe(catchError(error => {
+      return handleError(error)
+    }));
+  }
 }
