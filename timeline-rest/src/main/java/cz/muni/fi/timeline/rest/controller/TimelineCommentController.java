@@ -58,7 +58,7 @@ public class TimelineCommentController {
      */
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> removeComment(@PathVariable("id") long id) {
-        historicalTimelineFacade.removeHistoricalTimeline(id);
+        historicalTimelineFacade.removeTimelineComment(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

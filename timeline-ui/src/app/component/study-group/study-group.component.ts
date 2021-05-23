@@ -3,6 +3,9 @@ import {StudyGroupService} from "../../service/study-group.service";
 import {StudyGroupDTO} from "../../dto/study-group-dto";
 import {UserService} from "../../service/user.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {StudyGroupCreateDTO} from "../../dto/study-group-create-dto";
+import {faEdit, faEye, faTrash, faUserEdit} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-study-groups',
@@ -10,9 +13,13 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./study-group.component.css']
 })
 export class StudyGroupComponent implements OnInit {
+  faTrash = faTrash;
+  faEye = faEye
+  faEdit = faEdit
+  faUserEdit = faUserEdit
+
   studyGroups: StudyGroupDTO[] = [];
   isTeacher = false;
-  tmp: any;
 
   showUpdateGroupModal = false;
   showCreateGroupModal = false;
@@ -25,7 +32,10 @@ export class StudyGroupComponent implements OnInit {
   loading = false;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private studyGroupService: StudyGroupService, private userService: UserService) {
+  constructor(private formBuilder: FormBuilder,
+              private studyGroupService: StudyGroupService,
+              private userService: UserService,
+              private router: Router) {
     this.updateGroupDTO = new StudyGroupDTO()
     this.updateForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -48,8 +58,7 @@ export class StudyGroupComponent implements OnInit {
 
   private loadStudyGroups() {
     this.studyGroupService.getAllGroups().subscribe(response => {
-      this.tmp = response;
-      this.studyGroups = this.tmp.content;
+      this.studyGroups = response.content;
     })
   }
 
@@ -93,6 +102,7 @@ export class StudyGroupComponent implements OnInit {
   }
 
   // ========== Create ==========
+
   get fc() { return this.createForm.controls; }
 
   createGroupModal() {
@@ -109,7 +119,7 @@ export class StudyGroupComponent implements OnInit {
     }
 
     this.loading = true;
-    let group = new StudyGroupDTO();
+    let group = new StudyGroupCreateDTO();
     group.name = this.fc.name.value;
     this.studyGroupService.createGroup(group).subscribe(response => {
       this.loadStudyGroups();
@@ -121,5 +131,31 @@ export class StudyGroupComponent implements OnInit {
 
   closeCreateGroupModal() {
     this.showCreateGroupModal = false;
+  }
+
+  // ========== Show timelines ==========
+
+  showTimelines(studyGroupId: number) {
+    this.router.navigate([`/groups/${studyGroupId}`]);
+  }
+
+  // ========== Add user ==========
+
+  manageUsers(studyGroupId: number) {
+    this.router.navigate([`/groups/manage_users/${studyGroupId}`])
+  }
+  logout() {
+    this.userService.logout().subscribe(data => {
+      this.router.navigate(['/login']);
+    });
+  }
+  backToStudyGroups() {
+    this.router.navigate([`/groups`]);
+  }
+  backToHistoricalTimelines(){
+    this.router.navigate([`/timelines`]);
+  }
+  backToHistoricalEvents(){
+    this.router.navigate([`/events`]);
   }
 }

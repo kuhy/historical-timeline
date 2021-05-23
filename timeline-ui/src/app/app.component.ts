@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {UserService} from "./service/user.service";
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -10,11 +10,45 @@ import {Router} from "@angular/router";
 export class AppComponent {
   title = 'timeline-ui';
 
-  constructor(public router: Router, private userService: UserService) {}
+  showMenu = false
+  isTeacher = false
+
+  constructor(public router: Router, private userService: UserService) {
+    this.router.events.subscribe(response => {
+      if (response instanceof NavigationEnd) {
+        this.getShowMenu()
+      }
+    })
+  }
+
+  ngOnInit(): void {
+    this.getTeacherStatus()
+    this.getShowMenu()
+  }
+
+  private getTeacherStatus() {
+    this.userService.isTeacher().subscribe(response => {
+      this.isTeacher = response
+    })
+  }
+
+  private getShowMenu() {
+    this.userService.isUserLoggedIn().subscribe(response => {
+      this.showMenu = response
+    })
+  }
 
   logout() {
     this.userService.logout().subscribe(data => {
       this.router.navigate(['/login']);
     });
+  }
+
+  studyGroups() {
+    this.router.navigate(['/groups'])
+  }
+
+  users() {
+    this.router.navigate(['/users'])
   }
 }

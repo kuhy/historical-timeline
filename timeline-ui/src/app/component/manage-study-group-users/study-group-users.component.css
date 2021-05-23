@@ -1,3 +1,11 @@
+.buttonblack{
+  border-radius: 6px;
+  background-color: #221F1F;
+  color: silver;
+  width: 250px;
+  height: 50px;
+  margin-bottom: 15px;
+}
 .icon-bar {
   width: 150px; /* Set a specific width */
   background-color: #555; /* Dark-grey background */
@@ -104,15 +112,4 @@
 }
 .main_window{
   margin-left: 250px;
-}
-.buttonblack{
-  border-radius: 6px;
-  background-color: #221F1F;
-  color: silver;
-  width: 250px;
-  height: 50px;
-  margin-bottom: 15px;
-}
-.wrapper {
-  display: inline-block;
 }
