@@ -28,9 +28,7 @@ export class UserService {
   }
 
   isTeacher(): Observable<any> {
-    return this.http.get(`${this.apiURL}/is_teacher`).pipe(catchError(error => {
-      return handleError(error)
-    }))
+    return this.http.get(`${this.apiURL}/is_teacher`)
   }
 
   isUserLoggedIn(): Observable<any> {
