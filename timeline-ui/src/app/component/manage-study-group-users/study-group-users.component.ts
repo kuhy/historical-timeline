@@ -59,4 +59,9 @@ export class StudyGroupUsersComponent implements OnInit {
     // TODO not working
     this.studyGroupService.removeUserFromStudyGroup(this.studyGroupId, userId)
   }
+  logout() {
+    this.userService.logout().subscribe(data => {
+      this.router.navigate(['/login']);
+    });
+  }
 }
