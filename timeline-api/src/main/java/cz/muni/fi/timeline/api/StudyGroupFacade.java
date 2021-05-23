@@ -1,5 +1,7 @@
 package cz.muni.fi.timeline.api;
 
+import cz.muni.fi.timeline.api.dto.HistoricalEventCreateDTO;
+import cz.muni.fi.timeline.api.dto.HistoricalTimelineCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
 import cz.muni.fi.timeline.api.exception.UserAlreadyInStudyGroupException;
@@ -69,4 +71,6 @@ public interface StudyGroupFacade {
      * @return all study groups
      */
     List<StudyGroupDTO> getAllStudyGroups();
+
+    Long createTimelineInStudyGroup(HistoricalTimelineCreateDTO historicalTimelineCreateDTO, Long groupId);
 }

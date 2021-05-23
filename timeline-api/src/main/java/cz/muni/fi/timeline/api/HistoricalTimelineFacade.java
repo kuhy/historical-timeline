@@ -14,14 +14,6 @@ public interface HistoricalTimelineFacade {
     //Timeline
 
     /**
-     * creates new timeline in study group
-     * @param historicalTimelineCreateDTO historical timeline used for creation
-     * @param studyGroupId  id of group where timeline is created
-     * @return id of created timeline
-     */
-    Long createHistoricalTimeline(HistoricalTimelineCreateDTO historicalTimelineCreateDTO, Long studyGroupId);
-
-    /**
      * return timeline with given id
      * @param id of the looking timeline
      * @return found timeline
@@ -93,7 +85,7 @@ public interface HistoricalTimelineFacade {
     // Comment
 
     /**
-     * creates comment in timeline
+     * creates comment in timeline on behalf of logged in user
      * @param timelineCommentCreateDTO comment used for creation
      * @param timelineId id of timeline
      * @return id of created comment

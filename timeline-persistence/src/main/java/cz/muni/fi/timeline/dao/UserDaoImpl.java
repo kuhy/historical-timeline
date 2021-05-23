@@ -1,5 +1,6 @@
 package cz.muni.fi.timeline.dao;
 
+import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import org.springframework.stereotype.Repository;
 
@@ -55,6 +56,10 @@ public class UserDaoImpl implements UserDao {
             em.remove(user);
         } else {
             em.remove(em.merge(user));
+        }
+        em.createQuery("delete from TimelineComment c where c.user.id = :id").setParameter("id", user.getId()).executeUpdate();
+        for (StudyGroup studyGroup:em.createQuery("select s from StudyGroup s", StudyGroup.class).getResultList()) {
+            studyGroup.removeUser(user);
         }
     }
 

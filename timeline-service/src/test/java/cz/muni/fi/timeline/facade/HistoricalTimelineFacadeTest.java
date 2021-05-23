@@ -1,21 +1,19 @@
 package cz.muni.fi.timeline.facade;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import cz.muni.fi.timeline.api.dto.*;
 import cz.muni.fi.timeline.entity.*;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.HistoricalTimelineFacade;
+import cz.muni.fi.timeline.mapper.BeanMappingServiceImpl;
 import cz.muni.fi.timeline.service.*;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +24,7 @@ import static org.mockito.Mockito.*;
  * tests for facade of historical timeline
  * @author Matej Macák
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTests {
+public class HistoricalTimelineFacadeTest {
 
     @Mock
     private HistoricalTimelineService timelineService;
@@ -41,8 +38,11 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     @Mock
     private StudyGroupService studyGroupService;
 
-    @Inject
-    private BeanMappingService beanMappingService;
+    @Mock
+    private UserService userService;
+
+    // TODO @Mock
+    private final BeanMappingService beanMappingService = new BeanMappingServiceImpl(DozerBeanMapperBuilder.buildDefault());
 
     private HistoricalTimelineFacade historicalTimelineFacade;
 
@@ -89,7 +89,8 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     @BeforeMethod
     public void openMocks() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        historicalTimelineFacade = new HistoricalTimelineFacadeImpl(timelineService,eventService,commentService,studyGroupService,beanMappingService);
+        historicalTimelineFacade = new HistoricalTimelineFacadeImpl(timelineService, eventService, commentService,
+            studyGroupService, userService, beanMappingService);
     }
 
     @AfterMethod
@@ -97,19 +98,6 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
         autoCloseable.close();
     }
 
-    @Test
-    public void createHistoricalTimelineTest(){
-        HistoricalTimelineCreateDTO timelineCreateDTO = beanMappingService.mapTo(timeline, HistoricalTimelineCreateDTO.class);
-        when(studyGroupService.findById(studyGroup.getId())).thenReturn(Optional.of(studyGroup));
-        historicalTimelineFacade.createHistoricalTimeline(timelineCreateDTO,studyGroup.getId());
-
-        verify(timelineService, times(1)).createTimelineInStudyGroup(any(HistoricalTimeline.class),any(StudyGroup.class));
-        verify(studyGroupService, times(1)).findById(studyGroup.getId());
-        verifyNoMoreInteractions(timelineService);
-        verifyNoMoreInteractions(studyGroupService);
-        verifyNoInteractions(eventService);
-        verifyNoInteractions(commentService);
-    }
 
     @Test
     public void testGetHistoricalTimelineWithExistingId() {
@@ -287,6 +275,7 @@ public class HistoricalTimelineFacadeTest  extends AbstractTestNGSpringContextTe
     public void createTimelineComment(){
         TimelineCommentCreateDTO timelineCommentCreateDTO = beanMappingService.mapTo(event, TimelineCommentCreateDTO.class);
         when(timelineService.findTimelineById(timeline.getId())).thenReturn(Optional.of(timeline));
+        when(userService.getLoggedInUser()).thenReturn(Optional.of(user1));
         historicalTimelineFacade.createTimelineComment(timelineCommentCreateDTO,timeline.getId());
 
         verify(commentService, times(1)).createTimelineCommentInTimeline(any(TimelineComment.class),any(HistoricalTimeline.class));

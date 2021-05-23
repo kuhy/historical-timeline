@@ -1,23 +1,20 @@
 package cz.muni.fi.timeline.facade;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import cz.muni.fi.timeline.api.dto.UserLoginDTO;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.UserFacade;
-import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;
 import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
 import cz.muni.fi.timeline.entity.User;
+import cz.muni.fi.timeline.mapper.BeanMappingServiceImpl;
 import cz.muni.fi.timeline.service.UserService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import javax.inject.Inject;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,13 +27,12 @@ import static org.mockito.Mockito.*;
  *
  * @author Karolína Veselá
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class UserFacadeTest extends AbstractTestNGSpringContextTests {
+public class UserFacadeTest {
     @Mock
     private UserService userService;
 
-    @Inject
-    private BeanMappingService beanMappingService;
+    // TODO @Mock
+    private final BeanMappingService beanMappingService = new BeanMappingServiceImpl(DozerBeanMapperBuilder.buildDefault());
 
     private UserFacade userFacade;
 
@@ -96,7 +92,7 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
 
         verify(userService, times(1)).findById(anyLong());
         verifyNoMoreInteractions(userService);
-        }
+    }
 
     @Test
     public void testGetUserWithNonExistingId() {
@@ -178,15 +174,46 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testAuthenticateUser(){
-        when(userService.authenticateUser(user,"134")).thenReturn(true);
-        when(userService.findById(user.getId())).thenReturn(Optional.of(user));
+    public void testLoginUser(){
+        when(userService.loginUser(user,"134")).thenReturn(true);
+        when(userService.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
-        UserAuthenticateDTO userAuthenticateDTO = beanMappingService.mapTo(user, UserAuthenticateDTO.class);
-        userAuthenticateDTO.setPassword("134");
-        Assert.assertTrue(userFacade.authenticate(userAuthenticateDTO));
-        verify(userService, times(1)).findById(anyLong());
-        verify(userService, times(1)).authenticateUser(any(User.class),anyString());
+        UserLoginDTO userLoginDTO = beanMappingService.mapTo(user, UserLoginDTO.class);
+        userLoginDTO.setPassword("134");
+        Assert.assertTrue(userFacade.loginUser(userLoginDTO));
+        verify(userService, times(1)).findByUsername(user.getUsername());
+        verify(userService, times(1)).loginUser(any(User.class),anyString());
+        verifyNoMoreInteractions(userService);
+    }
+
+    @Test
+    public void testLogoutUser() {
+        userFacade.logoutUser();
+
+        verify(userService, times(1)).logoutUser();
+        verifyNoMoreInteractions(userService);
+    }
+
+    @Test
+    public void testGetLoggedInUser() {
+        when(userService.getLoggedInUser()).thenReturn(Optional.of(user));
+        UserDTO get = userFacade.getLoggedInUser().get();
+
+        Assert.assertNotNull(get, "User should return valid object");
+        UserDTO userDTO = beanMappingService.mapTo(user, UserDTO.class);
+        Assert.assertEquals(get, userDTO);
+
+        verify(userService, times(1)).getLoggedInUser();
+        verifyNoMoreInteractions(userService);
+    }
+
+    @Test
+    public void testIsLoggedInUser() {
+        when(userService.isUserLoggedIn()).thenReturn(true);
+
+        Assert.assertTrue(userFacade.isLoggedInUser());
+
+        verify(userService, times(1)).isUserLoggedIn();
         verifyNoMoreInteractions(userService);
     }
 
@@ -198,7 +225,6 @@ public class UserFacadeTest extends AbstractTestNGSpringContextTests {
 
         verify(userService, times(1)).isTeacher(any(User.class));
         verifyNoMoreInteractions(userService);
-
     }
 
     @Test

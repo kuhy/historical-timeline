@@ -1,8 +1,8 @@
 package cz.muni.fi.timeline.api;
 
-import cz.muni.fi.timeline.api.dto.UserAuthenticateDTO;
 import cz.muni.fi.timeline.api.dto.UserCreateDTO;
 import cz.muni.fi.timeline.api.dto.UserDTO;
+import cz.muni.fi.timeline.api.dto.UserLoginDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -62,11 +62,29 @@ public interface UserFacade {
     List<UserDTO> getAllStudents();
 
     /**
-     * Try to authenticate a user. Return true only if the hashed password matches the records.
-     * @param userAuthenticateDTO user to be authenticated
+     * Try to login a user. Return true only if the hashed password matches the records.
+     * @param userLoginDTO user to be logged in
      * @return boolean
      */
-    boolean authenticate(UserAuthenticateDTO userAuthenticateDTO);
+    boolean loginUser(UserLoginDTO userLoginDTO);
+
+    /**
+     * Log outs the current User.
+     */
+    void logoutUser();
+
+    /**
+     * Gets logged in user.
+     * @return logged user if logged, empty optional otherwise
+     */
+    Optional <UserDTO> getLoggedInUser();
+
+    /**
+     * Checks if an User is currently logged in.
+     *
+     * @return true if an User is logged in, false otherwise
+     */
+    boolean isLoggedInUser();
 
     /**
      * Check if the given user is teacher.
@@ -77,7 +95,7 @@ public interface UserFacade {
 
     /**
      * remove user with given id
-     * @param id of the removen user
+     * @param id of the user to be removed
      */
     void removeUser(Long id);
 }

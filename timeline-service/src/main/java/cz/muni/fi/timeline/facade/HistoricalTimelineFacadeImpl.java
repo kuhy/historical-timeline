@@ -4,17 +4,13 @@ import cz.muni.fi.timeline.api.HistoricalTimelineFacade;
 import cz.muni.fi.timeline.api.dto.*;
 import cz.muni.fi.timeline.entity.HistoricalEvent;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
-import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.TimelineComment;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
-import cz.muni.fi.timeline.service.HistoricalEventService;
-import cz.muni.fi.timeline.service.HistoricalTimelineService;
-import cz.muni.fi.timeline.service.StudyGroupService;
-import cz.muni.fi.timeline.service.TimelineCommentService;
+import cz.muni.fi.timeline.service.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,31 +22,25 @@ import java.util.Optional;
 @Transactional
 public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
 
-    final private HistoricalTimelineService timelineService;
-    final private HistoricalEventService eventService;
-    final private TimelineCommentService commentService;
-    final private StudyGroupService studyGroupService;
-    final private BeanMappingService beanMappingService;
+    private final HistoricalTimelineService timelineService;
+    private final HistoricalEventService eventService;
+    private final TimelineCommentService commentService;
+    private final StudyGroupService studyGroupService;
+    private final UserService userService;
+    private final BeanMappingService beanMappingService;
 
     @Inject
-    public HistoricalTimelineFacadeImpl(HistoricalTimelineService timelineService, HistoricalEventService eventService, TimelineCommentService commentService, StudyGroupService studyGroupService, BeanMappingService beanMappingService) {
+    public HistoricalTimelineFacadeImpl(HistoricalTimelineService timelineService, HistoricalEventService eventService,
+                                        TimelineCommentService commentService, StudyGroupService studyGroupService,
+                                        UserService userService, BeanMappingService beanMappingService) {
         this.timelineService = timelineService;
         this.eventService = eventService;
         this.commentService = commentService;
         this.studyGroupService = studyGroupService;
+        this.userService = userService;
         this.beanMappingService = beanMappingService;
     }
 
-    @Override
-    public Long createHistoricalTimeline(HistoricalTimelineCreateDTO historicalTimelineCreateDTO, Long studyGroupId) {
-        HistoricalTimeline mappedTimeline = beanMappingService.mapTo(historicalTimelineCreateDTO, HistoricalTimeline.class);
-        StudyGroup group = studyGroupService.findById(studyGroupId).orElseThrow(() ->
-                new IllegalArgumentException("Group with given id does not exist.")
-        );
-
-        timelineService.createTimelineInStudyGroup(mappedTimeline, group);
-        return mappedTimeline.getId();
-    }
 
     @Override
     public Optional<HistoricalTimelineDTO> getHistoricalTimelineWithId(Long id) {
@@ -140,6 +130,9 @@ public class HistoricalTimelineFacadeImpl implements HistoricalTimelineFacade {
         HistoricalTimeline timeline = timelineService.findTimelineById(timelineId).orElseThrow(() ->
                 new IllegalArgumentException("Timeline with given id does not exist.")
         );
+
+        mappedComment.setUser(userService.getLoggedInUser().orElseThrow(() ->
+            new IllegalStateException("There is no logged in user.")));
 
         commentService.createTimelineCommentInTimeline(mappedComment, timeline);
         return mappedComment.getId();

@@ -3,10 +3,16 @@ package cz.muni.fi.timeline.service;
 import cz.muni.fi.timeline.dao.UserDao;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.exception.ServiceLayerException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean authenticateUser(User user, String password) {
+    public boolean loginUser(User user, String password) {
         if (user == null) {
             throw new IllegalArgumentException("User is null.");
         }
@@ -54,7 +60,51 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Password is null.");
         }
 
-        return encoder.matches(password, user.getHashedPassword());
+        // unsuccessful login
+        if (!encoder.matches(password, user.getHashedPassword())) {
+            return false;
+        }
+
+        // Add roles / access rights
+        List<GrantedAuthority> roles = new ArrayList<>();
+        roles.add(new SimpleGrantedAuthority("ROLE_USER"));
+
+        if (user.getIsTeacher()) {
+            roles.add(new SimpleGrantedAuthority("ROLE_TEACHER"));
+        }
+
+        org.springframework.security.core.userdetails.User userDetails =
+                new org.springframework.security.core.userdetails.User(user.getUsername(), password, roles);
+
+        // Add user to context
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
+                userDetails.getUsername(),
+                userDetails.getPassword(),
+                userDetails.getAuthorities()
+        ));
+
+        return true;
+    }
+
+    @Override
+    public void logoutUser() {
+        SecurityContextHolder.clearContext();
+    }
+
+    @Override
+    public Optional<User> getLoggedInUser() {
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+
+        if (user == null) {
+            return Optional.empty();
+        }
+
+        return findByUsername(user.getName());
+    }
+
+    @Override
+    public boolean isUserLoggedIn() {
+        return SecurityContextHolder.getContext().getAuthentication() != null;
     }
 
     @Override

@@ -1,0 +1,41 @@
+<div>
+  <div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div class="main_window">
+      <div class="content">
+        <p class="h1">Study group users</p>
+        <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+          <tr>
+            <th>Username</th>
+            <th>Fisrt name</th>
+            <th>Last name</th>
+            <th>Add user</th>
+            <th>Remove user</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.username}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td><a *ngIf="isTeacher" class="button is-danger" (click)="addUserToStudyGroup(user.id)">
+              <fa-icon [icon]="faUserPlus"></fa-icon>
+              <span>Add user</span>
+            </a></td>
+            <td><a *ngIf="isTeacher" class="button is-danger" (click)="removeUserFromStudyGroup(user.id)">
+              <fa-icon [icon]="faUserMinus"></fa-icon>
+              <span>Remove user</span>
+            </a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <button class="buttonblack" (click)="backToStudyGroups()">
+          Back to study groups
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

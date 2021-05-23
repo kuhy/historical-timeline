@@ -1,0 +1,153 @@
+<div>
+  <div class="main_window">
+    <div class="content">
+      <p class="h1">Users</p>
+      <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Fisrt name</th>
+          <th>Last name</th>
+          <th>Is teacher</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{user.id}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.firstName}}</td>
+          <td>{{user.lastName}}</td>
+          <td>{{user.isTeacher}}</td>
+          <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateUserModal(user.id)">
+            <fa-icon [icon]="faEdit"></fa-icon>
+            <span>Update</span>
+          </a></td>
+          <td><a *ngIf="isTeacher" class="button is-danger" (click)="deleteUser(user.id)">
+            <fa-icon [icon]="faTrash"></fa-icon>
+            <span>Delete</span>
+          </a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="isTeacher">
+      <button class="buttonblack" (click)="createUserModal()">
+        Create new user
+      </button>
+    </div>
+
+    <div *ngIf="showUpdateUserModal">
+      <div (click)="showUpdateUserModal=!showUpdateUserModal" class="modal-background"></div>
+      <div class="modal-card">
+        <section class="modal-card-body">
+          <div class="content">
+            <form [formGroup]="updateForm" (submit)="updateUser()">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" formControlName="username" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && fu.username.errors }"/>
+                <div *ngIf="submitted && fu.username.errors" class="invalid-feedback">
+                  <div *ngIf="fu.username.errors.required">Username is required</div>
+                </div>
+                <label for="firstName">First name</label>
+                <input type="text" formControlName="firstName" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && fu.firstName.errors }"/>
+                <div *ngIf="submitted && fu.firstName.errors" class="invalid-feedback">
+                  <div *ngIf="fu.firstName.errors.required">First name is required</div>
+                </div>
+                <label for="lastName">Last name</label>
+                <input type="text" formControlName="lastName" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && fu.lastName.errors }"/>
+                <div *ngIf="submitted && fu.lastName.errors" class="invalid-feedback">
+                  <div *ngIf="fu.lastName.errors.required">Last name is required</div>
+                </div>
+                <label for="isTeacher">Is teacher</label>
+                <input type="text" formControlName="isTeacher" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && fu.isTeacher.errors }"/>
+                <div *ngIf="submitted && fu.isTeacher.errors" class="invalid-feedback">
+                  <div *ngIf="fu.isTeacher.errors.required">Is teacher is required</div>
+                </div>
+                <label for="hashedPassword">Hashed password</label>
+                <input type="text" formControlName="hashedPassword" class="form-control"
+                       [ngClass]="{ 'is-invalid': submitted && fu.isTeacher.errors }"/>
+                <div *ngIf="submitted && fu.hashedPassword.errors" class="invalid-feedback">
+                  <div *ngIf="fu.hashedPassword.errors.required">Password is required</div>
+                </div>
+              </div>
+              <nav class="level is-mobile">
+                <div class="level-left">
+                  <button [disabled]="loading" class="buttonblack">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Update
+                  </button>
+                  <div class="level-item">
+                    <a (click)="closeUpdateUserModal()" class="button">Close</a>
+                  </div>
+                </div>
+              </nav>
+            </form>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div *ngIf="showCreateUserModal">
+        <div (click)="showCreateUserModal=!showCreateUserModal" class="modal-background"></div>
+        <div class="modal-card">
+          <section class="modal-card-body">
+            <div class="content">
+              <form [formGroup]="createForm" (submit)="createUser()">
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input type="text" formControlName="username" class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && fc.username.errors }"/>
+                  <div *ngIf="submitted && fc.username.errors" class="invalid-feedback">
+                    <div *ngIf="fc.username.errors.required">Username is required</div>
+                  </div>
+                  <label for="firstName">First name</label>
+                  <input type="text" formControlName="firstName" class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && fc.firstName.errors }"/>
+                  <div *ngIf="submitted && fc.firstName.errors" class="invalid-feedback">
+                    <div *ngIf="fc.firstName.errors.required">First name is required</div>
+                  </div>
+                  <label for="lastName">Last name</label>
+                  <input type="text" formControlName="lastName" class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && fc.lastName.errors }"/>
+                  <div *ngIf="submitted && fc.lastName.errors" class="invalid-feedback">
+                    <div *ngIf="fc.lastName.errors.required">Last name is required</div>
+                  </div>
+                  <label for="isTeacher">Is teacher</label>
+                  <input type="text" formControlName="isTeacher" class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && fc.isTeacher.errors }"/>
+                  <div *ngIf="submitted && fc.isTeacher.errors" class="invalid-feedback">
+                    <div *ngIf="fc.isTeacher.errors.required">Is teacher is required</div>
+                  </div>
+                  <label for="password">Password</label>
+                  <input type="text" formControlName="password" class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && fc.password.errors }"/>
+                  <div *ngIf="submitted && fc.password.errors" class="invalid-feedback">
+                    <div *ngIf="fc.password.errors.required">Password is required</div>
+                  </div>
+                </div>
+                <nav class="level is-mobile">
+                  <div class="level-left">
+                    <button [disabled]="loading" class="buttonblack">
+                      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                      Create
+                    </button>
+                    <div class="level-item">
+                      <a (click)="closeCreateUserModal()" class="button">Close</a>
+                    </div>
+                  </div>
+                </nav>
+              </form>
+            </div>
+          </section>
+        </div>
+      </div>
+  </div>
+</div>

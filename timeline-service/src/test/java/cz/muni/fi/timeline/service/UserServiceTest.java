@@ -1,6 +1,5 @@
 package cz.muni.fi.timeline.service;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
 import cz.muni.fi.timeline.dao.UserDao;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
@@ -9,8 +8,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -28,8 +25,7 @@ import static org.mockito.Mockito.*;
  *
  * @author Tri Le Mau
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class UserServiceTest extends AbstractTestNGSpringContextTests {
+public class UserServiceTest {
     @Mock
     private UserDao userDao;
 
@@ -142,13 +138,32 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testAuthenticateUser() {
+    public void testLoginUserAndLogout() {
+        when(userDao.findByUserName(student1.getUsername())).thenReturn(Optional.ofNullable(student1));
+
+        Assert.assertEquals(userService.getLoggedInUser(), Optional.empty());
+        Assert.assertFalse(userService.isUserLoggedIn());
+
+        // Login
         when(encoder.matches(anyString(), anyString())).thenReturn(true);
-        Assert.assertTrue(userService.authenticateUser(student1, "hashedPassword"));
+        Assert.assertTrue(userService.loginUser(student1, "hashedPassword"));
 
-        verifyNoInteractions(userDao);
+        Optional<User> find = userService.getLoggedInUser();
+        Assert.assertTrue(find.isPresent());
+        Assert.assertEquals(find.get(), student1);
+        Assert.assertTrue(userService.isUserLoggedIn());
 
+        verify(userDao, times(1)).findByUserName(student1.getUsername());
         verify(encoder, times(1)).matches(anyString(), anyString());
+        verifyNoMoreInteractions(userDao);
+        verifyNoMoreInteractions(encoder);
+
+        // Logout
+        userService.logoutUser();
+        Assert.assertEquals(userService.getLoggedInUser(), Optional.empty());
+        Assert.assertFalse(userService.isUserLoggedIn());
+
+        verifyNoMoreInteractions(userDao);
         verifyNoMoreInteractions(encoder);
     }
 
@@ -266,13 +281,13 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testAuthenticateUserNullUser() {
-        userService.authenticateUser(null, "passowrd");
+    public void testLoginuserUserNullUser() {
+        userService.loginUser(null, "passowrd");
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
-    public void testAuthenticateUserNullPassword() {
-        userService.authenticateUser(teacher1, null);
+    public void testLoginuserUserNullPassword() {
+        userService.loginUser(teacher1, null);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

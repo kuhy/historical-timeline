@@ -8,6 +8,10 @@
         <module>timeline-persistence</module>
         <module>timeline-service</module>
         <module>timeline-api</module>
+        <module>timeline-data</module>
+        <module>timeline-rest</module>
+        <module>timeline-ui</module>
+        <module>timeline</module>
     </modules>
 
     <parent>
@@ -66,4 +70,35 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <compilerArgument>-Xlint:unchecked,deprecation</compilerArgument>
+                    </configuration>
+                </plugin>
+                <!-- embedded Tomcat 9 plugin configuration, use "mvn cargo:run" to run -->
+                <plugin>
+                    <groupId>org.codehaus.cargo</groupId>
+                    <artifactId>cargo-maven3-plugin</artifactId>
+                    <version>1.9.1</version>
+                    <configuration>
+                        <container>
+                            <containerId>tomcat9x</containerId>
+                            <artifactInstaller>
+                                <groupId>org.apache.tomcat</groupId>
+                                <artifactId>tomcat</artifactId>
+                                <version>${tomcat.version}</version>
+                            </artifactInstaller>
+                        </container>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
 </project>

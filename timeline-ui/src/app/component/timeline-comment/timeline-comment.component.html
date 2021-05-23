@@ -1,0 +1,104 @@
+<div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div class="main_window">
+      <div class="content">
+        <p class="h1">Comments of historical event</p>
+        <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+          <tr>
+            <th>Text</th>
+            <th>Author</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let comment of timelineComments">
+            <td>{{comment.text}}</td>
+            <td>{{comment.user}}</td>
+            <td><a class="button is-danger" (click)="updateCommentModal(comment)">
+              <fa-icon [icon]="faEdit"></fa-icon>
+              <span>Update</span>
+            </a></td>
+            <td><a class="button is-danger" (click)="deleteComment(comment.id)">
+              <fa-icon [icon]="faTrash"></fa-icon>
+              <span>Delete</span>
+            </a></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="wrapper">
+        <div>
+          <button class="buttonblack" (click)="createCommentModal()">
+            Add comment
+          </button>
+          <button class="buttonblack" (click)="backToTimeline()">
+            Back to historical event
+          </button>
+        </div>
+      </div>
+      <div *ngIf="showUpdateModal">
+        <div (click)="showUpdateModal=!showUpdateModal" class="modal-background"></div>
+        <div class="modal-card">
+          <section class="modal-card-body">
+            <div class="content">
+              <form [formGroup]="updateForm" (submit)="updateComment()">
+                <div class="form-group">
+                  <label for="text">Text</label>
+                  <input type="text" formControlName="text" class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && formUpdate.text.errors }"/>
+                  <div *ngIf="submitted && formUpdate.text.errors" class="invalid-feedback">
+                    <div *ngIf="formUpdate.text.errors.required">text is required</div>
+                  </div>
+                </div>
+                <nav class="level is-mobile">
+                  <div class="level-left">
+                    <button [disabled]="loading" class="buttonblack">
+                      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                      Update
+                    </button>
+                    <div class="level-item">
+                      <a (click)="closeUpdateModal()" class="button">Close</a>
+                    </div>
+                  </div>
+                </nav>
+              </form>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <div *ngIf="showCreateModal">
+        <div (click)="showCreateModal=!showCreateModal" class="modal-background"></div>
+        <div class="modal-card">
+          <section class="modal-card-body">
+            <div class="content">
+              <form [formGroup]="createForm" (submit)="createComment()">
+                <div class="form-group">
+                  <label for="text">Text</label>
+                  <input type="text" formControlName="text" class="form-control"
+                         [ngClass]="{ 'is-invalid': submitted && formUpdate.text.errors }"/>
+                  <div *ngIf="submitted && formUpdate.text.errors" class="invalid-feedback">
+                    <div *ngIf="formUpdate.text.errors.required">text is required</div>
+                  </div>
+                </div>
+                <nav class="level is-mobile">
+                  <div class="level-left">
+                    <button [disabled]="loading" class="buttonblack">
+                      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                      Create
+                    </button>
+                    <div class="level-item">
+                      <a (click)="closeCreateModal()" class="button">Close</a>
+                    </div>
+                  </div>
+                </nav>
+              </form>
+            </div>
+          </section>
+        </div>
+      </div>
+  </div>
+</div>
+

@@ -1,20 +1,24 @@
 package cz.muni.fi.timeline.facade;
 
 import cz.muni.fi.timeline.api.StudyGroupFacade;
+import cz.muni.fi.timeline.api.dto.HistoricalTimelineCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
+import cz.muni.fi.timeline.entity.HistoricalEvent;
+import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
+import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.api.exception.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.api.exception.UserNotInStudyGroupException;
 import cz.muni.fi.timeline.service.UserService;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,14 +31,16 @@ import java.util.Optional;
 @Transactional
 public class StudyGroupFacadeImpl implements StudyGroupFacade {
 
-    final private StudyGroupService studyGroupService;
-    final private UserService userService;
-    final private BeanMappingService beanMappingService;
+    private final StudyGroupService studyGroupService;
+    private final UserService userService;
+    private final HistoricalTimelineService timelineService;
+    private final BeanMappingService beanMappingService;
 
     @Inject
-    public StudyGroupFacadeImpl(StudyGroupService studyGroupService, UserService userService, BeanMappingService beanMappingService) {
+    public StudyGroupFacadeImpl(StudyGroupService studyGroupService, UserService userService, HistoricalTimelineService timelineService, BeanMappingService beanMappingService) {
         this.studyGroupService = studyGroupService;
         this.userService = userService;
+        this.timelineService = timelineService;
         this.beanMappingService = beanMappingService;
     }
 
@@ -101,5 +107,16 @@ public class StudyGroupFacadeImpl implements StudyGroupFacade {
     @Override
     public List<StudyGroupDTO> getAllStudyGroups() {
         return beanMappingService.mapTo(studyGroupService.findAllStudyGroups(), StudyGroupDTO.class);
+    }
+
+    @Override
+    public Long createTimelineInStudyGroup(HistoricalTimelineCreateDTO historicalTimelineCreateDTO, Long groupId) {
+        HistoricalTimeline mappedTimeline = beanMappingService.mapTo(historicalTimelineCreateDTO, HistoricalTimeline.class);
+        StudyGroup studyGroup = studyGroupService.findById(groupId).orElseThrow(() ->
+                new IllegalArgumentException("Study group with given id does not exist.")
+        );
+
+        timelineService.createTimelineInStudyGroup(mappedTimeline, studyGroup);
+        return mappedTimeline.getId();
     }
 }

@@ -1,26 +1,28 @@
 package cz.muni.fi.timeline.facade;
 
-import cz.muni.fi.timeline.TimelineServiceApplicationContext;
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import cz.muni.fi.timeline.api.dto.HistoricalEventCreateDTO;
+import cz.muni.fi.timeline.api.dto.HistoricalTimelineCreateDTO;
+import cz.muni.fi.timeline.entity.HistoricalEvent;
+import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.mapper.BeanMappingService;
 import cz.muni.fi.timeline.api.StudyGroupFacade;
 import cz.muni.fi.timeline.api.dto.StudyGroupCreateDTO;
 import cz.muni.fi.timeline.api.dto.StudyGroupDTO;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.entity.User;
+import cz.muni.fi.timeline.mapper.BeanMappingServiceImpl;
+import cz.muni.fi.timeline.service.HistoricalTimelineService;
 import cz.muni.fi.timeline.service.StudyGroupService;
 import cz.muni.fi.timeline.api.exception.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.api.exception.UserNotInStudyGroupException;
 import cz.muni.fi.timeline.service.UserService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
-
-import javax.inject.Inject;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +34,7 @@ import static org.mockito.Mockito.*;
  * Tests for StudyGroup Facade
  * @author Tri Le Mau
  */
-@ContextConfiguration(classes = TimelineServiceApplicationContext.class)
-public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
+public class StudyGroupFacadeTest {
 
     @Mock
     private StudyGroupService studyGroupService;
@@ -41,8 +42,11 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
     @Mock
     private UserService userService;
 
-    @Inject
-    private BeanMappingService beanMappingService;
+    @Mock
+    private HistoricalTimelineService timelineService;
+
+    // TODO @Mock
+    private final BeanMappingService beanMappingService = new BeanMappingServiceImpl(DozerBeanMapperBuilder.buildDefault());
 
     private StudyGroupFacade studyGroupFacade;
 
@@ -50,6 +54,7 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
 
     private User user;
     private StudyGroup studyGroup;
+    private HistoricalTimeline timeline;
 
     @BeforeMethod
     public void prepareEntities() {
@@ -64,12 +69,16 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
         studyGroup = new StudyGroup();
         studyGroup.setId(1L);
         studyGroup.setName("English group");
+
+        timeline = new HistoricalTimeline();
+        timeline.setName("Ancient Rome");
+        timeline.setId(2L);
     }
 
     @BeforeMethod
     public void openMocks() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        studyGroupFacade = new StudyGroupFacadeImpl(studyGroupService, userService, beanMappingService);
+        studyGroupFacade = new StudyGroupFacadeImpl(studyGroupService, userService, timelineService, beanMappingService);
     }
 
     @AfterMethod
@@ -173,6 +182,19 @@ public class StudyGroupFacadeTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(get, mappedList);
 
         verify(studyGroupService, times(1)).findAllStudyGroups();
+        verifyNoMoreInteractions(studyGroupService);
+        verifyNoInteractions(userService);
+    }
+
+    @Test
+    public void testCreateTimelineInStudyGroup() {
+        HistoricalTimelineCreateDTO timelineCreateDTO = beanMappingService.mapTo(timeline, HistoricalTimelineCreateDTO.class);
+        when(studyGroupService.findById(studyGroup.getId())).thenReturn(Optional.of(studyGroup));
+        studyGroupFacade.createTimelineInStudyGroup(timelineCreateDTO, studyGroup.getId());
+
+        verify(timelineService, times(1)).createTimelineInStudyGroup(any(HistoricalTimeline.class),any(StudyGroup.class));
+        verify(studyGroupService, times(1)).findById(studyGroup.getId());
+        verifyNoMoreInteractions(timelineService);
         verifyNoMoreInteractions(studyGroupService);
         verifyNoInteractions(userService);
     }
