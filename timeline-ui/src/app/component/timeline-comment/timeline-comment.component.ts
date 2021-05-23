@@ -181,10 +181,24 @@ export class TimelineCommentComponent implements OnInit {
   closeCreateModal() {
     this.showCreateModal = false
   }
+  logout() {
+    this.userService.logout().subscribe(data => {
+      this.router.navigate(['/login']);
+    });
+  }
 
   // ========== OTHERS ==========
 
   backToTimeline() {
     this.router.navigate([`/groups/${this.studyGroupId}`]);
+  }
+  backToStudyGroups() {
+    this.router.navigate([`/groups`]);
+  }
+  backToHistoricalTimelines(){
+    this.router.navigate([`/timelines`]);
+  }
+  backToHistoricalEvents(){
+    this.router.navigate([`/events`]);
   }
 }

@@ -139,4 +139,18 @@ export class StudyGroupComponent implements OnInit {
   addUser(studyGroupId: number) {
     this.router.navigate([`/groups/add_user/${studyGroupId}`])
   }
+  logout() {
+    this.userService.logout().subscribe(data => {
+      this.router.navigate(['/login']);
+    });
+  }
+  backToStudyGroups() {
+    this.router.navigate([`/groups`]);
+  }
+  backToHistoricalTimelines(){
+    this.router.navigate([`/timelines`]);
+  }
+  backToHistoricalEvents(){
+    this.router.navigate([`/events`]);
+  }
 }

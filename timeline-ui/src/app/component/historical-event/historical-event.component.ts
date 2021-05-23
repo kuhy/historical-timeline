@@ -188,4 +188,18 @@ export class HistoricalEventComponent implements OnInit {
   showImage(eventId: number) {
     // TODO
   }
+  logout() {
+    this.userService.logout().subscribe(data => {
+      this.router.navigate(['/login']);
+    });
+  }
+  backToStudyGroups() {
+    this.router.navigate([`/groups`]);
+  }
+  backToHistoricalTimelines(){
+    this.router.navigate([`/timelines`]);
+  }
+  backToHistoricalEvents(){
+    this.router.navigate([`/events`]);
+  }
 }

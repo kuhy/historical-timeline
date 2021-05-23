@@ -1,23 +1,26 @@
-<p class="h1">Login</p>
-<form [formGroup]="loginForm" (submit)="onSubmit()">
+
+<div style="box-shadow: 5px 10px 5px 2px #2f2e2e;padding: 80px 80px 80px 120px;margin-top: 100px;margin-left: 770px;background-color: #ffffff; height: 400px; width: 400px; border-radius: 50px;">
+  <b style="padding-bottom: 50px;margin-bottom: 600px; font-size: 40px">Login</b>
+<form [formGroup]="loginForm" (submit)="onSubmit()" style="width: 70%; text-align: center ">
   <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+    <label for="username"><b style="margin-bottom: 10px">Username</b> <b style="color: #880000">*</b></label>
+    <input  placeholder="Username" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
       <div *ngIf="f.username.errors.required">Username is required</div>
     </div>
   </div>
   <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+    <label for="password"><b style="margin-bottom: 10px">Password</b> <b style="color: #880000">*</b></label>
+    <input  placeholder="*****" type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
       <div *ngIf="f.password.errors.required">Password is required</div>
     </div>
   </div>
-  <div class="form-group">
-    <button [disabled]="loading" class="btn btn-primary">
+  <div style="margin-top: 20px" class="form-group">
+    <button [disabled]="loading" class="buttonblack">
       <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
       Login
     </button>
   </div>
 </form>
+</div>

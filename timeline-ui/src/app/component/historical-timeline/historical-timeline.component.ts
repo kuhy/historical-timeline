@@ -155,6 +155,12 @@ export class HistoricalTimelineComponent implements OnInit {
   backToStudyGroups() {
     this.router.navigate([`/groups`]);
   }
+  backToHistoricalTimelines(){
+    this.router.navigate([`/timelines`]);
+  }
+  backToHistoricalEvents(){
+    this.router.navigate([`/events`]);
+  }
 
   // ========== Show Historical Events ==========
 
@@ -166,5 +172,10 @@ export class HistoricalTimelineComponent implements OnInit {
 
   showComments(timelineId: number) {
     this.router.navigate([`/groups/${this.studyGroupId}/timeline/comments/${timelineId}`]);
+  }
+  logout() {
+    this.userService.logout().subscribe(data => {
+      this.router.navigate(['/login']);
+    });
   }
 }
