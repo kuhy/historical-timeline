@@ -4,6 +4,9 @@ This CLI can be installed using the =npm=:
 #+BEGIN_SRC sh
   npm install -g @angular/cli
 #+END_SRC
+The admin credentials are: username: xnatyin password: passHash11
+
+The user credentials are:  username: xkucera password: passHash2
 * Development server
   Run =npm start= for a development server. Navigate to [[http://localhost:4200/]].
   The app will automatically reload if you change any of the source files.
