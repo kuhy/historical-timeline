@@ -53,8 +53,7 @@ export class StudyGroupService {
   }
 
   addUserToStudyGroup(studyGroupId: number, userId: number) {
-    // TODO studyGroupId should not be passed in put ?
-    return this.http.put(`${this.apiURL}/${studyGroupId}/users/${userId}`, studyGroupId).pipe(catchError(error => {
+    return this.http.put(`${this.apiURL}/${studyGroupId}/users/${userId}`, null).pipe(catchError(error => {
       return handleError(error)
     }));
   }
