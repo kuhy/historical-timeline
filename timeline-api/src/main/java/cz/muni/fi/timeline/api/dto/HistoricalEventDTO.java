@@ -36,7 +36,7 @@ public class HistoricalEventDTO {
     private String location;
 
     @NotNull
-    private byte[] image;
+    private String image;
 
     @Override
     public boolean equals(Object o) {

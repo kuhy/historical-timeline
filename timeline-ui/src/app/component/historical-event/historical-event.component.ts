@@ -124,7 +124,7 @@ export class HistoricalEventComponent implements OnInit {
     this.updateDTO.name = this.formUpdate.name.value
     this.updateDTO.description = this.formUpdate.description.value
     this.updateDTO.location = this.formUpdate.location.value
-    this.updateDTO.date = this.formUpdate.date.value // TODO different date format
+    this.updateDTO.date = this.formUpdate.date.value
     // this.updateDTO.image = this.formUpdate.image.value // TODO image
 
     this.historicalEventService.updateHistoricalEvent(this.updateDTO).subscribe(response => {
@@ -167,7 +167,7 @@ export class HistoricalEventComponent implements OnInit {
     event.name = this.formCreate.name.value
     event.description = this.formCreate.description.value
     event.location = this.formCreate.location.value
-    event.date = this.formCreate.date.value // TODO different date format
+    event.date = this.formCreate.date.value
     this.historicalTimelineService.addEventToTimeline(this.historicalTimelineId, event).subscribe(response => {
       this.loadHistoricalEvents()
     })
@@ -186,8 +186,18 @@ export class HistoricalEventComponent implements OnInit {
     this.router.navigate([`/groups/${this.studyGroupId}`]);
   }
 
+  hideImage(){
+    const modal = document.getElementById("myModal") as HTMLDivElement;
+    modal.style.display = "none"
+  }
+
   showImage(eventId: number) {
-    // TODO
+    const img = document.getElementById(String(eventId)) as HTMLImageElement;
+    const modal = document.getElementById("myModal") as HTMLDivElement;
+    const modalimg = document.getElementById("img01") as HTMLImageElement;
+    modal.style.display = "block";
+    modalimg.src = img.src;
+
   }
   logout() {
     this.userService.logout().subscribe(data => {

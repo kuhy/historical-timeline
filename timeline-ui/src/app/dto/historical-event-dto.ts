@@ -4,5 +4,5 @@ export class HistoricalEventDTO {
   description!: string;
   date!: string;
   location!: string;
-  image!: object;
+  image!: string;
 }
