@@ -60,8 +60,8 @@ export class HistoricalEventComponent implements OnInit {
       name: ['', Validators.required],
       description: ['', Validators.required],
       date: ['', Validators.required], // TODO date validator
-      location: ['', Validators.required] // TODO validator ??
-      // TODO image
+      location: ['', Validators.required],
+      image: ['', Validators.required]// TODO validator ??
     })
   }
 
@@ -105,7 +105,8 @@ export class HistoricalEventComponent implements OnInit {
       name: this.updateDTO.name,
       description: this.updateDTO.description,
       date: this.updateDTO.date, // TODO format
-      location: this.updateDTO.location
+      location: this.updateDTO.location,
+      image: this.updateDTO.image
     })
 
     this.showUpdateModal = true
@@ -125,7 +126,7 @@ export class HistoricalEventComponent implements OnInit {
     this.updateDTO.description = this.formUpdate.description.value
     this.updateDTO.location = this.formUpdate.location.value
     this.updateDTO.date = this.formUpdate.date.value
-    // this.updateDTO.image = this.formUpdate.image.value // TODO image
+    this.updateDTO.image = this.formUpdate.image.value // TODO image
 
     this.historicalEventService.updateHistoricalEvent(this.updateDTO).subscribe(response => {
       this.loadHistoricalEvents()
