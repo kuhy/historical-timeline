@@ -11,6 +11,9 @@
             <th *ngIf="isTeacher">Manage user</th>
             <th *ngIf="isTeacher">Update</th>
             <th *ngIf="isTeacher">Delete</th>
+            <th *ngIf="!isTeacher"></th>
+            <th *ngIf="!isTeacher"></th>
+            <th *ngIf="!isTeacher"></th>
           </tr>
           </thead>
           <tbody>
@@ -63,7 +66,7 @@
                       Update
                     </button>
                     <div class="level-item">
-                      <a (click)="closeUpdateGroupModal()" class="button">Close</a>
+                      <a (click)="closeUpdateGroupModal()" class="buttonblack">Close</a>
                     </div>
                   </div>
                 </nav>
@@ -94,7 +97,7 @@
                       Create
                     </button>
                     <div class="level-item">
-                      <a (click)="closeCreateGroupModal()" class="button">Close</a>
+                      <a (click)="closeCreateGroupModal()" class="buttonblack">Close</a>
                     </div>
                   </div>
                 </nav>
