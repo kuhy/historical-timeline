@@ -25,7 +25,7 @@
               <fa-icon [icon]="faEye"></fa-icon>
               <span>Show</span>
             </a></td>
-            <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateHistoricalTimelineModal(historicalTimeline.id)">
+            <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateHistoricalTimelineModal(historicalTimeline)">
               <fa-icon [icon]="faEdit"></fa-icon>
               <span>Update</span>
             </a></td>
@@ -55,22 +55,6 @@
                     <div class="form-group">
                       <label for="name">Name</label>
                       <input type="text" formControlName="name" class="form-control"
-                             [ngClass]="{ 'is-invalid': submitted && formUpdate.name.errors }"/>
-                      <div *ngIf="submitted && formUpdate.name.errors" class="invalid-feedback">
-                        <div *ngIf="formUpdate.name.errors.required">Name is required</div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="events">Events</label>
-                      <input type="text" formControlName="events" class="form-control"
-                             [ngClass]="{ 'is-invalid': submitted && formUpdate.name.errors }"/>
-                      <div *ngIf="submitted && formUpdate.name.errors" class="invalid-feedback">
-                        <div *ngIf="formUpdate.name.errors.required">Name is required</div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="comments">Comments</label>
-                      <input type="text" formControlName="comments" class="form-control"
                              [ngClass]="{ 'is-invalid': submitted && formUpdate.name.errors }"/>
                       <div *ngIf="submitted && formUpdate.name.errors" class="invalid-feedback">
                         <div *ngIf="formUpdate.name.errors.required">Name is required</div>
