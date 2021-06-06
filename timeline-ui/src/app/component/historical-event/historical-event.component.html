@@ -2,7 +2,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <div class = "main_window">
       <p class="h1">Historical events of historical timeline</p>
+      <div id="myModal" class="modal">
+        <span class="close" (click)="hideImage()">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+      </div>
       <table class="table is-striped is-narrow is-hoverable is-fullwidth">
+        <colgroup>
+          <col span="1" style="width: 30%;">
+          <col span="1" style="width: 20%;">
+          <col span="1" style="width: 10%;">
+          <col span="1" style="width: 10%;">
+          <col span="1" style="width: 10%;">
+          <col span="1" style="width: 10%;">
+          <col span="1" style="width: 10%;">
+        </colgroup>
         <thead>
         <tr>
           <th>Name</th>
@@ -20,9 +34,9 @@
           <td>{{historicalEvent.description}}</td>
           <td>{{historicalEvent.date}}</td>
           <td>{{historicalEvent.location}}</td>
-          <td><a *ngIf="isTeacher" class="button is-danger" (click)="showImage(historicalEvent.id)">
-            <fa-icon [icon]="faEye"></fa-icon>
-            <span>Show</span>
+
+          <td><a class="button is-danger" (click)="showImage(historicalEvent.id)">
+            <img id="{{historicalEvent.id}}" src="{{historicalEvent.image}}" style="width:100%;max-width:100%">
           </a></td>
           <td><a *ngIf="isTeacher" class="button is-danger" (click)="updateHistoricalEventModal(historicalEvent)">
             <fa-icon [icon]="faEdit"></fa-icon>
@@ -36,123 +50,127 @@
         </tbody>
       </table>
       <div class="wrapper">
-      <div>
-        <button *ngIf="isTeacher" class="buttonblack" (click)="createHistoricalEventModal()">
-          Create new historical event
-        </button>
-        <button class="buttonblack" (click)="backToTimeline()">
-          Back to historical timeline
-        </button>
-      </div>
-      </div>
-  <div *ngIf="showUpdateModal">
-    <div (click)="showUpdateModal=!showUpdateModal" class="modal-background"></div>
-    <div class="modal-card">
-      <section class="modal-card-body">
-        <div class="content">
-          <form [formGroup]="updateForm" (submit)="updateHistoricalEvent()">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" formControlName="name" class="form-control"
-                     [ngClass]="{ 'is-invalid': submitted && formUpdate.name.errors }"/>
-              <div *ngIf="submitted && formUpdate.name.errors" class="invalid-feedback">
-                <div *ngIf="formUpdate.name.errors.required">Name is required</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="description">Description</label>
-              <input type="text" formControlName="description" class="form-control"
-                     [ngClass]="{ 'is-invalid': submitted && formUpdate.description.errors }"/>
-              <div *ngIf="submitted && formUpdate.description.errors" class="invalid-feedback">
-                <div *ngIf="formUpdate.description.errors.required">Description is required</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="date">Date</label>
-              <input type="text" formControlName="date" class="form-control"
-                     [ngClass]="{ 'is-invalid': submitted && formUpdate.date.errors }"/>
-              <div *ngIf="submitted && formUpdate.date.errors" class="invalid-feedback">
-                <div *ngIf="formUpdate.date.errors.required">Date is required</div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="location">Location</label>
-              <input type="text" formControlName="location" class="form-control"
-                     [ngClass]="{ 'is-invalid': submitted && formUpdate.location.errors }"/>
-              <div *ngIf="submitted && formUpdate.location.errors" class="invalid-feedback">
-                <div *ngIf="formUpdate.location.errors.required">Location is required</div>
-              </div>
-            </div>
-            <nav class="level is-mobile">
-              <div class="level-left">
-                <button [disabled]="loading" class="buttonblack">
-                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                  Update
-                </button>
-                <div class="level-item">
-                  <a (click)="closeUpdateModal()" class="button">Close</a>
-                </div>
-              </div>
-            </nav>
-          </form>
-        </div>
-      </section>
-    </div>
-
-
-    <div *ngIf="showCreateModal">
-      <div (click)="showCreateModal=!showCreateModal" class="modal-background"></div>
-      <div class="modal-card">
-        <section class="modal-card-body">
-          <div class="content">
-            <form [formGroup]="createForm" (submit)="createHistoricalEvent()">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" formControlName="name" class="form-control"
-                       [ngClass]="{ 'is-invalid': submitted && formUpdate.name.errors }"/>
-                <div *ngIf="submitted && formUpdate.name.errors" class="invalid-feedback">
-                  <div *ngIf="formUpdate.name.errors.required">Name is required</div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" formControlName="description" class="form-control"
-                       [ngClass]="{ 'is-invalid': submitted && formUpdate.description.errors }"/>
-                <div *ngIf="submitted && formUpdate.description.errors" class="invalid-feedback">
-                  <div *ngIf="formUpdate.description.errors.required">Description is required</div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="date">Date</label>
-                <input type="text" formControlName="date" class="form-control"
-                       [ngClass]="{ 'is-invalid': submitted && formUpdate.date.errors }"/>
-                <div *ngIf="submitted && formUpdate.date.errors" class="invalid-feedback">
-                  <div *ngIf="formUpdate.date.errors.required">Date is required</div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="location">Location</label>
-                <input type="text" formControlName="location" class="form-control"
-                       [ngClass]="{ 'is-invalid': submitted && formUpdate.location.errors }"/>
-                <div *ngIf="submitted && formUpdate.location.errors" class="invalid-feedback">
-                  <div *ngIf="formUpdate.location.errors.required">Location is required</div>
-                </div>
-              </div>
-              <nav class="level is-mobile">
-                <div class="level-left">
-                  <button [disabled]="loading" class="buttonblack">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Create
-                  </button>
-                  <div class="level-item">
-                    <a (click)="closeCreateModal()" class="button">Close</a>
-                  </div>
-                </div>
-              </nav>
-            </form>
+          <div>
+            <button *ngIf="isTeacher" class="buttonblack" (click)="createHistoricalEventModal()">
+              Create new historical event
+            </button>
+            <button class="buttonblack" (click)="backToTimeline()">
+              Back to historical timeline
+            </button>
           </div>
-        </section>
+          <div *ngIf="showUpdateModal">
+            <div (click)="showUpdateModal=!showUpdateModal" class="modal-background"></div>
+            <div class="modal-card">
+              <section class="modal-card-body">
+                <div class="content">
+                  <form [formGroup]="updateForm" (submit)="updateHistoricalEvent()">
+                    <div class="form-group">
+                      <label for="name">Name</label>
+                      <input type="text" formControlName="name" class="form-control"
+                             [ngClass]="{ 'is-invalid': submitted && formUpdate.name.errors }"/>
+                      <div *ngIf="submitted && formUpdate.name.errors" class="invalid-feedback">
+                        <div *ngIf="formUpdate.name.errors.required">Name is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <input type="text" formControlName="description" class="form-control"
+                             [ngClass]="{ 'is-invalid': submitted && formUpdate.description.errors }"/>
+                      <div *ngIf="submitted && formUpdate.description.errors" class="invalid-feedback">
+                        <div *ngIf="formUpdate.description.errors.required">Description is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="date">Date</label>
+                      <input type="date" formControlName="date" class="form-control"
+                             [ngClass]="{ 'is-invalid': submitted && formUpdate.date.errors }"/>
+                      <div *ngIf="submitted && formUpdate.date.errors" class="invalid-feedback">
+                        <div *ngIf="formUpdate.date.errors.required">Date is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="location">Location</label>
+                      <input type="text" formControlName="location" class="form-control"
+                             [ngClass]="{ 'is-invalid': submitted && formUpdate.location.errors }"/>
+                      <div *ngIf="submitted && formUpdate.location.errors" class="invalid-feedback">
+                        <div *ngIf="formUpdate.location.errors.required">Location is required</div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="image">Image</label>
+                      <input type="text" formControlName="image" class="form-control"
+                             [ngClass]="{ 'is-invalid': submitted && formUpdate.image.errors }"/>
+                    </div>
+                    <nav class="level is-mobile">
+                      <div class="level-left">
+                        <button [disabled]="loading" class="buttonblack">
+                          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                          Update
+                        </button>
+                        <div class="level-item">
+                          <a (click)="closeUpdateModal()" class="button">Close</a>
+                        </div>
+                      </div>
+                    </nav>
+                  </form>
+                </div>
+              </section>
+            </div>
+          </div>
+            <div *ngIf="showCreateModal">
+              <div (click)="showCreateModal=!showCreateModal" class="modal-background"></div>
+              <div class="modal-card">
+                <section class="modal-card-body">
+                  <div class="content">
+                    <form [formGroup]="createForm" (submit)="createHistoricalEvent()">
+                      <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" formControlName="name" class="form-control"
+                               [ngClass]="{ 'is-invalid': submitted && formCreate.name.errors }"/>
+                        <div *ngIf="submitted && formCreate.name.errors" class="invalid-feedback">
+                          <div *ngIf="formCreate.name.errors.required">Name is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" formControlName="description" class="form-control"
+                               [ngClass]="{ 'is-invalid': submitted && formCreate.description.errors }"/>
+                        <div *ngIf="submitted && formCreate.description.errors" class="invalid-feedback">
+                          <div *ngIf="formCreate.description.errors.required">Description is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" formControlName="date" class="form-control"
+                               [ngClass]="{ 'is-invalid': submitted && formCreate.date.errors }"/>
+                        <div *ngIf="submitted && formCreate.date.errors" class="invalid-feedback">
+                          <div *ngIf="formCreate.date.errors.required">Date is required</div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" formControlName="location" class="form-control"
+                               [ngClass]="{ 'is-invalid': submitted && formCreate.location.errors }"/>
+                        <div *ngIf="submitted && formCreate.location.errors" class="invalid-feedback">
+                          <div *ngIf="formCreate.location.errors.required">Location is required</div>
+                        </div>
+                      </div>
+                      <nav class="level is-mobile">
+                        <div class="level-left">
+                          <button [disabled]="loading" class="buttonblack">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Create
+                          </button>
+                          <div class="level-item">
+                            <a (click)="closeCreateModal()" class="button">Close</a>
+                          </div>
+                        </div>
+                      </nav>
+                    </form>
+                  </div>
+                </section>
+              </div>
+        </div>
       </div>
-    </div>
   </div>
 </div>
