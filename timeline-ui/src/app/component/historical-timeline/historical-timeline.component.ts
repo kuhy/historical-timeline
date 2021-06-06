@@ -69,6 +69,8 @@ export class HistoricalTimelineComponent implements OnInit {
   private loadHistoricalTimelines() {
     this.studyGroupService.getGroup(this.studyGroupId).subscribe(response => {
       this.historicalTimelines = response.historicalTimelines
+      this.historicalTimelines = this.historicalTimelines.sort(function (a, b) {
+        return ('' + a.name).localeCompare(b.name);})
     })
   }
 
@@ -86,10 +88,12 @@ export class HistoricalTimelineComponent implements OnInit {
     return this.updateForm.controls
   }
 
-  updateHistoricalTimelineModal(id: number) {
+  updateHistoricalTimelineModal(historicalTimeline: HistoricalTimelineDTO) {
     this.closeCreateHistoricalTimelineModal()
 
-    this.updateHistoricalTimelineDTO.id = id
+    this.updateHistoricalTimelineDTO.id = historicalTimeline.id
+    this.updateHistoricalTimelineDTO.historicalEvents = historicalTimeline.historicalEvents
+    this.updateHistoricalTimelineDTO.timelineComments = historicalTimeline.timelineComments
 
     this.showUpdateHistoricalTimelineModal = true
     this.submitted = false

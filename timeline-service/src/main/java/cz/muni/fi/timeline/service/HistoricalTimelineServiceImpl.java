@@ -5,6 +5,7 @@ import cz.muni.fi.timeline.dao.StudyGroupDao;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.StudyGroup;
 import cz.muni.fi.timeline.service.exception.ServiceLayerException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -51,7 +52,7 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
             studyGroupDao.update(group);
         } catch (ServiceLayerException e) {
             throw e;
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -64,7 +65,7 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
         try {
             historicalTimelineDao.update(timeline);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -77,7 +78,7 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
         try {
             historicalTimelineDao.remove(timeline);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -90,7 +91,7 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
         try {
             return historicalTimelineDao.findById(id);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -103,7 +104,7 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
 
         try {
             return historicalTimelineDao.findByName(name);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -112,7 +113,7 @@ public class HistoricalTimelineServiceImpl implements HistoricalTimelineService 
     public List<HistoricalTimeline> findAllTimelines() {
         try {
             return historicalTimelineDao.findAll();
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }

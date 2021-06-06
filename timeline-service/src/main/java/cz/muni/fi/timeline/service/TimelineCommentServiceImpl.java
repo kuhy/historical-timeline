@@ -5,6 +5,7 @@ import cz.muni.fi.timeline.dao.TimelineCommentDao;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.TimelineComment;
 import cz.muni.fi.timeline.service.exception.ServiceLayerException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -52,7 +53,7 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
             timelineDao.update(timeline);
         } catch (ServiceLayerException e) {
             throw e;
-        }catch (Exception e) {
+        }catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -65,7 +66,7 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
 
         try {
             timelineCommentDao.remove(comment);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -78,7 +79,7 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
 
         try {
             timelineCommentDao.update(comment);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -91,7 +92,7 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
 
         try {
             return timelineCommentDao.findById(id);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -100,7 +101,7 @@ public class TimelineCommentServiceImpl implements TimelineCommentService {
     public List<TimelineComment> findAllComments() {
         try {
             return timelineCommentDao.findAll();
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }

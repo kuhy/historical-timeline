@@ -16,52 +16,33 @@ import java.util.Set;
  *
  * @author Tri Le Mau
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "user_entity")
 public class User implements Serializable {
 
     @Id
-    @Getter
-    @Setter
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Getter
-    @Setter
     @Column(nullable=false, name = "first_name")
     private String firstName;
 
-    @Getter
-    @Setter
     @Column(nullable=false, name = "last_name")
     private String lastName;
 
-    @Getter
-    @Setter
     @Column(nullable=false)
     private String username;
 
-    @Getter
-    @Setter
     @Column(nullable=false, name = "hashed_password")
     private String hashedPassword;
 
-    @Getter
-    @Setter
     @Column(nullable=false, name = "is_teacher")
     private Boolean isTeacher;
 
     @ManyToMany(mappedBy = "users")
     private Set<StudyGroup> studyGroups = new HashSet<>();
-
-    /**
-     * Returns all study groups of user.
-     *
-     * @return all study groups of user
-     */
-    public Set<StudyGroup> getStudyGroups() {
-        return Collections.unmodifiableSet(studyGroups);
-    }
 
     /**
      * Adds study group to user.

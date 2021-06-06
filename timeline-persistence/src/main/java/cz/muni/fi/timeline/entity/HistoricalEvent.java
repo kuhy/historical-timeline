@@ -32,8 +32,7 @@ public class HistoricalEvent implements Serializable {
 
     private String location;
 
-    @Lob
-    private byte[] image;
+    private String image;
 
     @Override
     public boolean equals(Object o) {

@@ -19,11 +19,11 @@
             <td>{{user.username}}</td>
             <td>{{user.firstName}}</td>
             <td>{{user.lastName}}</td>
-            <td><a *ngIf="isTeacher" class="button is-danger" (click)="addUserToStudyGroup(user.id)">
+            <td><a *ngIf="isTeacher && !user.isInGroup" class="button is-danger" (click)="addUserToStudyGroup(user.id)">
               <fa-icon [icon]="faUserPlus"></fa-icon>
               <span>Add user</span>
             </a></td>
-            <td><a *ngIf="isTeacher" class="button is-danger" (click)="removeUserFromStudyGroup(user.id)">
+            <td><a *ngIf="isTeacher && user.isInGroup" class="button is-danger" (click)="removeUserFromStudyGroup(user.id)">
               <fa-icon [icon]="faUserMinus"></fa-icon>
               <span>Remove user</span>
             </a></td>

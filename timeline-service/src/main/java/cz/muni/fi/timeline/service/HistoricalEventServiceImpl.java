@@ -6,6 +6,7 @@ import cz.muni.fi.timeline.entity.HistoricalEvent;
 import cz.muni.fi.timeline.entity.HistoricalTimeline;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.exception.ServiceLayerException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -36,7 +37,7 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
         try {
             historicalEventDao.create(historicalEvent);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -63,7 +64,7 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
             historicalTimelineDao.update(timeline);
         } catch (ServiceLayerException e) {
             throw e;
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -76,7 +77,7 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
         try {
             historicalEventDao.update(historicalEvent);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -89,7 +90,7 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
         try {
             historicalEventDao.remove(historicalEvent);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -98,7 +99,7 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
     public List<HistoricalEvent> getAllEvents() {
         try {
             return historicalEventDao.findAll();
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -111,7 +112,7 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
         try {
             return historicalEventDao.findByName(name);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -124,7 +125,7 @@ public class HistoricalEventServiceImpl implements HistoricalEventService {
 
         try {
             return historicalEventDao.findById(id);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }

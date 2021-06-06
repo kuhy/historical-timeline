@@ -25,7 +25,7 @@ export class TimelineCommentComponent implements OnInit {
   timelineComments: TimelineCommentDTO[] = []
 
   updateDTO: TimelineCommentDTO
-  currentUser: UserDTO
+  currentUser = ""
 
   createForm: FormGroup
   updateForm: FormGroup
@@ -51,7 +51,6 @@ export class TimelineCommentComponent implements OnInit {
     })
 
     this.updateDTO = new TimelineCommentDTO()
-    this.currentUser = new UserDTO()
 
     this.createForm = this.formBuilder.group({
       text: ['', Validators.required]
@@ -64,7 +63,8 @@ export class TimelineCommentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTeacherStatus()
-    this.loadTimelineComments();
+    this.getCurrentUser()
+    this.loadTimelineComments()
   }
 
   private getTeacherStatus() {
@@ -73,9 +73,16 @@ export class TimelineCommentComponent implements OnInit {
     })
   }
 
+  private getCurrentUser() {
+    this.userService.getLoggedInUser().subscribe(response => {
+      this.currentUser = response.username
+    })
+  }
+
   private loadTimelineComments() {
     this.historicalTimelineService.getHistoricalTimeline(this.historicalTimelineId).subscribe(response => {
       this.timelineComments = response.timelineComments
+      this.timelineComments = this.timelineComments.sort(function(a, b) { return b.id - a.id })
     })
   }
 
@@ -159,21 +166,6 @@ export class TimelineCommentComponent implements OnInit {
     this.historicalTimelineService.addCommentInTimeline(this.historicalTimelineId, comment).subscribe(response => {
       this.loadTimelineComments()
     })
-
-    // add user to comment TODO
-    // this.userService.getLoggedInUser().subscribe(response => {
-    //   this.currentUser = response
-    // })
-    //
-    // console.log(this.currentUser)
-    //
-    // this.updateDTO = new TimelineCommentDTO()
-    // this.updateDTO.text = comment.text
-    // this.updateDTO.user = this.currentUser
-
-    // this.timelineCommentService.updateTimelineComment(this.updateDTO).subscribe(response => {
-    //   this.loadTimelineComments()
-    // })
 
     this.loading = false
     this.closeCreateModal()

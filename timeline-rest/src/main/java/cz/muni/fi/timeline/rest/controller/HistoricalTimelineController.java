@@ -106,7 +106,7 @@ public class HistoricalTimelineController {
      * @return id of created event
      */
     @RolesAllowed("ROLE_TEACHER")
-    @PostMapping(value ="{/{id}/events/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value ="/{id}/events/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> createEventInTimeline(@RequestBody HistoricalEventCreateDTO historicalEventCreateDTO, @PathVariable("id") long id) {
         return new ResponseEntity<>(historicalTimelineFacade.createEventInTimeline(historicalEventCreateDTO,id), HttpStatus.OK);
     }

@@ -59,6 +59,8 @@ export class StudyGroupComponent implements OnInit {
   private loadStudyGroups() {
     this.studyGroupService.getAllGroups().subscribe(response => {
       this.studyGroups = response.content;
+      this.studyGroups = this.studyGroups.sort(function (a, b) {
+        return ('' + a.name).localeCompare(b.name);})
     })
   }
 
@@ -72,11 +74,15 @@ export class StudyGroupComponent implements OnInit {
   // ========== Update ==========
   get fu() { return this.updateForm.controls; }
 
-  updateGroupModal(id: number) {
+  updateGroupModal(group: StudyGroupDTO) {
     this.closeCreateGroupModal()
-    this.updateGroupDTO.id = id;
+    this.updateGroupDTO.id = group.id;
+    this.updateGroupDTO.users = group.users;
+    this.updateGroupDTO.historicalTimelines = group.historicalTimelines;
+
     this.showUpdateGroupModal = true;
     this.submitted = false;
+    this.updateForm.setValue({name: this.studyGroups.find(x => x.id == group.id)!.name})
   }
 
   updateGroup() {
