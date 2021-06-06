@@ -65,6 +65,8 @@ export class UserComponent implements OnInit {
     this.userService.getAllUsers().subscribe(response => {
       this.tmp = response;
       this.users = this.tmp.content;
+      this.users = this.users.sort(function (a, b) {
+        return ('' + a.username).localeCompare(b.username);})
     })
   }
 
