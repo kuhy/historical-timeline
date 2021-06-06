@@ -59,6 +59,8 @@ export class StudyGroupComponent implements OnInit {
   private loadStudyGroups() {
     this.studyGroupService.getAllGroups().subscribe(response => {
       this.studyGroups = response.content;
+      this.studyGroups = this.studyGroups.sort(function (a, b) {
+        return ('' + a.name).localeCompare(b.name);})
     })
   }
 

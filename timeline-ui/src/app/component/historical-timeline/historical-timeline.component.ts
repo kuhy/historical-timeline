@@ -69,6 +69,8 @@ export class HistoricalTimelineComponent implements OnInit {
   private loadHistoricalTimelines() {
     this.studyGroupService.getGroup(this.studyGroupId).subscribe(response => {
       this.historicalTimelines = response.historicalTimelines
+      this.historicalTimelines = this.historicalTimelines.sort(function (a, b) {
+        return ('' + a.name).localeCompare(b.name);})
     })
   }
 

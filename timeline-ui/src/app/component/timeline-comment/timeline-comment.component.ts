@@ -82,6 +82,7 @@ export class TimelineCommentComponent implements OnInit {
   private loadTimelineComments() {
     this.historicalTimelineService.getHistoricalTimeline(this.historicalTimelineId).subscribe(response => {
       this.timelineComments = response.timelineComments
+      this.timelineComments = this.timelineComments.sort(function(a, b) { return b.id - a.id })
     })
   }
 

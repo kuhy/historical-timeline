@@ -3,6 +3,7 @@ package cz.muni.fi.timeline.service;
 import cz.muni.fi.timeline.dao.UserDao;
 import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.service.exception.ServiceLayerException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -45,7 +46,7 @@ public class UserServiceImpl implements UserService {
         try {
             user.setHashedPassword(encoder.encode(unencryptedPassword));
             userDao.create(user);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -115,7 +116,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             userDao.update(user);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -128,7 +129,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             userDao.remove(user);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -141,7 +142,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             return userDao.findById(id);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -154,7 +155,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             return userDao.findByUserName(username);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -173,7 +174,7 @@ public class UserServiceImpl implements UserService {
             return find.getIsTeacher();
         } catch (ServiceLayerException e) {
             throw e;
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -182,7 +183,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         try {
             return userDao.findAll();
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -191,7 +192,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllStudents() {
         try {
             return userDao.findAllStudents();
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -200,7 +201,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllTeachers() {
         try {
             return userDao.findAllTeachers();
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }

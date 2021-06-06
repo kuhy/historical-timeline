@@ -79,6 +79,8 @@ export class HistoricalEventComponent implements OnInit {
   private loadHistoricalEvents() {
     this.historicalTimelineService.getHistoricalTimeline(this.historicalTimelineId).subscribe(response => {
       this.historicalEvents = response.historicalEvents
+      this.historicalEvents = this.historicalEvents.sort(function (a, b) {
+        return ('' + a.date).localeCompare(b.date);})
     })
   }
 

@@ -6,6 +6,7 @@ import cz.muni.fi.timeline.entity.User;
 import cz.muni.fi.timeline.api.exception.UserAlreadyInStudyGroupException;
 import cz.muni.fi.timeline.api.exception.UserNotInStudyGroupException;
 import cz.muni.fi.timeline.service.exception.ServiceLayerException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -34,7 +35,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
 
         try {
             studyGroupDao.create(studyGroup);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -47,7 +48,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
 
         try {
             studyGroupDao.update(studyGroup);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -60,7 +61,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
 
         try {
             studyGroupDao.remove(studyGroup);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -90,7 +91,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             throw e;
         } catch (ServiceLayerException e) {
             throw e;
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -120,7 +121,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             throw e;
         } catch (ServiceLayerException e) {
             throw e;
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -134,7 +135,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
         try {
             Optional<StudyGroup> group = studyGroupDao.findById(id);
             return group;
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
@@ -143,7 +144,7 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     public List<StudyGroup> findAllStudyGroups() {
         try {
             return studyGroupDao.findAll();
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             throw new ServiceLayerException(e.getMessage());
         }
     }
