@@ -54,13 +54,13 @@ export class StudyGroupUsersComponent implements OnInit {
   // ========== Add user to study group ==========
   addUserToStudyGroup(userId: number) {
     // TODO not working
-    this.studyGroupService.addUserToStudyGroup(this.studyGroupId, userId)
+    this.studyGroupService.addUserToStudyGroup(this.studyGroupId, userId).subscribe(response => {})
   }
 
   // ========== Remove user from study group ==========
   removeUserFromStudyGroup(userId: number) {
     // TODO not working
-    this.studyGroupService.removeUserFromStudyGroup(this.studyGroupId, userId)
+    this.studyGroupService.removeUserFromStudyGroup(this.studyGroupId, userId).subscribe(response => {})
   }
   logout() {
     this.userService.logout().subscribe(data => {
