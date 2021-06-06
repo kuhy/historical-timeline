@@ -14,4 +14,11 @@ public class UserNotInStudyGroupException extends Exception {
     public UserNotInStudyGroupException(String msg, Throwable cause) {
         super(msg, cause);
     }
+
+    public UserNotInStudyGroupException() {super();
+    }
+
+    public UserNotInStudyGroupException(Throwable cause) {
+        super(cause);
+    }
 }
