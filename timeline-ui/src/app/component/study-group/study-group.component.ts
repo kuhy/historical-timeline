@@ -79,6 +79,7 @@ export class StudyGroupComponent implements OnInit {
     this.updateGroupDTO.id = id;
     this.showUpdateGroupModal = true;
     this.submitted = false;
+    this.updateForm.setValue({name: this.studyGroups.find(group => group.id == id)!.name})
   }
 
   updateGroup() {

@@ -13,4 +13,10 @@ public class UserAlreadyInStudyGroupException extends Exception {
     public UserAlreadyInStudyGroupException(String msg, Throwable cause) {
         super(msg, cause);
     }
+
+    public UserAlreadyInStudyGroupException(Throwable cause) {
+        super(cause);
+    }
+
+    public UserAlreadyInStudyGroupException() {super(); }
 }

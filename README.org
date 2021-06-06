@@ -29,6 +29,19 @@ group and add a comment to them. Searching among all events is also possible.
 
   The REST API and also the web application can be executed independently. For more information
   about this, visit the README of the corresponding module.
+** Credentials
+   There are two roles in the system --- =teacher= and =user=. Teachers have admin privileges.
+   Database is populated with sample data; here are the default credentials:
+   - Teacher:
+     #+BEGIN_EXAMPLE
+       amos
+       skakalzoknanazensky
+     #+END_EXAMPLE
+   - Student:
+     #+BEGIN_EXAMPLE
+       kuhy
+       hovnokleslo
+     #+END_EXAMPLE
 * Project structure
   The =historical-timeline= project is split into following modules:
   - [[./timeline][=timeline=]] :: Module that merges =timeline-ui= and =timeline-rest= into one WAR.

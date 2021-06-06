@@ -25,7 +25,7 @@ export class TimelineCommentComponent implements OnInit {
   timelineComments: TimelineCommentDTO[] = []
 
   updateDTO: TimelineCommentDTO
-  currentUser: UserDTO
+  currentUser = ""
 
   createForm: FormGroup
   updateForm: FormGroup
@@ -51,7 +51,6 @@ export class TimelineCommentComponent implements OnInit {
     })
 
     this.updateDTO = new TimelineCommentDTO()
-    this.currentUser = new UserDTO()
 
     this.createForm = this.formBuilder.group({
       text: ['', Validators.required]
@@ -64,12 +63,19 @@ export class TimelineCommentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTeacherStatus()
-    this.loadTimelineComments();
+    this.getCurrentUser()
+    this.loadTimelineComments()
   }
 
   private getTeacherStatus() {
     this.userService.isTeacher().subscribe(response => {
       this.isTeacher = response
+    })
+  }
+
+  private getCurrentUser() {
+    this.userService.getLoggedInUser().subscribe(response => {
+      this.currentUser = response.username
     })
   }
 
@@ -160,21 +166,6 @@ export class TimelineCommentComponent implements OnInit {
     this.historicalTimelineService.addCommentInTimeline(this.historicalTimelineId, comment).subscribe(response => {
       this.loadTimelineComments()
     })
-
-    // add user to comment TODO
-    // this.userService.getLoggedInUser().subscribe(response => {
-    //   this.currentUser = response
-    // })
-    //
-    // console.log(this.currentUser)
-    //
-    // this.updateDTO = new TimelineCommentDTO()
-    // this.updateDTO.text = comment.text
-    // this.updateDTO.user = this.currentUser
-
-    // this.timelineCommentService.updateTimelineComment(this.updateDTO).subscribe(response => {
-    //   this.loadTimelineComments()
-    // })
 
     this.loading = false
     this.closeCreateModal()

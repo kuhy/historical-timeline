@@ -15,12 +15,12 @@
           <tbody>
           <tr *ngFor="let comment of timelineComments">
             <td>{{comment.text}}</td>
-            <td>{{comment.user}}</td>
-            <td><a class="button is-danger" (click)="updateCommentModal(comment)">
+            <td>{{comment.user.username}}</td>
+            <td *ngIf="isTeacher || comment.user.username == currentUser"><a class="button is-danger" (click)="updateCommentModal(comment)">
               <fa-icon [icon]="faEdit"></fa-icon>
               <span>Update</span>
             </a></td>
-            <td><a class="button is-danger" (click)="deleteComment(comment.id)">
+            <td *ngIf="isTeacher || comment.user.username == currentUser"><a class="button is-danger" (click)="deleteComment(comment.id)">
               <fa-icon [icon]="faTrash"></fa-icon>
               <span>Delete</span>
             </a></td>
