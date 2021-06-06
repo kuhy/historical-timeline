@@ -18,18 +18,16 @@ import java.util.Set;
  *
  * @author Ondřej Kuhejda
  */
+@Getter
+@Setter
 @Entity
 @Table(name = "timeline_entity")
 public class HistoricalTimeline implements Serializable {
 
     @Id
-    @Getter
-    @Setter
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Getter
-    @Setter
     @Column(nullable=false)
     private String name;
 
@@ -40,13 +38,6 @@ public class HistoricalTimeline implements Serializable {
     @OneToMany
     @JoinColumn(name = "timeline_id", referencedColumnName = "id")
     private Set<TimelineComment> timelineComments = new HashSet<>();
-
-    /**
-     * Returns all events in this timeline.
-     */
-    public Set<HistoricalEvent> getHistoricalEvents() {
-        return Collections.unmodifiableSet(historicalEvents);
-    }
 
     /**
      * Adds new event to the timeline.
@@ -60,13 +51,6 @@ public class HistoricalTimeline implements Serializable {
      */
     public void removeHistoricalEvent(HistoricalEvent event) {
         historicalEvents.remove(event);
-    }
-
-    /**
-     * Returns all comments in this timeline.
-     */
-    public Set<TimelineComment> getTimelineComments() {
-        return Collections.unmodifiableSet(timelineComments);
     }
 
     /**

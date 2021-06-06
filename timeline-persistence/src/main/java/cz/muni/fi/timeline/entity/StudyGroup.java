@@ -17,18 +17,16 @@ import java.util.Set;
  * @author Tri Le Mau
  */
 
+@Getter
+@Setter
 @Entity
 @Table(name = "study_group_entity")
 public class StudyGroup implements Serializable {
 
     @Id
-    @Getter
-    @Setter
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Getter
-    @Setter
     @Column(nullable=false)
     private String name;
 
@@ -41,15 +39,6 @@ public class StudyGroup implements Serializable {
     @OneToMany
     @JoinColumn(name = "study_group_id", referencedColumnName = "id")
     private Set<HistoricalTimeline> historicalTimelines = new HashSet<>();
-
-    /**
-     * Returns all users of study group.
-     *
-     * @return all users of study group
-     */
-    public Set<User> getUsers() {
-        return Collections.unmodifiableSet(users);
-    }
 
     /**
      * Adds user to study group.
@@ -85,10 +74,6 @@ public class StudyGroup implements Serializable {
      */
     public void removeHistoricalTimeline(HistoricalTimeline timeline) {
         historicalTimelines.remove(timeline);
-    }
-
-    public Set<HistoricalTimeline> getHistoricalTimelines() {
-        return Collections.unmodifiableSet(historicalTimelines);
     }
 
     @Override

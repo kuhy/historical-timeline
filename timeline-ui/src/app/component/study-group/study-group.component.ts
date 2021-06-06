@@ -74,12 +74,15 @@ export class StudyGroupComponent implements OnInit {
   // ========== Update ==========
   get fu() { return this.updateForm.controls; }
 
-  updateGroupModal(id: number) {
+  updateGroupModal(group: StudyGroupDTO) {
     this.closeCreateGroupModal()
-    this.updateGroupDTO.id = id;
+    this.updateGroupDTO.id = group.id;
+    this.updateGroupDTO.users = group.users;
+    this.updateGroupDTO.historicalTimelines = group.historicalTimelines;
+
     this.showUpdateGroupModal = true;
     this.submitted = false;
-    this.updateForm.setValue({name: this.studyGroups.find(group => group.id == id)!.name})
+    this.updateForm.setValue({name: this.studyGroups.find(x => x.id == group.id)!.name})
   }
 
   updateGroup() {
