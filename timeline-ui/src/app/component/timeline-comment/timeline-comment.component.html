@@ -15,7 +15,7 @@
           <tbody>
           <tr *ngFor="let comment of timelineComments">
             <td>{{comment.text}}</td>
-            <td>{{comment.user}}</td>
+            <td>{{comment.user.username}}</td>
             <td><a class="button is-danger" (click)="updateCommentModal(comment)">
               <fa-icon [icon]="faEdit"></fa-icon>
               <span>Update</span>
