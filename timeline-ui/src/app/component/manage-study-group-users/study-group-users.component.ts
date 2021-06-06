@@ -43,6 +43,8 @@ export class StudyGroupUsersComponent implements OnInit {
   loadUsers() {
     this.userService.getAllUsers().subscribe(response => {
       this.users = response.content;
+      this.users = this.users.sort(function (a, b) {
+        return ('' + a.username).localeCompare(b.username);})
     })
   }
 
